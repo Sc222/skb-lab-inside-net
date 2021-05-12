@@ -1,25 +1,25 @@
 package com.sc222.insidenet.exampledata;
 
-import com.sc222.insidenet.exampledata.model.LoggedInUser;
+import com.sc222.insidenet.exampledata.examplemodel.ExampleLoggedInUser;
 
 import java.io.IOException;
 
 /**
  * Class that handles authentication w/ login credentials and retrieves user information.
  */
-public class LoginDataSource {
+public class ExampleLoginDataSource {
 
-    public Result<LoggedInUser> login(String username, String password) {
+    public ExampleResult<ExampleLoggedInUser> login(String username, String password) {
 
         try {
             // TODO: handle loggedInUser authentication
-            LoggedInUser fakeUser =
-                    new LoggedInUser(
+            ExampleLoggedInUser fakeUser =
+                    new ExampleLoggedInUser(
                             java.util.UUID.randomUUID().toString(),
                             "Jane Doe");
-            return new Result.Success<>(fakeUser);
+            return new ExampleResult.Success<>(fakeUser);
         } catch (Exception e) {
-            return new Result.Error(new IOException("Error logging in", e));
+            return new ExampleResult.Error(new IOException("Error logging in", e));
         }
     }
 

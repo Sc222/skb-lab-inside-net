@@ -3,11 +3,11 @@ package com.sc222.insidenet.ui.examplelogin;
 /**
  * Class exposing authenticated user details to the UI.
  */
-class LoggedInUserView {
+class ExampleLoggedInUserView {
     private String displayName;
     //... other data fields that may be accessible to the UI
 
-    LoggedInUserView(String displayName) {
+    ExampleLoggedInUserView(String displayName) {
         this.displayName = displayName;
     }
 

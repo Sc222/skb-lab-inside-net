@@ -3,25 +3,25 @@ package com.sc222.insidenet.exampledata;
 /**
  * A generic class that holds a result success w/ data or an error exception.
  */
-public class Result<T> {
+public class ExampleResult<T> {
     // hide the private constructor to limit subclass types (Success, Error)
-    private Result() {
+    private ExampleResult() {
     }
 
     @Override
     public String toString() {
-        if (this instanceof Result.Success) {
-            Result.Success success = (Result.Success) this;
+        if (this instanceof ExampleResult.Success) {
+            ExampleResult.Success success = (ExampleResult.Success) this;
             return "Success[data=" + success.getData().toString() + "]";
-        } else if (this instanceof Result.Error) {
-            Result.Error error = (Result.Error) this;
+        } else if (this instanceof ExampleResult.Error) {
+            ExampleResult.Error error = (ExampleResult.Error) this;
             return "Error[exception=" + error.getError().toString() + "]";
         }
         return "";
     }
 
     // Success sub-class
-    public final static class Success<T> extends Result {
+    public final static class Success<T> extends ExampleResult {
         private T data;
 
         public Success(T data) {
@@ -34,7 +34,7 @@ public class Result<T> {
     }
 
     // Error sub-class
-    public final static class Error extends Result {
+    public final static class Error extends ExampleResult {
         private Exception error;
 
         public Error(Exception error) {
