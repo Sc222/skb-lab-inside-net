@@ -13,4 +13,8 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="login">Логин</string>
+    <string name="password">Пароль</string>
+    <string name="sign_in">Войти</string>
+    <string name="sign_up">Создать аккаунт</string>
 </resources>

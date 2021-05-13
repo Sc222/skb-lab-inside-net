@@ -1,5 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="login_menu_width">260dp</dimen>
+    <dimen name="items_vertical_spacing">10dp</dimen>
+    <dimen name="items_vertical_spacing_dense">4dp</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="card_horizontal_margin">20dp</dimen>
+    <dimen name="card_vertical_margin">14dp</dimen>
+    <dimen name="card_horizontal_padding">14dp</dimen>
+    <dimen name="card_vertical_padding">12dp</dimen>
+    <dimen name="profile_width">300dp</dimen>
+
+    <dimen name="profile_name_width">200dp</dimen>
+    <dimen name="profile_name_padding">5dp</dimen>
+    <dimen name="profile_name_size">15sp</dimen>
+    <dimen name="profile_location_size">10sp</dimen>
+    <dimen name="bottom_nav_height">56dp</dimen>
+    <dimen name="bottomsheet_image_height">175dp</dimen>
+    <dimen name="bottomsheet_event_peek_height">185dp</dimen>
 </resources>
