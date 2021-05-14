@@ -10,8 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.InsideNet">
         <activity android:name=".ui.proflie.ProfileActivity" />
-        <activity android:name=".ui.register.RegisterActivity" />
-        <activity android:name=".ui.login.LoginActivity" />
         <activity android:name=".ui.launch.LauncherActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

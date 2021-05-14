@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.sc222.insidenet.R;
-import com.sc222.insidenet.databinding.ActivityMainBinding;
+import com.sc222.insidenet.databinding.ActivityProfileBinding;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -14,13 +14,13 @@ import androidx.navigation.ui.NavigationUI;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private ActivityMainBinding binding;
+    private ActivityProfileBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        binding = ActivityProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         // TODO USE CODE FROM SMARTRING OR LOBSTERS
