@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -31,6 +33,9 @@ public class LoginFragment extends Fragment {
 
     private LoginViewModel loginViewModel;
     private FragmentLoginBinding binding;
+    private NavController navController;
+
+    //TODO OVERRIDE ON BACK PRESSED TO CLOSE ACTIVITY (and not retiurn to launcher fragment)
 
     @Nullable
     @Override
@@ -46,6 +51,7 @@ public class LoginFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
+        navController = Navigation.findNavController(view);
 
         final EditText usernameEditText = binding.loginEditText;
         final EditText passwordEditText = binding.passwordEditText;
@@ -79,25 +85,26 @@ public class LoginFragment extends Fragment {
             }
         });
 
-        TextWatcher afterTextChangedListener = new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // ignore
-            }
+        // todo check fields before login
+       // TextWatcher afterTextChangedListener = new TextWatcher() {
+       //     @Override
+       //     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+       //         // ignore
+       //     }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // ignore
-            }
+       //     @Override
+       //     public void onTextChanged(CharSequence s, int start, int before, int count) {
+       //         // ignore
+       //     }
 
-            @Override
-            public void afterTextChanged(Editable s) {
-                loginViewModel.loginDataChanged(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
-            }
-        };
-        usernameEditText.addTextChangedListener(afterTextChangedListener);
-        passwordEditText.addTextChangedListener(afterTextChangedListener);
+       //     @Override
+       //     public void afterTextChanged(Editable s) {
+       //         loginViewModel.loginDataChanged(usernameEditText.getText().toString(),
+       //                 passwordEditText.getText().toString());
+       //     }
+       // };
+       // usernameEditText.addTextChangedListener(afterTextChangedListener);
+       // passwordEditText.addTextChangedListener(afterTextChangedListener);
         passwordEditText.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 loginViewModel.login(usernameEditText.getText().toString(),
@@ -113,7 +120,8 @@ public class LoginFragment extends Fragment {
         });
 
         signUpButton.setOnClickListener(v -> {
-            Log.d("LOGIN HERE", "aa");
+            //todo navigate to register
+            navController.navigate(R.id.registerFragment);
         });
     }
 
