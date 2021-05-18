@@ -1,18 +1,16 @@
 package com.sc222.insidenet.ui.register;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.sc222.insidenet.R;
 import com.sc222.insidenet.databinding.FragmentRegisterBinding;
@@ -23,9 +21,6 @@ public class RegisterFragment extends Fragment {
     private FragmentRegisterBinding binding;
     private NavController navController;
 
-    public static RegisterFragment newInstance() {
-        return new RegisterFragment();
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -40,12 +35,17 @@ public class RegisterFragment extends Fragment {
         registerViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
         navController = Navigation.findNavController(view);
 
-        binding.signInButton.setOnClickListener(v ->navController.navigateUp());
+        // TODO: clear fields before launching login
+        binding.signInButton.setOnClickListener(v -> navController.navigate(R.id.action_registerFragment_to_loginFragment));
 
-        //TODO: !!! sign in activity after registered? or immediately navigate to profile
-        binding.signUpButton.setOnClickListener(v -> navController.navigateUp());
+        // TODO: validate fields, send request and then navigate
+        binding.signUpButton.setOnClickListener(v -> navController.navigate(R.id.action_registerFragment_to_profileActivity));
+    }
 
-        // TODO: Use the ViewModel
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
 }

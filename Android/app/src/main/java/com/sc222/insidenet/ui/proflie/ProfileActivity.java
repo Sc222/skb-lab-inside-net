@@ -1,43 +1,46 @@
 package com.sc222.insidenet.ui.proflie;
 
 import android.os.Bundle;
-import android.util.Log;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.sc222.insidenet.R;
-import com.sc222.insidenet.databinding.ActivityProfileBinding;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import com.sc222.insidenet.R;
+import com.sc222.insidenet.databinding.ActivityProfileBinding;
 
 public class ProfileActivity extends AppCompatActivity {
 
     private ActivityProfileBinding binding;
+    private NavController navController;
 
-    //TODO OVERRIDE ON BACK PRESSED TO CLOSE ACTIVITY (and not retiurn to launcher fragment)
+    @Override
+    public void onBackPressed() {
+        if (navController.getCurrentDestination().getId() == R.id.homeFragment)
+            this.finishAffinity();
+        else
+            super.onBackPressed();
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = ActivityProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        setSupportActionBar(binding.toolbar);
 
-        // TODO USE CODE FROM SMARTRING OR LOBSTERS
+        navController = Navigation.findNavController(this, R.id.nav_host_profile);
 
-        Log.e("A","PROFILE ACTIVITY");
-
-        BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        // AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-        //         R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
-        //         .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_profile);
-        // NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(binding.navView, navController);
-    }
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.homeFragment, R.id.dashboardFragment, R.id.notificationsFragment)
+                .build();
 
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(binding.bottomNavigation, navController);
+    }
 }
