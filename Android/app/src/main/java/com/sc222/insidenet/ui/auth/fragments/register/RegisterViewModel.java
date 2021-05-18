@@ -1,4 +1,4 @@
-package com.sc222.insidenet.ui.register;
+package com.sc222.insidenet.ui.auth.fragments.register;
 
 import androidx.lifecycle.ViewModel;
 

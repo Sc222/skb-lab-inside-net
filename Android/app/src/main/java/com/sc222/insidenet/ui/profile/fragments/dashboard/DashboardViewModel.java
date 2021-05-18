@@ -1,4 +1,4 @@
-package com.sc222.insidenet.ui.proflie.ui.dashboard;
+package com.sc222.insidenet.ui.profile.fragments.dashboard;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

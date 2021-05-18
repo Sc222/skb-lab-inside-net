@@ -6,7 +6,7 @@
     app:startDestination="@id/launcherFragment">
     <fragment
         android:id="@+id/launcherFragment"
-        android:name="com.sc222.insidenet.ui.launch.LauncherFragment"
+        android:name="com.sc222.insidenet.ui.launcher.fragments.launcher.LauncherFragment"
         android:label="@string/fragment_launcher"
         tools:layout="@layout/fragment_launcher">
         <action
@@ -22,7 +22,7 @@
     </fragment>
     <activity
         android:id="@+id/profileActivity"
-        android:name="com.sc222.insidenet.ui.proflie.ProfileActivity" />
+        android:name="com.sc222.insidenet.ui.profile.ProfileActivity" />
     <activity
         android:id="@+id/authActivity"
         android:name="com.sc222.insidenet.ui.auth.AuthActivity" />

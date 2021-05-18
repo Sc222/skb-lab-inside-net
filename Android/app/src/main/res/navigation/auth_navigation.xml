@@ -6,7 +6,7 @@
     app:startDestination="@id/loginFragment">
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.sc222.insidenet.ui.login.LoginFragment"
+        android:name="com.sc222.insidenet.ui.auth.fragments.login.LoginFragment"
         android:label="@string/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.sc222.insidenet.ui.register.RegisterFragment"
+        android:name="com.sc222.insidenet.ui.auth.fragments.register.RegisterFragment"
         android:label="@string/fragment_register"
         tools:layout="@layout/fragment_register">
         <action
@@ -35,5 +35,5 @@
     </fragment>
     <activity
         android:id="@+id/profileActivity"
-        android:name="com.sc222.insidenet.ui.proflie.ProfileActivity" />
+        android:name="com.sc222.insidenet.ui.profile.ProfileActivity" />
 </navigation>

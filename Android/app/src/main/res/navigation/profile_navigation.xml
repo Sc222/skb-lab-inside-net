@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.sc222.insidenet.ui.proflie.ui.home.HomeFragment"
+        android:name="com.sc222.insidenet.ui.profile.fragments.home.HomeFragment"
         android:label="@string/fragment_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/dashboardFragment"
-        android:name="com.sc222.insidenet.ui.proflie.ui.dashboard.DashboardFragment"
+        android:name="com.sc222.insidenet.ui.profile.fragments.dashboard.DashboardFragment"
         android:label="@string/fragment_dashboard"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/notificationsFragment"
-        android:name="com.sc222.insidenet.ui.proflie.ui.notifications.NotificationsFragment"
+        android:name="com.sc222.insidenet.ui.profile.fragments.notifications.NotificationsFragment"
         android:label="@string/fragment_notifications"
         tools:layout="@layout/fragment_notifications" />
 </navigation>

@@ -1,4 +1,4 @@
-package com.sc222.insidenet.ui.login;
+package com.sc222.insidenet.ui.auth.fragments.login;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

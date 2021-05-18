@@ -1,4 +1,4 @@
-package com.sc222.insidenet.ui.login;
+package com.sc222.insidenet.ui.auth.fragments.login;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

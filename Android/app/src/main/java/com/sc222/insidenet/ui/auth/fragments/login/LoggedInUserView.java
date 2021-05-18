@@ -1,4 +1,4 @@
-package com.sc222.insidenet.ui.login;
+package com.sc222.insidenet.ui.auth.fragments.login;
 
 /**
  * Class exposing authenticated user details to the UI.

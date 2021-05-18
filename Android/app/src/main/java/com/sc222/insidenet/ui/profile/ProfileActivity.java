@@ -1,4 +1,4 @@
-package com.sc222.insidenet.ui.proflie;
+package com.sc222.insidenet.ui.profile;
 
 import android.os.Bundle;
 

@@ -1,4 +1,4 @@
-package com.sc222.insidenet.ui.launch;
+package com.sc222.insidenet.ui.launcher.fragments.launcher;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.InsideNet">
         <activity
-            android:name=".ui.launch.LauncherActivity"
+            android:name=".ui.launcher.LauncherActivity"
             android:theme="@style/Theme.InsideNet.WhiteStatusBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +22,7 @@
             android:name=".ui.auth.AuthActivity"
             android:theme="@style/Theme.InsideNet.WhiteStatusBar" />
         <activity
-            android:name=".ui.proflie.ProfileActivity"
+            android:name=".ui.profile.ProfileActivity"
             android:theme="@style/Theme.InsideNet" />
         <activity
             android:name=".ui.examplelogin.ExampleLoginActivity"
