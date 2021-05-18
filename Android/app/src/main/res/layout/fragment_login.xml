@@ -37,7 +37,7 @@
                 android:layout_width="@dimen/ic_large_size"
                 android:layout_height="@dimen/ic_large_size"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_team_large"
+                app:srcCompat="@drawable/ic_team_large_96dp"
                 android:tint="?attr/colorPrimary" />
 
             <com.google.android.material.textfield.TextInputLayout

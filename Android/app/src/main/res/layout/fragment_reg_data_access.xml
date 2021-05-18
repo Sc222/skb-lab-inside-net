@@ -61,7 +61,8 @@
 
             <com.google.android.material.chip.ChipGroup
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/items_vertical_spacing">
 
                 <!-- TODO GENERATE CHIPS LIST DYNAMICALLY BY GETTING DATA FROM SERVER (permissions list and their default value - true or false)-->
 
