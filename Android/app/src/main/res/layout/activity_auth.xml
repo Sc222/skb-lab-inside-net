@@ -10,12 +10,13 @@
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
-            style="@style/Widget.MaterialComponents.Toolbar.Primary"
+            style="@style/Toolbar.Surface.Primary"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            >
+            android:theme="@style/Toolbar.Icons.Primary.Overlay">
 
             <TextView
+                android:id="@+id/toolbar_title"
                 style="@style/TextAppearance.AppCompat.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

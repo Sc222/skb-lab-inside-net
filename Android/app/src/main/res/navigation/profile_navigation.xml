@@ -8,18 +8,18 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.sc222.insidenet.ui.proflie.ui.home.HomeFragment"
-        android:label="@string/title_home"
+        android:label="@string/fragment_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/dashboardFragment"
         android:name="com.sc222.insidenet.ui.proflie.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/fragment_dashboard"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/notificationsFragment"
         android:name="com.sc222.insidenet.ui.proflie.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
+        android:label="@string/fragment_notifications"
         tools:layout="@layout/fragment_notifications" />
 </navigation>

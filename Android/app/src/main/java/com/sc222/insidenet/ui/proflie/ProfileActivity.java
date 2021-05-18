@@ -11,6 +11,8 @@ import androidx.navigation.ui.NavigationUI;
 import com.sc222.insidenet.R;
 import com.sc222.insidenet.databinding.ActivityProfileBinding;
 
+import java.util.Objects;
+
 public class ProfileActivity extends AppCompatActivity {
 
     private ActivityProfileBinding binding;
@@ -18,7 +20,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (navController.getCurrentDestination().getId() == R.id.homeFragment)
+        if (Objects.requireNonNull(navController.getCurrentDestination()).getId() == R.id.homeFragment)
             this.finishAffinity();
         else
             super.onBackPressed();

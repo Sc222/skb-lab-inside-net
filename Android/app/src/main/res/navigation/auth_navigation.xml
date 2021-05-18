@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.sc222.insidenet.ui.login.LoginFragment"
-        android:label="LoginFragment">
+        android:label="@string/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
@@ -20,7 +20,7 @@
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.sc222.insidenet.ui.register.RegisterFragment"
-        android:label="register_fragment"
+        android:label="@string/fragment_register"
         tools:layout="@layout/fragment_register">
         <action
             android:id="@+id/action_registerFragment_to_loginFragment"
@@ -35,6 +35,5 @@
     </fragment>
     <activity
         android:id="@+id/profileActivity"
-        android:name="com.sc222.insidenet.ui.proflie.ProfileActivity"
-        android:label="ProfileActivity" />
+        android:name="com.sc222.insidenet.ui.proflie.ProfileActivity" />
 </navigation>

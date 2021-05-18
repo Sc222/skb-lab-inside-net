@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/launcherFragment"
         android:name="com.sc222.insidenet.ui.launch.LauncherFragment"
-        android:label="fragment_launcher"
+        android:label="@string/fragment_launcher"
         tools:layout="@layout/fragment_launcher">
         <action
             android:id="@+id/action_launcherFragment_to_profileActivity"
@@ -22,10 +22,8 @@
     </fragment>
     <activity
         android:id="@+id/profileActivity"
-        android:name="com.sc222.insidenet.ui.proflie.ProfileActivity"
-        android:label="ProfileActivity" />
+        android:name="com.sc222.insidenet.ui.proflie.ProfileActivity" />
     <activity
         android:id="@+id/authActivity"
-        android:name="com.sc222.insidenet.ui.auth.AuthActivity"
-        android:label="AuthActivity" />
+        android:name="com.sc222.insidenet.ui.auth.AuthActivity" />
 </navigation>
