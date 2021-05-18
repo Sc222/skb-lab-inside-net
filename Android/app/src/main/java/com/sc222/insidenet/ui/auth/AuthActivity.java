@@ -1,10 +1,12 @@
 package com.sc222.insidenet.ui.auth;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavArgument;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
@@ -39,6 +41,13 @@ public class AuthActivity extends AppCompatActivity implements NavController.OnD
     @Override
     public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
         binding.toolbarTitle.setText(destination.getLabel());
+        NavArgument subtitleArg = destination.getArguments().get(getString(R.string.nav_arg_toolbar_subtitle));
+        String subtitle = "";
+        if (subtitleArg != null && subtitleArg.isDefaultValuePresent() && subtitleArg.getDefaultValue() != null) {
+            subtitle = getString((int) subtitleArg.getDefaultValue());
+        }
+        binding.toolbarSubtitle.setVisibility(subtitle.equals("") ? View.GONE : View.VISIBLE);
+        binding.toolbarSubtitle.setText(subtitle);
     }
 
     @Override

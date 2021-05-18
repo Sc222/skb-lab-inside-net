@@ -1,4 +1,4 @@
-package com.sc222.insidenet.ui.auth.fragments.register;
+package com.sc222.insidenet.ui.auth.fragments.register.loginInfo;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,19 +13,21 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.sc222.insidenet.R;
-import com.sc222.insidenet.databinding.FragmentRegisterBinding;
+import com.sc222.insidenet.databinding.FragmentRegLoginInfoBinding;
+import com.sc222.insidenet.ui.auth.fragments.register.RegisterViewModel;
 
-public class RegisterFragment extends Fragment {
+public class RegLoginInfoFragment extends Fragment {
 
+    //TODO: !!! VIEWMODEL SHARED BETWEEN NAVIGATION GRAPH
     private RegisterViewModel registerViewModel;
-    private FragmentRegisterBinding binding;
+    private FragmentRegLoginInfoBinding binding;
     private NavController navController;
 
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        binding = FragmentRegisterBinding.inflate(inflater, container, false);
+        binding = FragmentRegLoginInfoBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -35,11 +37,8 @@ public class RegisterFragment extends Fragment {
         registerViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
         navController = Navigation.findNavController(view);
 
-        // TODO: clear fields before launching login
-        binding.signInButton.setOnClickListener(v -> navController.navigate(R.id.action_registerFragment_to_loginFragment));
-
         // TODO: validate fields, send request and then navigate
-        binding.signUpButton.setOnClickListener(v -> navController.navigate(R.id.action_registerFragment_to_profileActivity));
+        binding.signUpButton.setOnClickListener(v -> navController.navigate(R.id.action_regLoginInfoFragment_to_profileActivity));
     }
 
     @Override

@@ -13,8 +13,6 @@
     <string name="fragment_home">Home</string>
     <string name="fragment_dashboard">Dashboard</string>
     <string name="fragment_notifications">Notifications</string>
-    <string name="login">Логин</string>
-    <string name="password">Пароль</string>
     <string name="sign_in">Войти</string>
     <string name="sign_up">Создать аккаунт</string>
     <!-- TODO: Remove or change this placeholder text -->
@@ -23,4 +21,20 @@
     <string name="fragment_launcher">Запуск</string>
     <string name="fragment_register">Регистрация</string>
     <string name="fragment_login">Вход</string>
+    <string name="register_subtitle_basic_info">Общая информация</string>
+    <string name="register_subtitle_contact_info">Контактная информация</string>
+    <string name="register_subtitle_login_info">Данные для входа</string>
+    <string name="register_subtitle_data_access">Запрос прав доступа</string>
+    <string name="login_hint">Логин*</string>
+    <string name="password_hint">Пароль*</string>
+    <string name="login_mail_hint">Почта*</string>
+    <string name="about_hint">О себе*</string>
+    <string name="name_hint">Имя*</string>
+    <string name="patronymic_hint">Отчество*</string>
+    <string name="position_hint">Должность*</string>
+    <string name="phone_hint">Телефон*</string>
+    <string name="telegram_hint">Telegram</string>
+    <string name="surname_hint">Фамилия*</string>
+    <string name="nav_arg_toolbar_subtitle" translatable="false">subtitle</string>
+    <string name="register_next_page">Следующая страница</string>
 </resources>

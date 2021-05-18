@@ -10,7 +10,7 @@
         android:label="@string/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
-            app:destination="@id/registerFragment" />
+            app:destination="@id/register1Fragment" />
         <action
             android:id="@+id/action_loginFragment_to_profileActivity"
             app:destination="@id/profileActivity"
@@ -18,21 +18,68 @@
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
-        android:id="@+id/registerFragment"
-        android:name="com.sc222.insidenet.ui.auth.fragments.register.RegisterFragment"
+        android:id="@+id/register1Fragment"
+        android:name="com.sc222.insidenet.ui.auth.fragments.register.basicInfo.RegBasicInfoFragment"
         android:label="@string/fragment_register"
-        tools:layout="@layout/fragment_register">
+        tools:layout="@layout/fragment_reg_basic_info">
+        <argument
+            android:name="@string/nav_arg_toolbar_subtitle"
+            android:defaultValue="@string/register_subtitle_basic_info"
+            app:argType="reference" />
         <action
             android:id="@+id/action_registerFragment_to_loginFragment"
             app:destination="@id/loginFragment"
             app:popUpTo="@+id/loginFragment"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_registerFragment_to_profileActivity"
+            android:id="@+id/action_regBasicInfoFragment_to_regContactInfoFragment"
+            app:destination="@id/register2Fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/register2Fragment"
+        android:name="com.sc222.insidenet.ui.auth.fragments.register.contactInfo.RegContactInfoFragment"
+        android:label="@string/fragment_register"
+        tools:layout="@layout/fragment_reg_contact_info">
+        <argument
+            android:name="@string/nav_arg_toolbar_subtitle"
+            android:defaultValue="@string/register_subtitle_contact_info"
+            app:argType="reference" />
+        <action
+            android:id="@+id/action_regContactInfoFragment_to_regDataAccessFragment"
+            app:destination="@id/register3Fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/register3Fragment"
+        android:name="com.sc222.insidenet.ui.auth.fragments.register.dataAccess.RegDataAccessFragment"
+        android:label="@string/fragment_register"
+        tools:layout="@layout/fragment_reg_data_access">
+        <argument
+            android:name="@string/nav_arg_toolbar_subtitle"
+            android:defaultValue="@string/register_subtitle_data_access"
+            app:argType="reference" />
+        <action
+            android:id="@+id/action_regDataAccessFragment_to_regLoginInfoFragment"
+            app:destination="@id/register4Fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/register4Fragment"
+        android:name="com.sc222.insidenet.ui.auth.fragments.register.loginInfo.RegLoginInfoFragment"
+        android:label="@string/fragment_register"
+        tools:layout="@layout/fragment_reg_login_info">
+        <argument
+            android:name="@string/nav_arg_toolbar_subtitle"
+            android:defaultValue="@string/register_subtitle_login_info"
+            app:argType="reference" />
+        <action
+            android:id="@+id/action_regLoginInfoFragment_to_profileActivity"
             app:destination="@id/profileActivity"
             app:popUpTo="@+id/profileActivity"
             app:popUpToInclusive="true" />
     </fragment>
+
     <activity
         android:id="@+id/profileActivity"
         android:name="com.sc222.insidenet.ui.profile.ProfileActivity" />

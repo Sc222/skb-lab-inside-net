@@ -22,4 +22,9 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="fragment_horizontal_margin">16dp</dimen>
     <dimen name="fragment_vertical_margin">16dp</dimen>
+    <dimen name="ic_large_size">256dp</dimen>
+    <dimen name="ic_medium_size">96dp</dimen>
+    <dimen name="items_horizontal_spacing">8dp</dimen>
+    <dimen name="headline_numbering_size">24dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 </resources>
