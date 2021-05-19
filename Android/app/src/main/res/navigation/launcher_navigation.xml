@@ -22,7 +22,7 @@
     </fragment>
     <activity
         android:id="@+id/profileActivity"
-        android:name="com.sc222.insidenet.ui.profile.ProfileActivity" />
+        android:name="com.sc222.insidenet.ui.mainSections.MainSectionsActivity" />
     <activity
         android:id="@+id/authActivity"
         android:name="com.sc222.insidenet.ui.auth.AuthActivity" />

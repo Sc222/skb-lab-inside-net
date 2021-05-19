@@ -1,4 +1,4 @@
-package com.sc222.insidenet.ui.profile.fragments.dashboard;
+package com.sc222.insidenet.ui.mainSections.fragments.contacts;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,26 +12,26 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.sc222.insidenet.databinding.FragmentDashboardBinding;
+import com.sc222.insidenet.databinding.FragmentDataAccessBinding;
 
 
-public class DashboardFragment extends Fragment {
+public class ContactsFragment extends Fragment {
 
-    private DashboardViewModel dashboardViewModel;
-    private FragmentDashboardBinding binding;
+    private ContactsViewModel contactsViewModel;
+    private FragmentDataAccessBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentDashboardBinding.inflate(inflater, container, false);
+        binding = FragmentDataAccessBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        dashboardViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
-        final TextView textView = binding.textDashboard;
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        contactsViewModel = new ViewModelProvider(this).get(ContactsViewModel.class);
+        final TextView textView = binding.textDataAccess;
+        contactsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

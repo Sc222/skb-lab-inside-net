@@ -1,4 +1,4 @@
-package com.sc222.insidenet.ui.profile;
+package com.sc222.insidenet.ui.mainSections;
 
 import android.os.Bundle;
 
@@ -9,18 +9,18 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.sc222.insidenet.R;
-import com.sc222.insidenet.databinding.ActivityProfileBinding;
+import com.sc222.insidenet.databinding.ActivityMainSectionsBinding;
 
 import java.util.Objects;
 
-public class ProfileActivity extends AppCompatActivity {
+public class MainSectionsActivity extends AppCompatActivity {
 
-    private ActivityProfileBinding binding;
+    private ActivityMainSectionsBinding binding;
     private NavController navController;
 
     @Override
     public void onBackPressed() {
-        if (Objects.requireNonNull(navController.getCurrentDestination()).getId() == R.id.homeFragment)
+        if (Objects.requireNonNull(navController.getCurrentDestination()).getId() == R.id.profileFragment)
             this.finishAffinity();
         else
             super.onBackPressed();
@@ -30,16 +30,16 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityProfileBinding.inflate(getLayoutInflater());
+        binding = ActivityMainSectionsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setSupportActionBar(binding.toolbar);
 
-        navController = Navigation.findNavController(this, R.id.nav_host_profile);
+        navController = Navigation.findNavController(this, R.id.nav_host_main_sections);
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.homeFragment, R.id.dashboardFragment, R.id.notificationsFragment)
+                R.id.profileFragment, R.id.dataAccessFragment, R.id.holidaysFragment,R.id.contactsFragment)
                 .build();
 
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);

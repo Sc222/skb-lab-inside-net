@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/profileFragment"
+        android:icon="@drawable/ic_section_profile_24dp"
+        android:title="@string/section_profile" />
+
+    <item
+        android:id="@+id/dataAccessFragment"
+        android:icon="@drawable/ic_section_data_access_24dp"
+        android:title="@string/section_data_access" />
+
+    <item
+        android:id="@+id/holidaysFragment"
+        android:icon="@drawable/ic_section_holidays_24dp"
+        android:title="@string/section_holidays" />
+
+    <item
+        android:id="@+id/contactsFragment"
+        android:icon="@drawable/ic_section_contacts_24dp"
+        android:title="@string/section_contacts" />
+
+</menu>

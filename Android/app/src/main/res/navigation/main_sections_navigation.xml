@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profile_navigation"
+    app:startDestination="@+id/profileFragment">
+
+    <!--  TODO: !!! CREATE FRAGMENTS AND ADD NAMES AND LAYOUTS !!! -->
+
+    <!-- TODO: !!!  NESTED SECTIONS NAVIGATION IF THEY ARE COMPLEX (OR ADD JUST HERE)-->
+
+    <fragment
+        android:id="@+id/contactsFragment"
+        android:name="com.sc222.insidenet.ui.mainSections.fragments.contacts.ContactsFragment"
+        tools:layout="@layout/fragment_contacts"
+        android:label="@string/section_contacts" />
+
+    <fragment
+        android:id="@+id/dataAccessFragment"
+        android:name="com.sc222.insidenet.ui.mainSections.fragments.dataAccess.DataAccessFragment"
+        android:label="@string/section_data_access"
+        tools:layout="@layout/fragment_data_access" />
+
+    <fragment
+        android:id="@+id/holidaysFragment"
+        android:name="com.sc222.insidenet.ui.mainSections.fragments.holidays.HolidaysFragment"
+        android:label="@string/section_holidays"
+        tools:layout="@layout/fragment_holidays" />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.sc222.insidenet.ui.mainSections.fragments.profile.ProfileFragment"
+        android:label="@string/section_profile"
+        tools:layout="@layout/fragment_profile" />
+</navigation>

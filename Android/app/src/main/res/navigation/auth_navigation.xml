@@ -82,5 +82,5 @@
 
     <activity
         android:id="@+id/profileActivity"
-        android:name="com.sc222.insidenet.ui.profile.ProfileActivity" />
+        android:name="com.sc222.insidenet.ui.mainSections.MainSectionsActivity" />
 </navigation>

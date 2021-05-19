@@ -22,7 +22,7 @@
             android:name=".ui.auth.AuthActivity"
             android:theme="@style/Theme.InsideNet.WhiteStatusBar" />
         <activity
-            android:name=".ui.profile.ProfileActivity"
+            android:name=".ui.mainSections.MainSectionsActivity"
             android:theme="@style/Theme.InsideNet" />
         <activity
             android:name=".ui.examplelogin.ExampleLoginActivity"

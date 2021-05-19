@@ -37,4 +37,8 @@
     <string name="surname_hint">Фамилия*</string>
     <string name="nav_arg_toolbar_subtitle" translatable="false">subtitle</string>
     <string name="register_next_page">Следующая страница</string>
+    <string name="section_profile">Профиль</string>
+    <string name="section_contacts">Контакты</string>
+    <string name="section_data_access">Права</string>
+    <string name="section_holidays">Отпуск</string>
 </resources>
