@@ -37,6 +37,11 @@ namespace InsideNet.Services
             accessRights.Delete(id);
         }
 
+        public AccessRight Get(Guid id)
+        {
+            return accessRights.Get(id);
+        }
+
         public AccessRight[] GetAll()
         {
             return accessRights.GetAll();
