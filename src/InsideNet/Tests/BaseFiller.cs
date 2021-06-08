@@ -128,9 +128,7 @@ namespace Tests
                 Email = "m@m.com",
                 Login = "hr",
                 Password = "hr",
-                Name = "Екатерина",
-                Patronymic = "Андреевна",
-                Surname = "Зас",
+                FullName = "Екатерина Андреевна Зас",
                 Position = positions[UserType.Hr]
             };
             var simpleDimple = new Person
@@ -138,9 +136,7 @@ namespace Tests
                 Email = "k@k.com",
                 Login = "user",
                 Password = "user",
-                Name = "Анатолий",
-                Patronymic = "Генадьевич",
-                Surname = "Зас",
+                FullName = "Анатолий Генадьевич Зас",
                 Position = positions[UserType.SimpleDimple],
                 Telegram = "@abc"
             };
@@ -149,9 +145,7 @@ namespace Tests
                 Email = "a@a.com",
                 Login = "admin",
                 Password = "admin",
-                Name = "Супер",
-                Patronymic = "Пупер",
-                Surname = "Админ",
+                FullName = "Супер Лютый Админ",
                 Position = positions[UserType.Admin],
                 PhoneNumber = "88005553535"
             };
