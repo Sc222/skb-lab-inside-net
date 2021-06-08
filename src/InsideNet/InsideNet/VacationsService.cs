@@ -4,11 +4,11 @@ using Storage.Entities;
 
 namespace InsideNet.Services
 {
-    public class VacationService
+    public class VacationsService
     {
         private readonly IRepository<Vacation> vacations;
 
-        public VacationService(IRepository<Vacation> vacations)
+        public VacationsService(IRepository<Vacation> vacations)
         {
             this.vacations = vacations;
         }
