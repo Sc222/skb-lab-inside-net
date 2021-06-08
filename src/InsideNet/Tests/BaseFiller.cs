@@ -16,7 +16,7 @@ namespace Tests
             var context = new StorageContext();
             context.Database.ExecuteSqlRaw("DROP SCHEMA public CASCADE");
             context.Database.ExecuteSqlRaw("CREATE SCHEMA public");
-            //context.Database.Migrate();
+            context.Database.Migrate();
         }
 
         [Test]
@@ -30,6 +30,7 @@ namespace Tests
             var contactsRepo = new Repository<PersonContact>(contextFactory);
             var peopleRepo = new Repository<Person>(contextFactory);
             var peopleAccessRightsRepo = new Repository<PersonAccessRights>(contextFactory);
+            var peopleRolesRepo = new Repository<PersonRole>(contextFactory);
 
             var rights = GenerateAccessRights();
             var roles = GenerateRoles();
@@ -60,6 +61,9 @@ namespace Tests
 
             var peopleAccessRights = GeneratePersonAccessRights(people.Select(p => p.Value), rights);
             peopleAccessRightsRepo.CreateRange(peopleAccessRights);
+
+            var peopleRoles = GeneratePersonRoles(people, roles);
+            peopleRolesRepo.CreateRange(peopleRoles);
         }
 
         private List<AccessRight> GenerateAccessRights()
@@ -127,7 +131,6 @@ namespace Tests
                 Name = "Екатерина",
                 Patronymic = "Андреевна",
                 Surname = "Зас",
-                Role = roles[UserType.Hr],
                 Position = positions[UserType.Hr]
             };
             var simpleDimple = new Person
@@ -138,7 +141,6 @@ namespace Tests
                 Name = "Анатолий",
                 Patronymic = "Генадьевич",
                 Surname = "Зас",
-                Role = roles[UserType.SimpleDimple],
                 Position = positions[UserType.SimpleDimple],
                 Telegram = "@abc"
             };
@@ -150,7 +152,6 @@ namespace Tests
                 Name = "Супер",
                 Patronymic = "Пупер",
                 Surname = "Админ",
-                Role = roles[UserType.Admin],
                 Position = positions[UserType.Admin],
                 PhoneNumber = "88005553535"
             };
@@ -170,6 +171,14 @@ namespace Tests
                     PersonId = p.Id
                 }))
                 .ToList();
-        
+
+        private List<PersonRole> GeneratePersonRoles(Dictionary<UserType, Person> people, Dictionary<UserType, Role> rights) =>
+            people
+                .Select(kvp => new PersonRole
+                {
+                    PersonId = kvp.Value.Id,
+                    RoleId = rights[kvp.Key].Id
+                })
+                .ToList();
     }
 }

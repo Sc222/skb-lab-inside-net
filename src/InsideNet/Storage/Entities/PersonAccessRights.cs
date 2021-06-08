@@ -11,5 +11,7 @@ namespace Storage.Entities
         public Guid PersonId { get; set; }
 
         public Guid AccesRightId { get; set; }
+
+        public bool IsApproved { get; set; }
     }
 }

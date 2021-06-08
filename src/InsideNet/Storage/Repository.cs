@@ -85,6 +85,13 @@ namespace Storage
             context.SaveChanges();
         }
 
+        public void UpdateRange(IEnumerable<TEntity> entities)
+        {
+            var context = contextFactory.Create();
+            entities.ForEach(e => context.Entry(e).State = EntityState.Modified);
+            context.SaveChanges();
+        }
+
         private IQueryable<TEntity> LoadEntities(DbContext context, bool eager = false)
         {
             IQueryable<TEntity> query = context.Set<TEntity>();

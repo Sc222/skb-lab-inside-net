@@ -21,8 +21,6 @@ namespace Storage.Entities
 
         public string Patronymic { get; set; }
 
-        public virtual Role Role { get; set; }
-
         public virtual Position Position { get; set; }
 
         public bool IsNewbie { get; set; }
@@ -34,5 +32,8 @@ namespace Storage.Entities
         public string Email { get; set; }
 
         public string PhoneNumber { get; set; }
+
+        [NotMapped]
+        public PersonAccessRights[] AccessRights { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace Storage
         public DbSet<Vacation> Vacations { get; set; }
         public DbSet<NotificationsChannel> NotificationsChannel { get; set; }
         public DbSet<PersonAccessRights> PersonAccessRights { get; set; }
-
+        public DbSet<PersonRole> PersonRoles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -21,7 +21,7 @@ namespace Storage
 
             modelBuilder.Entity<PersonAccessRights>().HasKey(p => new {p.PersonId, p.AccesRightId});
 
-            modelBuilder.Entity<Person>().HasOne(p => p.Role).WithMany().OnDelete(DeleteBehavior.NoAction).IsRequired();
+            modelBuilder.Entity<PersonRole>().HasKey(r => new {r.PersonId, r.RoleId});
 
             modelBuilder.Entity<Person>().HasOne(p => p.Position).WithMany().OnDelete(DeleteBehavior.NoAction).IsRequired();
         }

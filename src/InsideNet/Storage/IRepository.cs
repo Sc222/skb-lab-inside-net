@@ -20,6 +20,8 @@ namespace Storage
 
         void Update(TEntity entity);
 
+        void UpdateRange(IEnumerable<TEntity> entities);
+
         void Delete(Guid id);
 
         void Delete(TEntity entity);
