@@ -1,0 +1,56 @@
+﻿using System;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Routing;
+using Storage.Entities;
+
+// ReSharper disable PossibleNullReferenceException
+
+namespace InsideNet.Web.Auth
+{
+    public class AccessFor : Attribute, IAuthorizationFilter, IOrderedFilter
+    {
+        private readonly string actionName;
+        private readonly bool isAllowedForSelf;
+
+        public AccessFor(string actionName, bool isAllowedForSelf)
+        {
+            this.actionName = actionName;
+            this.isAllowedForSelf = isAllowedForSelf;
+        }
+
+        public void OnAuthorization(AuthorizationFilterContext context)
+        {
+            var isCheckSuccess = TryCheckForSelf(context.HttpContext);
+
+            if (!isCheckSuccess)
+                isCheckSuccess = TryCheckForRoleAccess(context.HttpContext);
+
+            if (!isCheckSuccess)
+                context.Result = new StatusCodeResult(StatusCodes.Status403Forbidden);
+        }
+
+        private bool TryCheckForSelf(HttpContext context)
+        {
+            var routeData = context.GetRouteData();
+
+            if (isAllowedForSelf && routeData.Values.TryGetValue("id", out var requestId))
+                return IdValidator.IsValidAction(context, (Guid) requestId);
+
+            return false;
+        }
+
+        private bool TryCheckForRoleAccess(HttpContext context)
+        {
+            if (context.Items.TryGetValue("PersonRole", out var role))
+            {
+                return ((Role) role).AllowedActions.Contains(actionName);
+            }
+
+            return false;
+        }
+
+        public int Order => 10000;
+    }
+}

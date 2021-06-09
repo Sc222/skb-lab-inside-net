@@ -1,5 +1,9 @@
 ﻿using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using Castle.Core.Internal;
+using Microsoft.IdentityModel.Tokens;
 using Storage;
 using Storage.Entities;
 
@@ -9,6 +13,7 @@ namespace InsideNet.Services
     {
         private readonly IRepository<Person> people;
         private readonly IRepository<PersonAccessRights> accessRights;
+        private static readonly TimeSpan ExpirationTime = TimeSpan.FromHours(4);
 
 
         public PeopleService(IRepository<Person> people, IRepository<PersonAccessRights> accessRights)
@@ -44,6 +49,33 @@ namespace InsideNet.Services
         public Person[] GetAll()
         {
             return people.GetAll(true);
+        }
+
+        public (Person Person, string Token, DateTime Expires)? Authenticate(string login, string password)
+        {
+            var user = people.SingleOrDefault(x => x.Login == login && x.Password == password);
+
+            if (user == null)
+                return null;
+
+            var (token, expires) = GenerateJwtToken(user);
+
+            return (user, token, expires);
+        }
+
+        private static (string Token, DateTime Expires) GenerateJwtToken(Person person)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes("absolutelysecretkey)))");
+            var expires = DateTime.UtcNow + ExpirationTime;
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new[] { new Claim("id", person.Id.ToString()) }),
+                Expires = DateTime.UtcNow + ExpirationTime,
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return (tokenHandler.WriteToken(token), expires);
         }
     }
 }
