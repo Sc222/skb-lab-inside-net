@@ -14,7 +14,7 @@ namespace InsideNet.Web.Auth
         private readonly string actionName;
         private readonly bool isAllowedForSelf;
 
-        public AccessFor(string actionName, bool isAllowedForSelf)
+        public AccessFor(string actionName, bool isAllowedForSelf = false)
         {
             this.actionName = actionName;
             this.isAllowedForSelf = isAllowedForSelf;
@@ -35,7 +35,7 @@ namespace InsideNet.Web.Auth
         {
             var routeData = context.GetRouteData();
 
-            if (isAllowedForSelf && routeData.Values.TryGetValue("id", out var requestId))
+            if (isAllowedForSelf && routeData.Values.TryGetValue("personId", out var requestId))
                 return IdValidator.IsValidAction(context, (Guid) requestId);
 
             return false;
