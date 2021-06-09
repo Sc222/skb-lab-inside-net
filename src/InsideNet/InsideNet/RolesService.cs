@@ -5,11 +5,11 @@ using Storage.Entities;
 
 namespace InsideNet.Services
 {
-    public class RolesServices
+    public class RolesService
     {
         private readonly IRepository<Role> roles;
 
-        public RolesServices(IRepository<Role> roles)
+        public RolesService(IRepository<Role> roles)
         {
             this.roles = roles;
         }

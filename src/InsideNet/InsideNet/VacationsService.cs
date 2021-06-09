@@ -18,9 +18,9 @@ namespace InsideNet.Services
             return vacations.Find(v => v.PersonId == personId);
         }
 
-        public Vacation[] GetForPeriod(DateTime from, DateTime to)
+        public Vacation[] GetForPeriod(Guid personId, DateTime from, DateTime to)
         {
-            return vacations.Find(v => v.From.Date >= from.Date && v.To.Date <= to.Date);
+            return vacations.Find(v => v.From.Date >= from.Date && v.To.Date <= to.Date && v.PersonId == personId);
         }
 
         public void Create(Vacation vacation)
