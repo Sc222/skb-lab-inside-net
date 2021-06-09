@@ -40,5 +40,10 @@ namespace InsideNet.Services
             var searchedNameLower = searchedName.ToLower();
             return people.Find(p => p.FullName.ToLower().Contains(searchedNameLower));
         }
+
+        public Person[] GetAll()
+        {
+            return people.GetAll(true);
+        }
     }
 }
