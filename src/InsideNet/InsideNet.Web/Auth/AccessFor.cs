@@ -28,7 +28,7 @@ namespace InsideNet.Web.Auth
                 isCheckSuccess = TryCheckForRoleAccess(context.HttpContext);
 
             if (!isCheckSuccess)
-                context.Result = new StatusCodeResult(StatusCodes.Status403Forbidden);
+                context.Result = new StatusCodeResult(StatusCodes.Status401Unauthorized);
         }
 
         private bool TryCheckForSelf(HttpContext context)
