@@ -9,6 +9,7 @@ using Storage.Entities;
 
 namespace InsideNet.Web.Auth
 {
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class AccessFor : Attribute, IAuthorizationFilter, IOrderedFilter
     {
         private readonly string actionName;
