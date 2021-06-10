@@ -25,8 +25,6 @@ namespace InsideNet.Services
         public Person Create(Person person)
         {
             people.Create(person);
-            if (!person.AccessRights.IsNullOrEmpty())
-                accessRights.CreateRange(person.AccessRights);
             //движуха с рассылкой уведомлений
             return person;
         }

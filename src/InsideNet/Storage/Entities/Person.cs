@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Storage.Entities
 {
@@ -27,8 +26,5 @@ namespace Storage.Entities
         public string Email { get; set; }
 
         public string PhoneNumber { get; set; }
-
-        [NotMapped]
-        public PersonAccessRights[] AccessRights { get; set; }
     }
 }
