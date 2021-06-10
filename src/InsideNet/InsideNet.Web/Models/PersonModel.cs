@@ -5,11 +5,12 @@ namespace InsideNet.Web.Models
     public class PersonModel : GuidIdentifiable
     {
         public string Login { get; set; }
+
         public string Password { get; set; }
 
         public string FullName { get; set; }
 
-        public string Position { get; set; }
+        public PositionModel Position { get; set; }
 
         public bool IsNewbie { get; set; }
 
