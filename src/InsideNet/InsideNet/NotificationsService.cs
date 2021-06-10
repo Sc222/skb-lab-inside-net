@@ -24,23 +24,33 @@ namespace InsideNet.Services
             if (channel == null)
                 return;
 
-            using var slackClientHr = new SlackClient(channel.SlackForHr);
-            await slackClientHr.PostAsync(new SlackMessage {Text = MessageForHrs(person)}).ConfigureAwait(false);
+            if (channel.SlackForHr != null)
+            {
+                using var slackClientHr = new SlackClient(channel.SlackForHr);
+                await slackClientHr.PostAsync(new SlackMessage { Text = MessageForHrs(person) }).ConfigureAwait(false);
+            }
 
-            using var slackClient = new SlackClient(channel.Slack);
-            await slackClientHr.PostAsync(new SlackMessage { Text = MessageForNormalPeople(person) }).ConfigureAwait(false);
+            if (channel.Slack != null)
+            {
+                using var slackClient = new SlackClient(channel.Slack);
+                await slackClient.PostAsync(new SlackMessage { Text = MessageForNormalPeople(person) }).ConfigureAwait(false);
+            }
         }
 
         public async Task SendNotificationAboutNewUserToTelegram(Person person)
         {
             var channel = notificationChannel.SingleOrDefault(_ => true);
 
-            if (channel == null)
+            if (channel == null || channel.TelegramBotApiKey == null)
                 return;
 
             var tgBotClient = new TelegramBotClient(channel.TelegramBotApiKey);
-            await tgBotClient.SendTextMessageAsync(channel.TelegramForHr, MessageForHrs(person)).ConfigureAwait(false);
-            await tgBotClient.SendTextMessageAsync(channel.Telegram, MessageForNormalPeople(person)).ConfigureAwait(false);
+
+            if (channel.TelegramForHr != null)
+                await tgBotClient.SendTextMessageAsync(channel.TelegramForHr, MessageForHrs(person)).ConfigureAwait(false);
+
+            if (channel.Telegram != null)
+                await tgBotClient.SendTextMessageAsync(channel.Telegram, MessageForNormalPeople(person)).ConfigureAwait(false);
         }
     }
 }
