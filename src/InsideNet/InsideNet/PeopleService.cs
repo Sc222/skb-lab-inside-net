@@ -2,7 +2,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Castle.Core.Internal;
+using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
 using Storage;
 using Storage.Entities;
@@ -13,19 +13,31 @@ namespace InsideNet.Services
     {
         private readonly IRepository<Person> people;
         private readonly IRepository<PersonAccessRights> accessRights;
+        private readonly NotificationsService notificationsService;
         private static readonly TimeSpan ExpirationTime = TimeSpan.FromHours(4);
 
 
-        public PeopleService(IRepository<Person> people, IRepository<PersonAccessRights> accessRights)
+        public PeopleService(IRepository<Person> people, IRepository<PersonAccessRights> accessRights, NotificationsService notificationsService)
         {
             this.people = people;
             this.accessRights = accessRights;
+            this.notificationsService = notificationsService;
         }
 
-        public Person Create(Person person)
+        public async Task<Person> Create(Person person)
         {
             people.Create(person);
-            //движуха с рассылкой уведомлений
+            if (person.IsNewbie)
+                try
+                {
+                    await notificationsService.SendNotificationAboutNewUserToSlack(person).ConfigureAwait(false);
+                    await notificationsService.SendNotificationAboutNewUserToTelegram(person).ConfigureAwait(false);
+                }
+                catch
+                {
+                    // ignored
+                }
+
             return person;
         }
 

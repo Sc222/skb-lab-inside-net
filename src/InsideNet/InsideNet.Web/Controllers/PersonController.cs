@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using AutoMapper;
 using InsideNet.Services;
 using InsideNet.Web.Auth;
@@ -47,10 +48,10 @@ namespace InsideNet.Web.Controllers
         }
 
         [HttpPost("create")]
-        public PersonModel Create([FromBody] PersonModel person)
+        public async Task<PersonModel> Create([FromBody] PersonModel person)
         {
             var personEntity = mapper.Map<Person>(person);
-            personEntity = peopleService.Create(personEntity);
+            personEntity = await peopleService.Create(personEntity).ConfigureAwait(false);
 
             var defaultRole = rolesService.GetOrCreateDefaultRole();
             personRolesService.SetPersonRole(personEntity.Id, defaultRole.Id);

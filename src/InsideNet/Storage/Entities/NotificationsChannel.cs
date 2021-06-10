@@ -9,5 +9,7 @@
         public string Telegram { get; set; }
 
         public string TelegramForHr { get; set; }
+
+        public string TelegramBotApiKey { get; set; }
     }
 }
