@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Storage.Entities
 {
-    [Index(nameof(Name), IsUnique = true)]
     public class Role : GuidIdentifiable
     {
         public string Name { get; set; }

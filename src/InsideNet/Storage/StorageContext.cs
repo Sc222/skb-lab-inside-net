@@ -24,11 +24,19 @@ namespace Storage
             modelBuilder.Entity<PersonRole>().HasKey(r => new {r.PersonId, r.RoleId});
 
             modelBuilder.Entity<Person>().HasOne(p => p.Position).WithMany().OnDelete(DeleteBehavior.NoAction).IsRequired();
+
+            modelBuilder.Entity<Person>().HasIndex(p => p.Login).IsUnique();
+            modelBuilder.Entity<Person>().HasIndex(p => p.Telegram).IsUnique();
+            modelBuilder.Entity<Person>().HasIndex(p => p.Slack).IsUnique();
+            modelBuilder.Entity<Person>().HasIndex(p => p.Email).IsUnique();
+            modelBuilder.Entity<Person>().HasIndex(p => p.PhoneNumber).IsUnique();
+
+            modelBuilder.Entity<Role>().HasIndex(r => r.Name).IsUnique();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            const string connectionString = "Host=localhost;Port=5432;Username=postgres;Password=wt;Database=postgres;"; //вот это да, чего только C#9 е умеет...
+            const string connectionString = "Host=localhost;Port=5432;Username=postgres;Password=wt;Database=postgres;";
             optionsBuilder.UseNpgsql(connectionString)
                 .UseLazyLoadingProxies();
         }

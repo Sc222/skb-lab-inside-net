@@ -2,11 +2,6 @@
 
 namespace Storage.Entities
 {
-    [Index(nameof(Login), IsUnique = true)]
-    [Index(nameof(Telegram), IsUnique = true)]
-    [Index(nameof(Slack), IsUnique = true)]
-    [Index(nameof(Email), IsUnique = true)]
-    [Index(nameof(PhoneNumber), IsUnique = true)]
     public class Person : GuidIdentifiable
     {
         public string Login { get; set; }
