@@ -11,7 +11,7 @@ namespace InsideNet.Web.Controllers
     [ApiController]
     [Authentication]
     [Route("api/[controller]")]
-    public class AccessRightsController
+    public class AccessRightsController : ControllerBase
     {
         private readonly AccessRightsService accessRightsService;
         private readonly IMapper mapper;
