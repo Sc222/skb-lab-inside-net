@@ -5,21 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using InsideNet.Services;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using Storage;
-using Storage.Entities;
 
 namespace InsideNet.Web.Auth
 {
     public class JwtMiddleware
     {
         private readonly RequestDelegate next;
-        private readonly PersonRolesService rolesService;
 
-        public JwtMiddleware(RequestDelegate next, PersonRolesService rolesService)
+        public JwtMiddleware(RequestDelegate next)
         {
             this.next = next;
-            this.rolesService = rolesService;
         }
 
         public async Task Invoke(HttpContext context)
@@ -35,6 +32,8 @@ namespace InsideNet.Web.Auth
         {
             try
             {
+                var rolesService = context.RequestServices.GetService<PersonRolesService>();
+
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.ASCII.GetBytes("absolutelysecretkey)))");
 
