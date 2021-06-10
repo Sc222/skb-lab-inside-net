@@ -22,12 +22,13 @@ namespace InsideNet.Services
             this.accessRights = accessRights;
         }
 
-        public void Create(Person person)
+        public Person Create(Person person)
         {
             people.Create(person);
             if (!person.AccessRights.IsNullOrEmpty())
                 accessRights.CreateRange(person.AccessRights);
             //движуха с рассылкой уведомлений
+            return person;
         }
 
         public Person Get(Guid id)

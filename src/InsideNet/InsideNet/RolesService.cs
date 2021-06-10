@@ -41,9 +41,10 @@ namespace InsideNet.Services
             return roles.GetAll();
         }
 
-        public void Create(Role role)
+        public Role Create(Role role)
         {
             roles.Create(role);
+            return role;
         }
 
         public void Update(Role role)

@@ -14,9 +14,10 @@ namespace InsideNet.Services
             this.accessRights = accessRights;
         }
 
-        public void Create(AccessRight accessRight)
+        public AccessRight Create(AccessRight accessRight)
         {
             accessRights.Create(accessRight);
+            return accessRight;
         }
 
         public void Update(AccessRight accessRight)
