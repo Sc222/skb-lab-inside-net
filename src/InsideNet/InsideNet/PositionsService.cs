@@ -13,19 +13,26 @@ namespace InsideNet.Services
             this.positions = positions;
         }
 
+        public Position Get(Guid id)
+        {
+            return positions.Get(id);
+        }
+
         public Position[] GetAll()
         {
             return positions.GetAll();
         }
 
-        public void Create(Position position)
+        public Position Create(Position position)
         {
             positions.Create(position);
+            return position;
         }
 
-        public void Update(Position position)
+        public Position Update(Position position)
         {
             positions.Update(position);
+            return position;
         }
 
         public void Delete(Guid id)
