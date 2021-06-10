@@ -51,10 +51,10 @@ namespace InsideNet.Web.Controllers
         }
 
         [AccessFor("canEditAccessRights")]
-        [HttpPost("delete")]
-        public void Delete([FromBody] AccessRightModel accessRight)
+        [HttpPost("delete/{id}")]
+        public void Delete(Guid id)
         {
-            accessRightsService.Delete(accessRight.Id);
+            accessRightsService.Delete(id);
         }
     }
 }

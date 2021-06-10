@@ -53,10 +53,10 @@ namespace InsideNet.Web.Controllers
         }
 
         [AccessFor("canEditRoles")]
-        [HttpPost("delete")]
-        public void Delete([FromBody] RoleModel role)
+        [HttpPost("delete/{id}")]
+        public void Delete(Guid id)
         {
-            rolesService.Delete(role.Id);
+            rolesService.Delete(id);
         }
     }
 }
