@@ -9,10 +9,18 @@ namespace InsideNet.Services
     public class PersonAccessRightsService
     {
         private readonly IRepository<PersonAccessRights> personAccessRights;
+        private readonly IRepository<AccessRight> accessRights;
 
-        public PersonAccessRightsService(IRepository<PersonAccessRights> personAccessRights)
+        public PersonAccessRightsService(IRepository<PersonAccessRights> personAccessRights, IRepository<AccessRight> accessRights)
         {
             this.personAccessRights = personAccessRights;
+            this.accessRights = accessRights;
+        }
+
+        public AccessRight[] GetAccessRightsRelatedToPerson(Guid personId)
+        {
+            var ids = personAccessRights.Find(r => r.PersonId == personId).Select(r => r.AccesRightId);
+            return accessRights.Find(r => ids.Contains(r.Id));
         }
 
         public void RequestAccess(Guid personId, params Guid[] rightsIds)
