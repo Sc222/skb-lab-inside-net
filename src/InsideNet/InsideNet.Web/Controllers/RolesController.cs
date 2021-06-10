@@ -38,25 +38,25 @@ namespace InsideNet.Web.Controllers
 
         [AccessFor("canEditRoles")]
         [HttpPost("create")]
-        public RoleModel Create([FromBody] RoleModel accessRight)
+        public RoleModel Create([FromBody] RoleModel role)
         {
-            var entity = mapper.Map<Role>(accessRight);
+            var entity = mapper.Map<Role>(role);
             return mapper.Map<RoleModel>(rolesService.Create(entity));
         }
 
         [AccessFor("canEditRoles")]
         [HttpPost("update")]
-        public RoleModel Update([FromBody] RoleModel accessRight)
+        public RoleModel Update([FromBody] RoleModel role)
         {
-            var entity = mapper.Map<Role>(accessRight);
+            var entity = mapper.Map<Role>(role);
             return mapper.Map<RoleModel>(rolesService.Update(entity));
         }
 
         [AccessFor("canEditRoles")]
         [HttpPost("delete")]
-        public void Delete([FromBody] RoleModel accessRight)
+        public void Delete([FromBody] RoleModel role)
         {
-            rolesService.Delete(accessRight.Id);
+            rolesService.Delete(role.Id);
         }
     }
 }
