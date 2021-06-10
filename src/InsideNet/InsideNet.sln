@@ -16,7 +16,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InsideNet.Web", "InsideNet.
 		{126653E7-0D93-450B-A1C5-D7CD9EF0F6BC} = {126653E7-0D93-450B-A1C5-D7CD9EF0F6BC}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{DCC59887-6572-4B4E-B5A8-6A1EC3578FE4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{DCC59887-6572-4B4E-B5A8-6A1EC3578FE4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
