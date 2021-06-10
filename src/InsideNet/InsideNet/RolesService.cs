@@ -47,9 +47,10 @@ namespace InsideNet.Services
             return role;
         }
 
-        public void Update(Role role)
+        public Role Update(Role role)
         {
             roles.Update(role);
+            return role;
         }
 
         public void Delete(Guid id)

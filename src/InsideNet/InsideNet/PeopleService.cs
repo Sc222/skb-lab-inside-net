@@ -36,9 +36,10 @@ namespace InsideNet.Services
             return people.Get(id);
         }
 
-        public void Update(Person person)
+        public Person Update(Person person)
         {
             people.Update(person);
+            return person;
         }
 
         public Person[] SearchByName(string searchedName)

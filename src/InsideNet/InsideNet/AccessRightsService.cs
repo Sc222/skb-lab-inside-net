@@ -20,9 +20,10 @@ namespace InsideNet.Services
             return accessRight;
         }
 
-        public void Update(AccessRight accessRight)
+        public AccessRight Update(AccessRight accessRight)
         {
             accessRights.Update(accessRight);
+            return accessRight;
         }
 
         public void Delete(Guid id)
