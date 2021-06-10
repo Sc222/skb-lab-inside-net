@@ -13,11 +13,6 @@ namespace InsideNet.Services
             this.vacations = vacations;
         }
 
-        public Vacation[] GetPersonVacations(Guid personId)
-        {
-            return vacations.Find(v => v.PersonId == personId);
-        }
-
         public Vacation[] GetForPeriod(Guid personId, DateTime from, DateTime to)
         {
             return vacations.Find(v => v.From.Date >= from.Date && v.To.Date <= to.Date && v.PersonId == personId);
