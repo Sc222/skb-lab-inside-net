@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace Storage.Entities
+﻿namespace Storage.Entities
 {
     public class Person : GuidIdentifiable
     {
