@@ -12,7 +12,7 @@ namespace Storage
 
         TEntity[] Find(Expression<Func<TEntity, bool>> predicate, bool eager = false);
 
-        TEntity SingleOrDefault(Expression<Func<TEntity, bool>> predicate);
+        TEntity SingleOrDefault(Expression<Func<TEntity, bool>> predicate = null);
 
         void Create(TEntity entity);
 

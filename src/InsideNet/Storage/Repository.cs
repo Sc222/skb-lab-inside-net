@@ -36,10 +36,10 @@ namespace Storage
             return query.Where(predicate).ToArray();
         }
 
-        public TEntity SingleOrDefault(Expression<Func<TEntity, bool>> predicate)
+        public TEntity SingleOrDefault(Expression<Func<TEntity, bool>> predicate = null)
         {
             var context = contextFactory.Create();
-            return context.Set<TEntity>().SingleOrDefault(predicate);
+            return context.Set<TEntity>().SingleOrDefault(predicate ?? (_ => true));
         }
 
         public void Delete(Guid id)

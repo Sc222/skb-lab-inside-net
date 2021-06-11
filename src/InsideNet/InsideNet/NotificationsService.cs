@@ -19,7 +19,7 @@ namespace InsideNet.Services
 
         public async Task SendNotificationAboutNewUserToSlack(Person person)
         {
-            var channel = notificationChannel.SingleOrDefault(_ => true);
+            var channel = notificationChannel.SingleOrDefault();
 
             if (channel == null)
                 return;
@@ -39,7 +39,7 @@ namespace InsideNet.Services
 
         public async Task SendNotificationAboutNewUserToTelegram(Person person)
         {
-            var channel = notificationChannel.SingleOrDefault(_ => true);
+            var channel = notificationChannel.SingleOrDefault();
 
             if (channel == null || channel.TelegramBotApiKey == null)
                 return;
@@ -51,6 +51,26 @@ namespace InsideNet.Services
 
             if (channel.Telegram != null)
                 await tgBotClient.SendTextMessageAsync(channel.Telegram, MessageForNormalPeople(person)).ConfigureAwait(false);
+        }
+
+        public NotificationsChannel GetNotificationsChannel()
+        {
+            return notificationChannel.SingleOrDefault();
+        }
+
+        public NotificationsChannel CreateNotificationsChannel(NotificationsChannel channel)
+        {
+            var dbChannel = notificationChannel.SingleOrDefault();
+            if (dbChannel != null)
+                return null;
+            notificationChannel.Create(channel);
+            return channel;
+        }
+
+        public NotificationsChannel UpdateNotificationsChannel(NotificationsChannel channel)
+        {
+            notificationChannel.Update(channel);
+            return channel;
         }
     }
 }

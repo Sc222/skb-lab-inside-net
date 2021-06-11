@@ -2,7 +2,7 @@
 
 namespace InsideNet.Web.Models
 {
-    public class NotificationsChannel : GuidIdentifiable
+    public class NotificationsChannelModel : GuidIdentifiable
     {
         public string Slack { get; set; }
 
