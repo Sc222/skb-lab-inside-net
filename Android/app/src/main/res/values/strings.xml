@@ -27,7 +27,7 @@
     <string name="register_subtitle_data_access">Запрос прав доступа</string>
     <string name="login_hint">Логин*</string>
     <string name="password_hint">Пароль*</string>
-    <string name="login_mail_hint">Почта*</string>
+    <string name="login_mail_hint">Корпоративная почта*</string>
     <string name="about_hint">О себе*</string>
     <string name="name_hint">Имя*</string>
     <string name="patronymic_hint">Отчество*</string>
@@ -41,4 +41,6 @@
     <string name="section_contacts">Контакты</string>
     <string name="section_data_access">Права</string>
     <string name="section_holidays">Отпуск</string>
+    <string name="account_type_hint">Тип аккаунта</string>
+    <string name="contacts_info_corporate_email_hint">*В разделе контактов также будет указана Ваша корпоративная почта</string>
 </resources>

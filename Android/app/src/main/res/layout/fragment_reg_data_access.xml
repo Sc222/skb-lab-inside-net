@@ -59,6 +59,23 @@
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
             </LinearLayout>
 
+            <!-- todo select from variants -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/accountTypeInputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/items_vertical_spacing"
+                android:hint="@string/account_type_hint">
+
+                <AutoCompleteTextView
+                    android:id="@+id/accountTypeAutoCompleteTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
             <com.google.android.material.chip.ChipGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -70,47 +87,45 @@
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Право доступа 1" />
+                    android:checkable="false"
+                    android:checked="true"
+                    android:text="Gitlab репозиторий" />
 
                 <com.google.android.material.chip.Chip
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Доступ 2" />
+                    android:checkable="false"
+                    android:checked="true"
+                    android:text="Файловый сервер" />
 
                 <com.google.android.material.chip.Chip
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Доступ 3" />
+                    android:checkable="false"
+                    android:checked="true"
+                    android:text="Каналы в Slack" />
 
                 <com.google.android.material.chip.Chip
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Доступ 4" />
+                    android:checkable="false"
+                    android:checked="true"
+                    android:text="Dev сервер" />
 
                 <com.google.android.material.chip.Chip
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Доступ 5" />
-
-                <com.google.android.material.chip.Chip
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Доступ 6" />
-
-                <com.google.android.material.chip.Chip
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Доступ 7" />
+                    android:checkable="false"
+                    android:checked="true"
+                    android:text="Production сервер" />
 
             </com.google.android.material.chip.ChipGroup>
 
-            <com.google.android.material.textfield.TextInputLayout
+            <!--<com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -122,8 +137,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="text" />
 
-            </com.google.android.material.textfield.TextInputLayout>
-
+            </com.google.android.material.textfield.TextInputLayout>-->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/nextPageButton"
                 style="@style/LargeAccentButtonStyle"

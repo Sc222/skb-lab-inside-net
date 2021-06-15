@@ -140,7 +140,7 @@
                 android:layout_marginTop="@dimen/items_vertical_spacing"
                 android:hint="@string/position_hint">
 
-                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                <AutoCompleteTextView
                     android:id="@+id/positionAutoCompleteTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

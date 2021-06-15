@@ -64,7 +64,7 @@
                 android:layout_marginTop="@dimen/items_vertical_spacing"
                 android:hint="@string/password_hint"
                 app:endIconMode="password_toggle"
-                app:passwordToggleEnabled="true">
+              >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/passwordEditText"

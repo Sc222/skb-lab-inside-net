@@ -12,17 +12,17 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.sc222.insidenet.databinding.FragmentDataAccessBinding;
+import com.sc222.insidenet.databinding.FragmentContactsBinding;
 
 
 public class ContactsFragment extends Fragment {
 
     private ContactsViewModel contactsViewModel;
-    private FragmentDataAccessBinding binding;
+    private FragmentContactsBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentDataAccessBinding.inflate(inflater, container, false);
+        binding = FragmentContactsBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -30,7 +30,7 @@ public class ContactsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         contactsViewModel = new ViewModelProvider(this).get(ContactsViewModel.class);
-        final TextView textView = binding.textDataAccess;
+        final TextView textView = binding.textContacts;
         contactsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {

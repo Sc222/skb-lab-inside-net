@@ -72,7 +72,7 @@
                     android:id="@+id/phoneEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text" />
+                    android:inputType="phone" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -92,10 +92,16 @@
                     android:inputType="text" />
 
             </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:layout_marginTop="@dimen/items_vertical_spacing"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                android:text="@string/contacts_info_corporate_email_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
             <!-- TODO: FUTURE IDEAS - recyclerview with possibility to add contact info items -->
 
-            <com.google.android.material.textfield.TextInputLayout
+            <!--<com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -109,7 +115,7 @@
                     android:inputType="text" />
 
             </com.google.android.material.textfield.TextInputLayout>
-
+            -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/nextPageButton"
                 style="@style/LargeAccentButtonStyle"
