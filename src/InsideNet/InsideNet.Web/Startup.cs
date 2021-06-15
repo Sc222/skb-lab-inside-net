@@ -87,6 +87,7 @@ namespace InsideNet.Web
             services.AddScoped<PositionsService>();
             services.AddScoped<RolesService>();
             services.AddScoped<VacationsService>();
+            services.AddScoped<NotificationsService>();
         }
     }
 }
