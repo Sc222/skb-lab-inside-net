@@ -29,13 +29,6 @@ public class DataAccessFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         dataAccessViewModel = new ViewModelProvider(this).get(DataAccessViewModel.class);
-        // final TextView textView = binding.textDataAccess;
-        // dataAccessViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-        //    @Override
-        //    public void onChanged(@Nullable String s) {
-        //        textView.setText(s);
-        //    }
-        // });
 
         //todo move to viewmodel and add server requests
         binding.requestDataAccessButton.setOnClickListener(new View.OnClickListener() {
@@ -45,7 +38,7 @@ public class DataAccessFragment extends Fragment {
                     binding.tmpWaitChip.setVisibility(View.VISIBLE);
                     binding.tmpRequestChip.setChecked(false);
                     binding.tmpRequestChip.setVisibility(View.GONE);
-                },100);
+                },300);
             }
         });
 

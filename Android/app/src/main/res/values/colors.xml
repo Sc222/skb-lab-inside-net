@@ -2,6 +2,7 @@
 <resources>
     <color name="theme_light_primary">#7965B8</color>
     <color name="theme_light_primary_variant">#624DA8</color>
+    <color name="theme_light_primary_variant_transparent">#4D624DA8</color>
     <color name="theme_light_secondary">#FF7477</color>
     <color name="theme_light_secondary_variant">#FF5C5F</color>
 

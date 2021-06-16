@@ -6,17 +6,72 @@
     android:layout_height="match_parent"
     tools:context=".ui.mainSections.fragments.holidays.HolidaysFragment">
 
-    <TextView
-        android:id="@+id/text_holidays"
-        android:layout_width="match_parent"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/card_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginRight="@dimen/card_horizontal_margin"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/card_horizontal_padding"
+                    android:paddingTop="@dimen/card_vertical_padding"
+                    android:paddingRight="@dimen/card_horizontal_padding"
+                    android:paddingBottom="@dimen/card_vertical_padding">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:text="Укажите сроки отпуска"
+                        android:layout_marginBottom="20dp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                        android:textColor="@color/theme_light_primary" />
+
+
+                    <!--TODO: set selected colors using theme attr -->
+                    <com.archit.calendardaterangepicker.customviews.DateRangeCalendarView
+                        android:id="@+id/holidaysCalendar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        app:disable_date_color="#ABABAB"
+                        app:range_color="@color/theme_light_primary_variant_transparent"
+                        app:selected_date_circle_color="@color/theme_light_primary" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/update_holidays_button"
+                        android:enabled="false"
+                        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:text="Обновить данные"
+                        app:elevation="0dp" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
