@@ -73,7 +73,6 @@
                     android:scaleType="fitCenter"
                     app:srcCompat="@drawable/ic_contacts_no_image" />
 
-
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -110,6 +109,7 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/bottomSheetContact"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/items_vertical_spacing_dense"

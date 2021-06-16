@@ -12,6 +12,7 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.sc222.insidenet.R;
 import com.sc222.insidenet.databinding.FragmentContactsBinding;
 
@@ -21,6 +22,7 @@ public class ContactsFragment extends Fragment {
     private ContactsViewModel contactsViewModel;
     private FragmentContactsBinding binding;
     private boolean[] tmpAreContactsAdded = {false,false,false};
+    private BottomSheetBehavior sheetBehavior;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -35,6 +37,22 @@ public class ContactsFragment extends Fragment {
         binding.icAdd1.setOnClickListener(view1 -> tmpAddContact(binding.icAdd1,0));
         binding.icAdd2.setOnClickListener(view12 -> tmpAddContact(binding.icAdd2,1));
         binding.icAdd3.setOnClickListener(view13 -> tmpAddContact(binding.icAdd3,2));
+
+        sheetBehavior = BottomSheetBehavior.from(binding.getRoot().findViewById(R.id.bottomsheet_root));
+        sheetBehavior.setHideable(true); // sheet can be manually hidden in artists fragment
+        sheetBehavior.setPeekHeight(0,false);
+        binding.bottomSheetContact.setOnClickListener(v -> {
+            sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            binding.getRoot().findViewById(R.id.deleteContact).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new Handler().postDelayed(() -> {
+                        sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                        binding.contactsContainer.removeView(binding.bottomSheetContact);
+                    },300);
+                }
+            });
+        });
     }
 
     //TODO refactor, move to viewmodel and add server requests

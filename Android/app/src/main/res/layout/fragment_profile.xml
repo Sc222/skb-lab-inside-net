@@ -6,17 +6,455 @@
     android:layout_height="match_parent"
     tools:context=".ui.mainSections.fragments.profile.ProfileFragment">
 
-    <TextView
-        android:id="@+id/text_home"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <!--Gitlab + Dev server-->
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/card_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginRight="@dimen/card_horizontal_margin"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:orientation="vertical"
+
+                    android:paddingTop="@dimen/card_vertical_padding"
+
+                    android:paddingBottom="@dimen/card_vertical_padding">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_marginRight="@dimen/items_vertical_spacing_dense"
+                        android:layout_marginLeft="@dimen/items_vertical_spacing_dense"
+                        android:id="@+id/account_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/items_vertical_spacing_dense"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="35"
+                            android:adjustViewBounds="true"
+                            android:scaleType="fitCenter"
+                            app:srcCompat="@drawable/ic_contacts_no_image" />
+
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/items_horizontal_spacing"
+                            android:layout_weight="65"
+                            android:gravity="center_vertical|start"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Шатерников Владислав"
+                                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                                android:textColor="?attr/colorPrimary" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/items_vertical_spacing_dense"
+                                android:text="Админ"
+                                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                                android:textColor="?attr/colorSecondary"
+                                android:visibility="gone" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/items_vertical_spacing_dense"
+                                android:text="Стажер-разработчик"
+                                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                                android:textColor="?attr/colorControlNormal" />
+
+                            <!--todo "command is used by 0 locations, something like this"-->
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_marginRight="@dimen/card_horizontal_padding"
+                        android:layout_marginLeft="@dimen/card_horizontal_padding"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/items_vertical_spacing"
+                        android:text="Краткая информация о себе"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                        android:textColor="?attr/colorControlNormal" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_marginRight="@dimen/card_horizontal_padding"
+                        android:layout_marginLeft="@dimen/card_horizontal_padding"
+                        android:id="@+id/editButton"
+                        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Редактировать профиль"
+                        app:elevation="0dp" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/card_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginRight="@dimen/card_horizontal_margin"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/card_horizontal_padding"
+                    android:paddingTop="@dimen/card_vertical_padding"
+                    android:paddingRight="@dimen/card_horizontal_padding"
+                    android:paddingBottom="@dimen/card_vertical_padding">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:text="Контактная информация"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                        android:textColor="@color/theme_light_primary" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/text_mail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/account_actions"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="12dp"
+                        android:drawableStart="@drawable/ic_email_24dp"
+                        android:drawablePadding="8dp"
+                        android:gravity="center_vertical"
+                        android:text="v.a.shaternikov@skb.ru"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                        android:textColor="?attr/colorControlNormal" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/text_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/text_mail"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="12dp"
+                        android:drawableStart="@drawable/ic_phone_24dp"
+                        android:drawablePadding="8dp"
+                        android:gravity="center_vertical"
+                        android:text="8 (800) 555-35-35"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                        android:textColor="?attr/colorControlNormal" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/text_telegram"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/text_phone"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="12dp"
+                        android:drawableStart="@drawable/ic_telegram_24dp"
+                        android:drawablePadding="8dp"
+                        android:gravity="center_vertical"
+                        android:text="\@sc222"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                        android:textColor="?attr/colorControlNormal" />
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_data_access"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/card_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginRight="@dimen/card_horizontal_margin"
+                android:foreground="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/card_horizontal_padding"
+                    android:paddingTop="@dimen/card_vertical_padding"
+                    android:paddingRight="@dimen/card_horizontal_padding"
+                    android:paddingBottom="@dimen/card_vertical_padding">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/ic_go_to_24dp"
+                        android:drawablePadding="8dp"
+                        android:gravity="start"
+                        android:text="Полученные права"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                        android:textColor="@color/theme_light_primary" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/items_vertical_spacing_dense"
+                        android:text="Пока что вы не обладаете никакими правами"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                        android:textColor="?attr/colorControlNormal" />
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_contacts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/card_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginRight="@dimen/card_horizontal_margin"
+                android:foreground="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/card_horizontal_padding"
+                    android:paddingTop="@dimen/card_vertical_padding"
+                    android:paddingRight="@dimen/card_horizontal_padding"
+                    android:paddingBottom="@dimen/card_vertical_padding">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/ic_go_to_24dp"
+                        android:drawablePadding="8dp"
+                        android:gravity="start"
+                        android:text="Мои контакты"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                        android:textColor="@color/theme_light_primary" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/account_actions"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/account_info"
+                        android:layout_marginTop="@dimen/items_vertical_spacing"
+                        android:layout_marginBottom="@dimen/items_vertical_spacing"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="33"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:background="?attr/selectableItemBackground"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:layout_width="54dp"
+                                android:layout_height="54dp"
+                                android:layout_weight="25"
+                                android:adjustViewBounds="true"
+                                android:scaleType="fitCenter"
+                                app:srcCompat="@drawable/ic_contacts_no_image" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="Чемезов\nДанил"
+                                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="33"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:background="?attr/selectableItemBackground"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:layout_width="54dp"
+                                android:layout_height="54dp"
+                                android:layout_weight="25"
+                                android:adjustViewBounds="true"
+                                android:scaleType="fitCenter"
+                                app:srcCompat="@drawable/ic_contacts_no_image" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="Малышев\nВладислав"
+                                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="33"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:background="?attr/selectableItemBackground"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:layout_width="54dp"
+                                android:layout_height="54dp"
+                                android:layout_weight="25"
+                                android:adjustViewBounds="true"
+                                android:scaleType="fitCenter"
+                                app:srcCompat="@drawable/ic_contacts_no_image" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="Сахно\nАлександр"
+                                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_holiday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/card_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginRight="@dimen/card_horizontal_margin"
+                android:layout_marginBottom="80dp"
+                android:foreground="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/card_horizontal_padding"
+                    android:paddingTop="@dimen/card_vertical_padding"
+                    android:paddingRight="@dimen/card_horizontal_padding"
+                    android:paddingBottom="@dimen/card_vertical_padding">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/ic_go_to_24dp"
+                        android:drawablePadding="8dp"
+                        android:gravity="start"
+                        android:text="Отпуск"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                        android:textColor="@color/theme_light_primary" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/items_vertical_spacing"
+                        android:gravity="start"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/items_horizontal_spacing"
+                            android:text="Начало: "
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                            android:textColor="?attr/colorControlNormal" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="9 июня 2021 года"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                            android:textColor="?attr/colorPrimary" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/items_vertical_spacing_dense"
+                        android:gravity="start"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="16dp"
+                            android:text="Конец: "
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                            android:textColor="?attr/colorControlNormal" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="30 июня 2021 года"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                            android:textColor="?attr/colorPrimary" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.cardview.widget.CardView>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

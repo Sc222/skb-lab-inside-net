@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.sc222.insidenet.databinding.FragmentDataAccessBinding;
 
 

@@ -87,40 +87,30 @@
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checkable="false"
-                    android:checked="true"
                     android:text="Gitlab репозиторий" />
 
                 <com.google.android.material.chip.Chip
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checkable="false"
-                    android:checked="true"
                     android:text="Файловый сервер" />
 
                 <com.google.android.material.chip.Chip
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checkable="false"
-                    android:checked="true"
                     android:text="Каналы в Slack" />
 
                 <com.google.android.material.chip.Chip
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checkable="false"
-                    android:checked="true"
                     android:text="Dev сервер" />
 
                 <com.google.android.material.chip.Chip
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checkable="false"
-                    android:checked="true"
                     android:text="Production сервер" />
 
             </com.google.android.material.chip.ChipGroup>
