@@ -8,15 +8,17 @@
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <androidx.cardview.widget.CardView
@@ -43,9 +45,9 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
                         android:gravity="start"
                         android:text="Укажите сроки отпуска"
-                        android:layout_marginBottom="20dp"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title"
                         android:textColor="@color/theme_light_primary" />
 
@@ -59,13 +61,14 @@
                         app:disable_date_color="#ABABAB"
                         app:range_color="@color/theme_light_primary_variant_transparent"
                         app:selected_date_circle_color="@color/theme_light_primary" />
+
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/update_holidays_button"
-                        android:enabled="false"
                         style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
+                        android:enabled="false"
                         android:text="Обновить данные"
                         app:elevation="0dp" />
                 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -42,7 +42,7 @@ public class RegBasicInfoFragment extends Fragment {
         navController = Navigation.findNavController(view);
 
         // TODO: move to viewmodel and get list from server
-        List<String> positions = Arrays.asList("Стажер Web-разработчик", "Стажер Android-разработчик", "Стажер-аналитик", "Cтажер HR-специалист");
+        List<String> positions = Arrays.asList("Стажер Web-разработчик", "Стажер Android-разработчик", "Стажер-тестировщик", "Стажер-аналитик", "Cтажер HR-специалист");
         ArrayAdapter<String> positionsAdapter = new ArrayAdapter<>(requireContext(), R.layout.dropdown_menu_item, positions);
         binding.positionAutoCompleteTextView.setAdapter(positionsAdapter);
 

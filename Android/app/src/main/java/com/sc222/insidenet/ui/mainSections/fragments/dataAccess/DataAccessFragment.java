@@ -41,7 +41,6 @@ public class DataAccessFragment extends Fragment {
                 },300);
             }
         });
-
     }
 
     @Override
