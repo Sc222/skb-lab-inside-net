@@ -1,0 +1,167 @@
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/event_bottomsheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/colorSurface"
+    android:orientation="vertical"
+    app:behavior_hideable="false"
+    app:behavior_peekHeight="@dimen/bottomsheet_event_peek_height"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:paddingLeft="@dimen/card_horizontal_padding"
+        android:paddingTop="@dimen/card_vertical_padding"
+        android:paddingRight="@dimen/card_horizontal_padding"
+        android:paddingBottom="@dimen/card_vertical_padding">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/bottomsheet_top"
+            android:layout_width="50dp"
+            android:layout_height="5dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/bottomsheet_top" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/account_info"
+            android:layout_below="@id/bottomsheet_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/items_vertical_spacing"
+            android:layout_marginBottom="@dimen/items_vertical_spacing_dense"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="15"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/ic_contacts_no_image" />
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/items_horizontal_spacing"
+                android:layout_weight="75"
+
+                android:gravity="center_vertical|start"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Чемезов Данил"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                    android:textColor="?attr/colorPrimary" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Стажер HR-специалист"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
+
+                <!--todo "command is used by 0 locations, something like this"-->
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ic_add_1"
+                style="@style/Widget.AppCompat.ActionButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_add_24dp" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/items_vertical_spacing"
+            android:layout_below="@id/account_info"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="top"
+            android:layout_marginEnd="30dp"
+            android:ellipsize="end"
+            android:gravity="top"
+            android:maxLines="1"
+            android:textColor="?attr/colorPrimary"
+            android:text="Малышев Владислав"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/button_add"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="@dimen/items_vertical_spacing"
+            android:layout_below="@id/bottomsheet_top"
+            android:layout_alignParentEnd="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_add_24dp" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/button_delete"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="@dimen/items_vertical_spacing_dense"
+            android:layout_below="@id/button_add"
+            android:layout_alignParentEnd="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_add_24dp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_name"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="2"
+            android:text="Стажер-разработчик"
+            android:textColor="?attr/colorControlNormal"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_description"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="12dp"
+            android:drawableStart="@drawable/ic_phone_24dp"
+            android:gravity="center_vertical"
+            android:drawablePadding="8dp"
+            android:text="8 (800) 555-35-35"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_date"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="12dp"
+            android:drawableStart="@drawable/ic_telegram_24dp"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:text="\@neo.ezop"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+
+    </RelativeLayout>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
