@@ -8,14 +8,12 @@ namespace InsideNet.Services
     public class PeopleService
     {
         private readonly IRepository<Person> people;
-        private readonly IRepository<PersonAccessRights> accessRights;
         private readonly NotificationsService notificationsService;
         private readonly TokenGenerator tokenGenerator;
 
-        public PeopleService(IRepository<Person> people, IRepository<PersonAccessRights> accessRights, NotificationsService notificationsService, TokenGenerator tokenGenerator)
+        public PeopleService(IRepository<Person> people, NotificationsService notificationsService, TokenGenerator tokenGenerator)
         {
             this.people = people;
-            this.accessRights = accessRights;
             this.notificationsService = notificationsService;
             this.tokenGenerator = tokenGenerator;
         }

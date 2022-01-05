@@ -9,7 +9,6 @@ namespace InsideNet.Web.Models
         {
             CreateMap<Vacation, VacationModel>();
             CreateMap<Role, RoleModel>().ReverseMap();
-            CreateMap<AccessRight, AccessRightModel>().ReverseMap();
             CreateMap<Position, PositionModel>().ReverseMap();
             CreateMap<Person, PersonModel>().ForMember(d => d.Password, opt => opt.Ignore()).ReverseMap();
         }

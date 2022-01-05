@@ -23,21 +23,17 @@ namespace Tests
         public void FillBase()
         {
             var contextFactory = new ContextFactory();
-            var rightsRepo = new Repository<AccessRight>(contextFactory);
             var rolesRepo = new Repository<Role>(contextFactory);
             var positionsRepo = new Repository<Position>(contextFactory);
             var vacationsRepo = new Repository<Vacation>(contextFactory);
             var contactsRepo = new Repository<PersonContact>(contextFactory);
             var peopleRepo = new Repository<Person>(contextFactory);
-            var peopleAccessRightsRepo = new Repository<PersonAccessRights>(contextFactory);
             var peopleRolesRepo = new Repository<PersonRole>(contextFactory);
 
-            var rights = GenerateAccessRights();
             var roles = GenerateRoles();
             var positions = GenerateUserPositions();
-            var people = GeneratePeople(rights, positions, roles);
+            var people = GeneratePeople(positions, roles);
 
-            rightsRepo.CreateRange(rights);
             rolesRepo.CreateRange(roles.Select(r => r.Value));
             positionsRepo.CreateRange(positions.Select(p => p.Value));
             peopleRepo.CreateRange(people.Select(p => p.Value));
@@ -59,26 +55,9 @@ namespace Tests
 
             contactsRepo.Create(contact);
 
-            var peopleAccessRights = GeneratePersonAccessRights(people.Select(p => p.Value), rights);
-            peopleAccessRightsRepo.CreateRange(peopleAccessRights);
 
             var peopleRoles = GeneratePersonRoles(people, roles);
             peopleRolesRepo.CreateRange(peopleRoles);
-        }
-
-        private List<AccessRight> GenerateAccessRights()
-        {
-            var right1 = new AccessRight
-            {
-                AccessLevel = "Reader",
-                ResourceName = "Grafana"
-            };
-            var right2 = new AccessRight
-            {
-                AccessLevel = "Maintainer",
-                ResourceName = "GitLab"
-            };
-            return new List<AccessRight> {right1, right2};
         }
 
         private enum UserType
@@ -121,7 +100,7 @@ namespace Tests
             {UserType.Admin, new Position {Name = "RUSS1488"}}
         };
 
-        private Dictionary<UserType, Person> GeneratePeople(List<AccessRight> rights, Dictionary<UserType, Position> positions, Dictionary<UserType, Role> roles)
+        private Dictionary<UserType, Person> GeneratePeople(Dictionary<UserType, Position> positions, Dictionary<UserType, Role> roles)
         {
             var hr = new Person
             {
@@ -156,15 +135,6 @@ namespace Tests
                 {UserType.Admin, admin}
             };
         }
-
-        private List<PersonAccessRights> GeneratePersonAccessRights(IEnumerable<Person> people, List<AccessRight> rights) =>
-            people
-                .SelectMany(p => rights.Select(r => new PersonAccessRights
-                {
-                    AccesRightId = r.Id,
-                    PersonId = p.Id
-                }))
-                .ToList();
 
         private List<PersonRole> GeneratePersonRoles(Dictionary<UserType, Person> people, Dictionary<UserType, Role> rights) =>
             people
