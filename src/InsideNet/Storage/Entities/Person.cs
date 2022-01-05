@@ -16,6 +16,8 @@
 
         public string Slack { get; set; }
 
+        public string SlackId { get; set; }
+
         public string Email { get; set; }
 
         public string PhoneNumber { get; set; }

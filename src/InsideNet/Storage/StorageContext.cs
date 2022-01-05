@@ -24,6 +24,7 @@ namespace Storage
             modelBuilder.Entity<Person>().HasIndex(p => p.Login).IsUnique();
             modelBuilder.Entity<Person>().HasIndex(p => p.Telegram).IsUnique();
             modelBuilder.Entity<Person>().HasIndex(p => p.Slack).IsUnique();
+            modelBuilder.Entity<Person>().HasIndex(p => p.SlackId).IsUnique();
             modelBuilder.Entity<Person>().HasIndex(p => p.Email).IsUnique();
             modelBuilder.Entity<Person>().HasIndex(p => p.PhoneNumber).IsUnique();
 
