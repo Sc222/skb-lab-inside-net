@@ -20,20 +20,9 @@ namespace InsideNet.Services
             this.tokenGenerator = tokenGenerator;
         }
 
-        public async Task<Person> Create(Person person)
+        public Person Create(Person person)
         {
             people.Create(person);
-            if (person.IsNewbie)
-                try
-                {
-                    await notificationsService.SendNotificationAboutNewUserToSlack(person).ConfigureAwait(false);
-                    await notificationsService.SendNotificationAboutNewUserToTelegram(person).ConfigureAwait(false);
-                }
-                catch
-                {
-                    // ignored
-                }
-
             return person;
         }
 
