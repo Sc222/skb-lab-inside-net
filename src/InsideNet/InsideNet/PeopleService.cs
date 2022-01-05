@@ -1,9 +1,5 @@
 ﻿using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.IdentityModel.Tokens;
 using Storage;
 using Storage.Entities;
 
@@ -14,14 +10,14 @@ namespace InsideNet.Services
         private readonly IRepository<Person> people;
         private readonly IRepository<PersonAccessRights> accessRights;
         private readonly NotificationsService notificationsService;
-        private static readonly TimeSpan ExpirationTime = TimeSpan.FromHours(4);
+        private readonly TokenGenerator tokenGenerator;
 
-
-        public PeopleService(IRepository<Person> people, IRepository<PersonAccessRights> accessRights, NotificationsService notificationsService)
+        public PeopleService(IRepository<Person> people, IRepository<PersonAccessRights> accessRights, NotificationsService notificationsService, TokenGenerator tokenGenerator)
         {
             this.people = people;
             this.accessRights = accessRights;
             this.notificationsService = notificationsService;
+            this.tokenGenerator = tokenGenerator;
         }
 
         public async Task<Person> Create(Person person)
@@ -70,24 +66,9 @@ namespace InsideNet.Services
             if (user == null)
                 return null;
 
-            var (token, expires) = GenerateJwtToken(user);
+            var (token, expires) = tokenGenerator.GenerateJwtToken(user);
 
             return (user, token, expires);
-        }
-
-        private static (string Token, DateTime Expires) GenerateJwtToken(Person person)
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes("absolutelysecretkey)))");
-            var expires = DateTime.UtcNow + ExpirationTime;
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new[] { new Claim("id", person.Id.ToString()) }),
-                Expires = DateTime.UtcNow + ExpirationTime,
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return (tokenHandler.WriteToken(token), expires);
         }
     }
 }

@@ -88,6 +88,7 @@ namespace InsideNet.Web
             services.AddScoped<RolesService>();
             services.AddScoped<VacationsService>();
             services.AddScoped<NotificationsService>();
+            services.AddScoped<TokenGenerator>();
         }
     }
 }
