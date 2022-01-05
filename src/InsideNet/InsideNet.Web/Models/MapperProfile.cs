@@ -11,6 +11,7 @@ namespace InsideNet.Web.Models
             CreateMap<Role, RoleModel>().ReverseMap();
             CreateMap<Position, PositionModel>().ReverseMap();
             CreateMap<Person, PersonModel>().ForMember(d => d.Password, opt => opt.Ignore()).ReverseMap();
+            CreateMap<AccessRequest, AccessRequestModel>().ReverseMap();
         }
     }
 }

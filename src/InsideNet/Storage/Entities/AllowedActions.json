@@ -4,8 +4,7 @@
 		"canEditRoles",
 		"canSetRoles",
 		"canViewRoles",
-		"canEditAccessRights",
-		"canSetAccessRights",
+		"canResolveAccessRequests",
 		"canEditVacations",
 		"canEditPositions",
 		"canEditNotificationsChannels"
