@@ -51,7 +51,7 @@ namespace InsideNet.Web.Controllers
         public async Task<PersonModel> Create([FromBody] PersonModel person)
         {
             var personEntity = mapper.Map<Person>(person);
-            personEntity = await peopleService.Create(personEntity).ConfigureAwait(false);
+            personEntity = peopleService.Create(personEntity);
 
             var defaultRole = rolesService.GetOrCreateDefaultRole();
             personRolesService.SetPersonRole(personEntity.Id, defaultRole.Id);
