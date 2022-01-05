@@ -4,23 +4,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Storage.Migrations
 {
-    public partial class alpha : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "AccessRights",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    ResourceName = table.Column<string>(nullable: true),
-                    AccessLevel = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AccessRights", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "NotificationsChannel",
                 columns: table => new
@@ -29,24 +16,12 @@ namespace Storage.Migrations
                     Slack = table.Column<string>(nullable: true),
                     SlackForHr = table.Column<string>(nullable: true),
                     Telegram = table.Column<string>(nullable: true),
-                    TelegramForHr = table.Column<string>(nullable: true)
+                    TelegramForHr = table.Column<string>(nullable: true),
+                    TelegramBotApiKey = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_NotificationsChannel", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PersonAccessRights",
-                columns: table => new
-                {
-                    PersonId = table.Column<Guid>(nullable: false),
-                    AccesRightId = table.Column<Guid>(nullable: false),
-                    IsApproved = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PersonAccessRights", x => new { x.PersonId, x.AccesRightId });
                 });
 
             migrationBuilder.CreateTable(
@@ -124,6 +99,7 @@ namespace Storage.Migrations
                     IsNewbie = table.Column<bool>(nullable: false),
                     Telegram = table.Column<string>(nullable: true),
                     Slack = table.Column<string>(nullable: true),
+                    SlackId = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
                     PhoneNumber = table.Column<string>(nullable: true)
                 },
@@ -167,6 +143,12 @@ namespace Storage.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Persons_SlackId",
+                table: "Persons",
+                column: "SlackId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Persons_Telegram",
                 table: "Persons",
                 column: "Telegram",
@@ -182,13 +164,7 @@ namespace Storage.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AccessRights");
-
-            migrationBuilder.DropTable(
                 name: "NotificationsChannel");
-
-            migrationBuilder.DropTable(
-                name: "PersonAccessRights");
 
             migrationBuilder.DropTable(
                 name: "PersonContacts");

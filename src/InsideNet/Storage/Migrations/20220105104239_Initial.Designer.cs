@@ -11,8 +11,8 @@ using Storage;
 namespace Storage.Migrations
 {
     [DbContext(typeof(StorageContext))]
-    [Migration("20210610150213_notifications")]
-    partial class notifications
+    [Migration("20220105104239_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,23 +21,6 @@ namespace Storage.Migrations
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
                 .HasAnnotation("ProductVersion", "3.1.16")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
-
-            modelBuilder.Entity("Storage.Entities.AccessRight", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("AccessLevel")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ResourceName")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AccessRights");
-                });
 
             modelBuilder.Entity("Storage.Entities.NotificationsChannel", b =>
                 {
@@ -95,6 +78,9 @@ namespace Storage.Migrations
                     b.Property<string>("Slack")
                         .HasColumnType("text");
 
+                    b.Property<string>("SlackId")
+                        .HasColumnType("text");
+
                     b.Property<string>("Telegram")
                         .HasColumnType("text");
 
@@ -114,26 +100,13 @@ namespace Storage.Migrations
                     b.HasIndex("Slack")
                         .IsUnique();
 
+                    b.HasIndex("SlackId")
+                        .IsUnique();
+
                     b.HasIndex("Telegram")
                         .IsUnique();
 
                     b.ToTable("Persons");
-                });
-
-            modelBuilder.Entity("Storage.Entities.PersonAccessRights", b =>
-                {
-                    b.Property<Guid>("PersonId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("AccesRightId")
-                        .HasColumnType("uuid");
-
-                    b.Property<bool>("IsApproved")
-                        .HasColumnType("boolean");
-
-                    b.HasKey("PersonId", "AccesRightId");
-
-                    b.ToTable("PersonAccessRights");
                 });
 
             modelBuilder.Entity("Storage.Entities.PersonContact", b =>

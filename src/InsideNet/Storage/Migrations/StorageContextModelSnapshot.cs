@@ -20,23 +20,6 @@ namespace Storage.Migrations
                 .HasAnnotation("ProductVersion", "3.1.16")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            modelBuilder.Entity("Storage.Entities.AccessRight", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("AccessLevel")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ResourceName")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AccessRights");
-                });
-
             modelBuilder.Entity("Storage.Entities.NotificationsChannel", b =>
                 {
                     b.Property<Guid>("Id")
@@ -93,6 +76,9 @@ namespace Storage.Migrations
                     b.Property<string>("Slack")
                         .HasColumnType("text");
 
+                    b.Property<string>("SlackId")
+                        .HasColumnType("text");
+
                     b.Property<string>("Telegram")
                         .HasColumnType("text");
 
@@ -112,26 +98,13 @@ namespace Storage.Migrations
                     b.HasIndex("Slack")
                         .IsUnique();
 
+                    b.HasIndex("SlackId")
+                        .IsUnique();
+
                     b.HasIndex("Telegram")
                         .IsUnique();
 
                     b.ToTable("Persons");
-                });
-
-            modelBuilder.Entity("Storage.Entities.PersonAccessRights", b =>
-                {
-                    b.Property<Guid>("PersonId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("AccesRightId")
-                        .HasColumnType("uuid");
-
-                    b.Property<bool>("IsApproved")
-                        .HasColumnType("boolean");
-
-                    b.HasKey("PersonId", "AccesRightId");
-
-                    b.ToTable("PersonAccessRights");
                 });
 
             modelBuilder.Entity("Storage.Entities.PersonContact", b =>
