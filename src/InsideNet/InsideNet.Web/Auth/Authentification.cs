@@ -10,8 +10,8 @@ namespace InsideNet.Web.Auth
     {
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            var userId = (Guid?)context.HttpContext.Items["UserId"];
-            if (userId == null)
+            var personId = (Guid?)context.HttpContext.Items["PersonId"];
+            if (personId == null)
             {
                 context.Result = new JsonResult(new
                 {
