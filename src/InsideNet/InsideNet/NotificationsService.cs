@@ -37,22 +37,6 @@ namespace InsideNet.Services
             }
         }
 
-        public async Task SendNotificationAboutNewUserToTelegram(Person person)
-        {
-            var channel = notificationChannel.SingleOrDefault();
-
-            if (channel == null || channel.TelegramBotApiKey == null)
-                return;
-
-            var tgBotClient = new TelegramBotClient(channel.TelegramBotApiKey);
-
-            if (channel.TelegramForHr != null)
-                await tgBotClient.SendTextMessageAsync(channel.TelegramForHr, MessageForHrs(person)).ConfigureAwait(false);
-
-            if (channel.Telegram != null)
-                await tgBotClient.SendTextMessageAsync(channel.Telegram, MessageForNormalPeople(person)).ConfigureAwait(false);
-        }
-
         public NotificationsChannel GetNotificationsChannel()
         {
             return notificationChannel.SingleOrDefault();
