@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using SlackAPI;
 using Storage;
 
 namespace InsideNet.Web
@@ -79,16 +80,16 @@ namespace InsideNet.Web
                 .AddScoped(typeof(IRepository<>), typeof(Repository<>))
                 .AddEntityFrameworkProxies();
 
-            services.AddScoped<AccessRightsService>();
             services.AddScoped<ContactsService>();
             services.AddScoped<PeopleService>();
-            services.AddScoped<PersonAccessRightsService>();
             services.AddScoped<PersonRolesService>();
             services.AddScoped<PositionsService>();
             services.AddScoped<RolesService>();
             services.AddScoped<VacationsService>();
             services.AddScoped<NotificationsService>();
             services.AddScoped<TokenGenerator>();
+            services.AddSingleton(_ => new SlackTaskClient("xoxb-123"));
+            services.AddSingleton<SlackService>();
         }
     }
 }
