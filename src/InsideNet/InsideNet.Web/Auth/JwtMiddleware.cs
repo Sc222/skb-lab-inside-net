@@ -13,6 +13,7 @@ namespace InsideNet.Web.Auth
     public class JwtMiddleware
     {
         private readonly RequestDelegate next;
+        private const string SecretKey = "absolutelysecretkey)))";
 
         public JwtMiddleware(RequestDelegate next)
         {
@@ -35,7 +36,7 @@ namespace InsideNet.Web.Auth
                 var rolesService = context.RequestServices.GetService<PersonRolesService>();
 
                 var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes("absolutelysecretkey)))");
+                var key = Encoding.ASCII.GetBytes(SecretKey);
 
                 tokenHandler.ValidateToken(token, new TokenValidationParameters
                 {
