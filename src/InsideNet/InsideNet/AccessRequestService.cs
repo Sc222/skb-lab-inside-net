@@ -13,6 +13,11 @@ public class AccessRequestService
         this.accessRequests = accessRequests;
     }
 
+    public AccessRequest[] GetByPersonId(Guid personId)
+    {
+        return accessRequests.Find(r => r.PersonId == personId);
+    }
+
     public AccessRequest[] GetAll()
     {
         return accessRequests.GetAll();

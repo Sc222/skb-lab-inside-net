@@ -62,6 +62,13 @@ public class SlackAccessesController
         return mapper.Map<AccessRequestModel[]>(accessRequests);
     }
 
+    [HttpGet("accessRequests/{personId}")]
+    public AccessRequestModel[] GetPersonAccessRequests(Guid personId)
+    {
+        var accessRequests = accessRequestService.GetByPersonId(personId);
+        return mapper.Map<AccessRequestModel[]>(accessRequests);
+    }
+
 
     [HttpDelete("accessRequests")]
     [AccessFor("canResolveAccessRequests")]
