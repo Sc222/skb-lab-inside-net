@@ -36,6 +36,8 @@ namespace SlackNotificationsWorker
 
                 SetPeopleAsNotNewbies(newbies);
 
+                logger.LogInformation("Worker finished cycle at: {time}", DateTimeOffset.Now);
+
                 await Task.Delay(WorkerDelay10MinutesInMs, stoppingToken);
             }
         }
