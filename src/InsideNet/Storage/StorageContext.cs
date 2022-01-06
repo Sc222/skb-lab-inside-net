@@ -19,6 +19,8 @@ namespace Storage
 
             modelBuilder.Entity<PersonRole>().HasKey(r => new {r.PersonId, r.RoleId});
 
+            modelBuilder.Entity<AccessRequest>().HasKey(r => new {r.PersonId, r.SlackUserId});
+
             modelBuilder.Entity<Person>().HasOne(p => p.Position).WithMany().OnDelete(DeleteBehavior.NoAction).IsRequired();
 
             modelBuilder.Entity<Person>().HasIndex(p => p.Login).IsUnique();
