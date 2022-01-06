@@ -33,4 +33,9 @@ public class AccessRequestService
     {
         accessRequests.Delete(accessRequest);
     }
+
+    public void Update(AccessRequest accessRequest)
+    {
+        accessRequests.Update(accessRequest);
+    }
 }

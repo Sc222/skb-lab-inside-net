@@ -79,7 +79,7 @@ public class SlackAccessesController
         accessRequestService.Delete(accessRequest);
     }
 
-    [HttpPut("accessRequests")]
+    [HttpPut("accessRequests/approve")]
     [AccessFor("canResolveAccessRequests")]
     public async Task ApproveAccessRequest([FromBody] AccessRequestModel accessRequestModel)
     {
@@ -88,5 +88,14 @@ public class SlackAccessesController
         await slackService.InviteToChannel(accessRequest.ChannelId, accessRequest.SlackUserId);
 
         accessRequestService.Delete(accessRequest);
+    }
+
+    [HttpPut("accessRequests")]
+    [AccessFor("canResolveAccessRequests")]
+    public void UpdateAccessRequest([FromBody] AccessRequestModel accessRequestModel)
+    {
+        var accessRequest = mapper.Map<AccessRequest>(accessRequestModel);
+
+        accessRequestService.Update(accessRequest);
     }
 }
