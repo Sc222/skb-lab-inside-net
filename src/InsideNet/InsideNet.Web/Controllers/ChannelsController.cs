@@ -13,10 +13,10 @@ namespace InsideNet.Web.Controllers
     [Route("api/[controller]")]
     public class ChannelsController
     {
-        private readonly NotificationsService notificationsService;
+        private readonly NotificationChannelsService notificationsService;
         private readonly IMapper mapper;
 
-        public ChannelsController(NotificationsService notificationsService, IMapper mapper)
+        public ChannelsController(NotificationChannelsService notificationsService, IMapper mapper)
         {
             this.notificationsService = notificationsService;
             this.mapper = mapper;

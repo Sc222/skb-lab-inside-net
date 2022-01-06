@@ -86,7 +86,7 @@ namespace InsideNet.Web
             services.AddScoped<PositionsService>();
             services.AddScoped<RolesService>();
             services.AddScoped<VacationsService>();
-            services.AddScoped<NotificationsService>();
+            services.AddScoped<NotificationChannelsService>();
             services.AddScoped<TokenGenerator>();
             services.AddSingleton(_ => new SlackTaskClient("xoxb-123"));
             services.AddSingleton<SlackService>();
