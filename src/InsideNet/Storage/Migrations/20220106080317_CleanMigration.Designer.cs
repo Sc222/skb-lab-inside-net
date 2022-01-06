@@ -11,8 +11,8 @@ using Storage;
 namespace Storage.Migrations
 {
     [DbContext(typeof(StorageContext))]
-    [Migration("20220105104239_Initial")]
-    partial class Initial
+    [Migration("20220106080317_CleanMigration")]
+    partial class CleanMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,6 +21,31 @@ namespace Storage.Migrations
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
                 .HasAnnotation("ProductVersion", "3.1.16")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
+
+            modelBuilder.Entity("Storage.Entities.AccessRequest", b =>
+                {
+                    b.Property<Guid>("PersonId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("SlackUserId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ChannelId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ChannelName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("DisapproveReason")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDisapproved")
+                        .HasColumnType("boolean");
+
+                    b.HasKey("PersonId", "SlackUserId");
+
+                    b.ToTable("AccessRequest");
+                });
 
             modelBuilder.Entity("Storage.Entities.NotificationsChannel", b =>
                 {
