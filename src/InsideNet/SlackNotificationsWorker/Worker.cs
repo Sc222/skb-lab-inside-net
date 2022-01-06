@@ -10,7 +10,7 @@ namespace SlackNotificationsWorker
 {
     public class Worker : BackgroundService
     {
-        private const int WorkerDelayInMs = 600000;
+        private const int WorkerDelay10MinutesInMs = 600000;
         private readonly ILogger<Worker> logger;
         private readonly NewbiesGetter newbiesGetter;
         private readonly SlackNotificationsService slackNotificationsService;
@@ -36,7 +36,7 @@ namespace SlackNotificationsWorker
 
                 SetPeopleAsNotNewbies(newbies);
 
-                await Task.Delay(WorkerDelayInMs, stoppingToken);
+                await Task.Delay(WorkerDelay10MinutesInMs, stoppingToken);
             }
         }
 
