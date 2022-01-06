@@ -48,7 +48,7 @@ namespace InsideNet.Web.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<PersonModel> Create([FromBody] PersonModel person)
+        public PersonModel Create([FromBody] PersonModel person)
         {
             var personEntity = mapper.Map<Person>(person);
             personEntity = peopleService.Create(personEntity);
