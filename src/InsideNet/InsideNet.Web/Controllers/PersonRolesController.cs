@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using AutoMapper;
 using InsideNet.Services;
 using InsideNet.Web.Auth;
@@ -19,6 +20,13 @@ namespace InsideNet.Web.Controllers
         {
             this.personRolesService = personRolesService;
             this.mapper = mapper;
+        }
+
+        [HttpGet("allowedActions/{personId}")]
+        public List<string> GetAllowedActionsForPerson(Guid personId)
+        {
+            var role = personRolesService.GetPersonRole(personId);
+            return role.AllowedActions;
         }
 
         [AccessFor("canViewRoles", true)]
