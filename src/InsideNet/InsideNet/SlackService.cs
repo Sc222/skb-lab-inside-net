@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using SlackAPI;
-using Storage.Entities;
 
 namespace InsideNet.Services;
 

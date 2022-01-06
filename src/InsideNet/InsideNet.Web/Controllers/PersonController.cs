@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using AutoMapper;
 using InsideNet.Services;
 using InsideNet.Web.Auth;
