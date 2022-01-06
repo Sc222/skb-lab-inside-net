@@ -1,7 +1,5 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Storage;
+using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Hosting;
 
 namespace SlackNotificationsWorker
 {
@@ -12,17 +10,8 @@ namespace SlackNotificationsWorker
             CreateHostBuilder(args).Build().Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureServices((hostContext, services) =>
-                {
-                    services.AddHostedService<Worker>();
-                    services.AddScoped(typeof(DbContext), typeof(StorageContext))
-                        .AddScoped<ContextFactory>()
-                        .AddScoped(typeof(IRepository<>), typeof(Repository<>))
-                        .AddEntityFrameworkProxies();
-                    services.AddSingleton<NewbiesGetter>();
-                    services.AddSingleton<SlackNotificationsService>();
-                });
+        private static IWebHostBuilder CreateHostBuilder(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+                .UseStartup<Startup>();
     }
 }
