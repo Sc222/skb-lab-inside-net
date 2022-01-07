@@ -25,7 +25,7 @@ namespace InsideNet.Web.Auth
         {
             var isCheckSuccess = TryCheckForSelf(context.HttpContext);
 
-            if (!isCheckSuccess)
+            if (!isCheckSuccess && actionName != null)
                 isCheckSuccess = TryCheckForRoleAccess(context.HttpContext);
 
             if (!isCheckSuccess)

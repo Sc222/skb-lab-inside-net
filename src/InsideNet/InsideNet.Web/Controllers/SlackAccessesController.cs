@@ -53,7 +53,7 @@ public class SlackAccessesController : ControllerBase
     }
 
     [HttpPost("accessRequests/{personId}")]
-    [AccessFor("", true)]
+    [AccessFor(null, true)]
     public void CreateAccessRequest(Guid personId, [FromBody] AccessRequestModel accessRequestModel)
     {
         var accessRequest = mapper.Map<AccessRequest>(accessRequestModel);

@@ -28,14 +28,14 @@ namespace InsideNet.Web.Controllers
             return mapper.Map<PersonModel[]>(contacts);
         }
 
-        [AccessFor("", true)]
+        [AccessFor(null, true)]
         [HttpPut("add/{contactId}")]
         public void AddToContacts(Guid personId, Guid contactId)
         {
             contactsService.AddToContacts(personId, contactId);
         }
 
-        [AccessFor("", true)]
+        [AccessFor(null, true)]
         [HttpDelete("remove/{contactId}")]
         public void RemoveFromContacts(Guid personId, Guid contactId)
         {

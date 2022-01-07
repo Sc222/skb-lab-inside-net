@@ -22,7 +22,7 @@ namespace InsideNet.Web.Controllers
             this.mapper = mapper;
         }
 
-        [AccessFor("", true)]
+        [AccessFor(null, true)]
         [HttpGet("allowedActions/{personId}")]
         public List<string> GetAllowedActionsForPerson(Guid personId)
         {
