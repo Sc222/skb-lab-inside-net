@@ -11,7 +11,7 @@ namespace InsideNet.Web.Controllers
     [ApiController]
     [Authentication]
     [Route("api/[controller]")]
-    public class ChannelsController
+    public class ChannelsController : ControllerBase
     {
         private readonly NotificationChannelsService notificationsService;
         private readonly IMapper mapper;

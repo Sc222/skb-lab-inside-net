@@ -14,7 +14,7 @@ namespace InsideNet.Web.Controllers;
 [ApiController]
 [Authentication]
 [Route("api/[controller]")]
-public class SlackAccessesController
+public class SlackAccessesController : ControllerBase
 {
     private readonly SlackService slackService;
     private readonly PeopleService peopleService;
@@ -53,6 +53,7 @@ public class SlackAccessesController
     }
 
     [HttpPost("accessRequests/{personId}")]
+    [AccessFor("", true)]
     public void CreateAccessRequest(Guid personId, [FromBody] AccessRequestModel accessRequestModel)
     {
         var accessRequest = mapper.Map<AccessRequest>(accessRequestModel);
@@ -72,6 +73,7 @@ public class SlackAccessesController
     }
 
     [HttpGet("accessRequests/{personId}")]
+    [AccessFor("canResolveAccessRequests", true)]
     public AccessRequestModel[] GetPersonAccessRequests(Guid personId)
     {
         var accessRequests = accessRequestService.GetByPersonId(personId);

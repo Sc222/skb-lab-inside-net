@@ -22,6 +22,7 @@ namespace InsideNet.Web.Controllers
             this.mapper = mapper;
         }
 
+        [AccessFor("", true)]
         [HttpGet("allowedActions/{personId}")]
         public List<string> GetAllowedActionsForPerson(Guid personId)
         {
@@ -37,10 +38,10 @@ namespace InsideNet.Web.Controllers
         }
 
         [AccessFor("canViewRoles")]
-        [HttpGet("role/{id}")]
-        public PersonModel[] GetPeopleByRole(Guid id)
+        [HttpGet("role/{roleId}")]
+        public PersonModel[] GetPeopleByRole(Guid roleId)
         {
-            return mapper.Map<PersonModel[]>(personRolesService.GetPeopleByRole(id));
+            return mapper.Map<PersonModel[]>(personRolesService.GetPeopleByRole(roleId));
         }
 
         [AccessFor("canSetRoles")]

@@ -11,7 +11,7 @@ namespace InsideNet.Web.Controllers
     [ApiController]
     [Authentication]
     [Route("api/[controller]")]
-    public class PositionsController
+    public class PositionsController : ControllerBase
     {
         private readonly PositionsService positionsService;
         private readonly IMapper mapper;
