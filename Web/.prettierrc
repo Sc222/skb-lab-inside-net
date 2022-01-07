@@ -1,0 +1,17 @@
+{
+    "endOfLine": "auto",
+    "proseWrap": "never",
+    "tabWidth": 4,
+    "printWidth": 120,
+    "trailingComma": "es5",
+    "semi": true,
+    "singleQuote": false,
+    "overrides": [
+        {
+            "files": ["*.tsx", "*.jsx"],
+            "options": {
+                "tabWidth": 2
+            }
+        }
+    ]
+}

@@ -1,0 +1,9 @@
+@import "sizes.scss";
+
+// todo some utility breakpoint sizes here
+
+@media (min-width: 0) and (max-width: 1000px) {
+    .display-none-mobile{
+        display: none;
+    }
+}

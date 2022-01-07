@@ -1,0 +1,27 @@
+{
+    "root": true,
+    "env": {
+        "browser": true
+    },
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["prettier", "@typescript-eslint"],
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended",
+        "prettier"
+    ],
+    "rules": {
+        "prefer-const": "off",
+
+        "prettier/prettier": [
+            "warn", // off, warn or error
+            {
+                "endOfLine": "auto"
+            }
+        ],
+
+        // Allow empty interfaces
+        "@typescript-eslint/no-empty-interface": ["off"]
+    }
+}
