@@ -4,10 +4,10 @@
     "description": "Extendable service for organizing contacts in company, managing slack access and notifying people about new employees",
     "private": true,
     "scripts": {
-        "start": "webpack serve --config webpack.dev.js",
+        "start": "cross-env NODE_ENV=development webpack serve --config webpack.dev.js",
         "watch": "webpack --watch --config webpack.dev.js",
         "build": "cross-env NODE_ENV=production webpack --config webpack.prod.js",
-        "build-dev": "webpack --config webpack.dev.js"
+        "build-dev": "cross-env NODE_ENV=development webpack --config webpack.dev.js"
     },
     "dependencies": {
         "axios": "^0.21.1",
@@ -16,8 +16,8 @@
         "react": "^17.0.2",
         "react-dom": "^17.0.2",
         "react-player": "^2.9.0",
-        "react-router-dom": "^5.2.0",
-        "react-router-hash-link": "^2.4.3"
+        "react-router-dom": "6.2.1",
+        "react-router": "6.2.1"
     },
     "devDependencies": {
         "@babel/core": "^7.14.6",
@@ -29,8 +29,6 @@
         "@types/node": "^16.6.1",
         "@types/react": "^17.0.14",
         "@types/react-dom": "^17.0.9",
-        "@types/react-router-dom": "^5.1.8",
-        "@types/react-router-hash-link": "^2.4.1",
         "@typescript-eslint/eslint-plugin": "^4.28.3",
         "@typescript-eslint/parser": "^4.28.3",
         "babel-loader": "^8.2.2",
