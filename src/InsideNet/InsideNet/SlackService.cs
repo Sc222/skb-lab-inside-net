@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using SlackAPI;
 
 namespace InsideNet.Services;
@@ -21,5 +22,17 @@ public class SlackService
     public async Task InviteToChannel(string channelId, string userId)
     {
         await slackClient.ConversationsInviteAsync(channelId, new[] { userId });
+    }
+
+    public async Task<string[]> GetChannelMembers(string channelId)
+    {
+        var response = await slackClient.APIRequestWithTokenAsync<MembersResponse>(new Tuple<string, string>("channel", channelId));
+        return response.Members;
+    }
+
+    [RequestPath("conversations.members")]
+    private class MembersResponse : Response
+    {
+        public string[] Members { get; set; }
     }
 }

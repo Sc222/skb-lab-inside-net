@@ -30,17 +30,26 @@ public class SlackAccessesController
     }
 
     [HttpGet("channels/{personId}")]
-    public async Task<IEnumerable<SlackChannelModel>> GetSlackChannels(Guid personId)
+    public async Task<List<SlackChannelModel>> GetSlackChannels(Guid personId)
     {
         var channels = await slackService.GetChannelsList();
         var person = peopleService.Get(personId);
-        var hasSlack = string.IsNullOrEmpty(person.SlackId);
-        return channels.Select(channel => new SlackChannelModel
+        var hasSlack = !string.IsNullOrEmpty(person.SlackId);
+
+        var response = new List<SlackChannelModel>();
+
+        foreach (var channel in channels)
         {
-            ChannelId = channel.id,
-            ChannelName = channel.name,
-            IsInChannel = hasSlack && channel.members.Any(memberId => memberId == person.SlackId)
-        });
+            var channelMembers = await slackService.GetChannelMembers(channel.id);
+            response.Add(new SlackChannelModel
+            {
+                ChannelId = channel.id,
+                ChannelName = channel.name,
+                IsInChannel = hasSlack && channelMembers.Any(memberId => memberId == person.SlackId)
+            });
+        }
+
+        return response;
     }
 
     [HttpPost("accessRequests/{personId}")]
