@@ -5,6 +5,7 @@ export interface PersonModel {
     Login: string;
     Password: string;
     FullName: string;
+    AuthScope: string;
     Position: PositionModel;
     IsNewbie: boolean;
     Email: string;
