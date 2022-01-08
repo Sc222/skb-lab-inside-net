@@ -1,13 +1,13 @@
-export enum SiteRoutes {
+export enum SiteRoute {
     //root routes
     home = "/",
     login = "/login",
     register = "/register",
     search = "/search",
-    user = "/user",
-    userId = ":userId",
+    person = "/person",
+    personId = ":personId",
 
-    //user nested routes
+    // person nested routes
     profile = "/profile",
     editProfile = "/edit-profile",
     manageAccess = "/manage-access",
