@@ -2,17 +2,20 @@ import { AuthScope } from "../Typings/Enums/authScope";
 import * as React from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useEffect } from "react";
-import { useAuth } from "../Contexts/authContext";
+import { useAuthContext } from "../Contexts/authContext";
 
+//rename to AuthPage
 interface AuthAreaProps {
   acceptedScopes: Set<Exclude<AuthScope, AuthScope.unknown>>;
 }
+
+//add separate AuthPage that helps redirecting and protecting pages AND PersonPrivateArea that shows data only if person id matches requested id (identify by guid and server token check request)
 
 //todo add props: ACCESSIBLE ONLY FOR USER ITSELF (check guids)
 export const AuthArea: React.FunctionComponent<AuthAreaProps> = ({ acceptedScopes, children }) => {
   let [authProfileScope, setAuthProfileScope] = React.useState<AuthScope | null>(null);
 
-  let auth = useAuth();
+  let auth = useAuthContext();
   let location = useLocation();
 
   // must be memoized callback

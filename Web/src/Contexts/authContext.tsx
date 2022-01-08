@@ -40,7 +40,6 @@ export const AuthContextProvider: React.FunctionComponent = ({ children }) => {
     callback: (result: Result<AuthContextPerson>) => void
   ): Promise<void> => {
     let result = await authenticationService.signIn(authData);
-    console.log("person: ", result);
     if (result.success) {
       let person = result.success;
       setPerson(person);
@@ -68,6 +67,6 @@ export const AuthContextProvider: React.FunctionComponent = ({ children }) => {
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
-export function useAuth(): AuthContextType {
+export function useAuthContext(): AuthContextType {
   return React.useContext(AuthContext);
 }
