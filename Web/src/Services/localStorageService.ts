@@ -1,7 +1,7 @@
-import { AuthContextPersonModel } from "../Api/Models/authContextPersonModel";
+import { AuthContextPerson } from "../Typings/Interfaces/authContextPerson";
 
 export class LocalStorageService {
-    public addPersonInfo(authContextPerson: AuthContextPersonModel): void {
+    public addPersonInfo(authContextPerson: AuthContextPerson): void {
         localStorage.setItem("token", authContextPerson.token);
         localStorage.setItem("expires", authContextPerson.expires);
         localStorage.setItem("personId", authContextPerson.personId);
@@ -13,7 +13,7 @@ export class LocalStorageService {
         localStorage.removeItem("personId");
     }
 
-    public getPersonInfo(): AuthContextPersonModel | null {
+    public getPersonInfo(): AuthContextPerson | null {
         let token = localStorage.getItem("token");
         let expires = localStorage.getItem("expires");
         let personId = localStorage.getItem("personId");
