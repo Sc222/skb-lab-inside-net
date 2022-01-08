@@ -24,13 +24,13 @@ export class AuthenticationService {
     }
 
     public async getAuthScope(personId: string, token: string): Promise<Result<AuthScope>> {
-        let response = await PersonsApi.GetPersonById(personId, token);
+        let response = await PersonsApi.GetPersonById(personId, token, true);
         if (!Api.IsRequestSuccess(response) || !response.data) {
             return ResultBuilder.Error(response.error);
         }
 
-        let isKnownScope = Object.values(AuthScope).includes(response.data.Position.Name as AuthScope);
-        let finalAuthScope = isKnownScope ? (response.data.Position.Name as AuthScope) : AuthScope.unknown;
+        let isKnownScope = Object.values(AuthScope).includes(response.data.AuthScope as AuthScope);
+        let finalAuthScope = isKnownScope ? (response.data.AuthScope as AuthScope) : AuthScope.unknown;
         return ResultBuilder.Success(finalAuthScope);
     }
 }

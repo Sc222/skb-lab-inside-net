@@ -3,7 +3,7 @@ import { AuthContextPerson } from "../Typings/Interfaces/authContextPerson";
 export class LocalStorageService {
     public addPersonInfo(authContextPerson: AuthContextPerson): void {
         localStorage.setItem("token", authContextPerson.token);
-        localStorage.setItem("expires", authContextPerson.expires);
+        localStorage.setItem("expires", authContextPerson.expires.toString());
         localStorage.setItem("personId", authContextPerson.personId);
     }
 
@@ -15,11 +15,12 @@ export class LocalStorageService {
 
     public getPersonInfo(): AuthContextPerson | null {
         let token = localStorage.getItem("token");
-        let expires = localStorage.getItem("expires");
+        let expiresStr = localStorage.getItem("expires");
+        let expires = Number(localStorage.getItem("expires"));
         let personId = localStorage.getItem("personId");
 
         // Person info is incorrect, return null (should trigger login in react)
-        if (!token || !expires || !personId) {
+        if (!token || !expiresStr || !Number.isFinite(expires) || !personId) {
             return null;
         }
         return {
