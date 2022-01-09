@@ -1,20 +1,20 @@
 import * as React from "react";
 import { Navigate } from "react-router-dom";
-import { useAuthContext } from "../Contexts/authContext";
-import { SiteRoute } from "../Typings/Enums/siteRoute";
-import { NotFoundDefaultRedirection } from "./notFoundDefaultRedirection";
-import { usePersonContext } from "../Contexts/personContext";
+import { useAuthContext } from "../../Contexts/authContext";
+import { SiteRoute } from "../../Typings/Enums/siteRoute";
+import { NotFoundDefaultRedirection } from "../notFoundDefaultRedirection";
+import { usePersonContext } from "../../Contexts/personContext";
 
-interface PrivatePersonAreaProps {}
+interface PersonalPageRestrictionProps {}
 
 // private person section (like edit profile, for example), if id's don't match redirect to /profile
 // MUST BE INSIDE personContext
-export const PrivatePersonSection: React.FunctionComponent<PrivatePersonAreaProps> = ({ children }) => {
+export const PersonalPageRestriction: React.FunctionComponent<PersonalPageRestrictionProps> = ({ children }) => {
   let auth = useAuthContext();
   let personContext = usePersonContext();
 
   if (personContext.isLoading) {
-    return <>LOADING person info...</>;
+    return <>Loading...</>;
   }
 
   let personId = personContext.person?.Id;

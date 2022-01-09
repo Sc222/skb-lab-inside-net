@@ -1,12 +1,12 @@
 import * as React from "react";
 import { Navigate } from "react-router-dom";
-import { useAuthContext } from "../Contexts/authContext";
-import { SiteRoute } from "../Typings/Enums/siteRoute";
+import { useAuthContext } from "../../Contexts/authContext";
+import { SiteRoute } from "../../Typings/Enums/siteRoute";
 
-interface LoggedOutPersonAreaProps {}
+interface LoggedOutOnlyPageRestriction {}
 
 // Area only for logged-out user, logged-in users will be redirected to their profile
-export const LoggedOutPersonArea: React.FunctionComponent<LoggedOutPersonAreaProps> = ({ children }) => {
+export const LoggedOutOnlyPageRestriction: React.FunctionComponent<LoggedOutOnlyPageRestriction> = ({ children }) => {
   let auth = useAuthContext();
 
   if (auth.person) {

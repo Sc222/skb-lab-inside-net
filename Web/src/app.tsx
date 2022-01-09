@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { AuthArea } from "./Components/authArea";
+import { AuthPageRestriction } from "./Components/PageRestrictions/authPageRestriction";
 import { AuthContextProvider, useAuthContext } from "./Contexts/authContext";
 import { SiteRoute } from "./Typings/Enums/siteRoute";
 import { SearchPage } from "./Pages/Persons/searchPage";
@@ -13,8 +13,8 @@ import { ProfilePage } from "./Pages/Persons/Person/profilePage";
 import { EditProfilePage } from "./Pages/Persons/Person/editProfilePage";
 import { ManageSlackAccessPage } from "./Pages/Persons/Person/manageSlackAccessPage";
 import { NotFoundDefaultRedirection } from "./Components/notFoundDefaultRedirection";
-import { LoggedOutPersonArea } from "./Components/loggedOutPersonArea";
-import { PrivatePersonSection } from "./Components/privatePersonSection";
+import { LoggedOutOnlyPageRestriction } from "./Components/PageRestrictions/loggedOutOnlyPageRestriction";
+import { PersonalPageRestriction } from "./Components/PageRestrictions/personalPageRestriction";
 
 //todo debug view, remove later
 const AuthStatus: React.FunctionComponent = () => {
@@ -67,25 +67,25 @@ export class App extends Component<AppProps, AppState> {
           <Route
             path={SiteRoute.login}
             element={
-              <LoggedOutPersonArea>
+              <LoggedOutOnlyPageRestriction>
                 <LoginPage />
-              </LoggedOutPersonArea>
+              </LoggedOutOnlyPageRestriction>
             }
           />
           <Route
             path={SiteRoute.register}
             element={
-              <LoggedOutPersonArea>
+              <LoggedOutOnlyPageRestriction>
                 <RegisterPage />
-              </LoggedOutPersonArea>
+              </LoggedOutOnlyPageRestriction>
             }
           />
           <Route
             path={SiteRoute.persons}
             element={
-              <AuthArea acceptedScopes={AuthScopesSets.All}>
+              <AuthPageRestriction acceptedScopes={AuthScopesSets.All}>
                 <PersonsPage /> {/*THERE SHOULD BE TOOLBAR + SIDE MENU*/}
-              </AuthArea>
+              </AuthPageRestriction>
             }
           >
             <Route path={SiteRoute.search} element={<SearchPage />} />
@@ -97,17 +97,17 @@ export class App extends Component<AppProps, AppState> {
               <Route
                 path={SiteRoute.editProfile}
                 element={
-                  <PrivatePersonSection>
+                  <PersonalPageRestriction>
                     <EditProfilePage />
-                  </PrivatePersonSection>
+                  </PersonalPageRestriction>
                 }
               />
               <Route
                 path={SiteRoute.manageSlackAccess}
                 element={
-                  <PrivatePersonSection>
+                  <PersonalPageRestriction>
                     <ManageSlackAccessPage />
-                  </PrivatePersonSection>
+                  </PersonalPageRestriction>
                 }
               />
               <Route path={"*"} element={<NotFoundDefaultRedirection />} />
