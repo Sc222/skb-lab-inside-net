@@ -44,6 +44,7 @@ export const AuthArea: React.FunctionComponent<AuthAreaProps> = ({ acceptedScope
   }
 
   if (!authProfileScope) {
+    // TODO: LOADER HERE
     return <>LOADING profile info...</>;
   }
 

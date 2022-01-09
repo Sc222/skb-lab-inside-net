@@ -1,16 +1,21 @@
+// those are RELATIVE site routes (create relative and absolute routes !)
 export enum SiteRoute {
     //root routes
     home = "/",
     login = "/login",
     register = "/register",
-    search = "/search",
-    person = "/person",
+    persons = "/persons",
+
+    //other routes are relative without /
+
+    // nested /persons routes
+    search = "search",
     personId = ":personId",
 
-    // person nested routes
-    profile = "/profile",
-    editProfile = "/edit-profile",
-    manageAccess = "/manage-access",
-    timeOff = "/time-off",
-    //all new plugin links go here
+    // persons/:personId nested routes
+    profile = "profile",
+    editProfile = "edit-profile",
+    manageSlackAccess = "manage-slack-access", //todo add TABS nav using search params (?tab=SOMETHING)
+    timeOff = "time-off",
+    //TODO!!! all new extended plugin links go here (ex. timetable, ...)
 }
