@@ -35,6 +35,8 @@ export const AuthContextProvider: React.FunctionComponent = ({ children }) => {
 
   let [person, setPerson] = React.useState<AuthContextPerson | null>(localStorageService.getPersonInfo());
 
+  //FIXME SECURITY!!! for safety purposes try gettingUserId from token!!! (because userId in local storage may be WRONG)
+
   let signIn = async (
     authData: Pick<PersonModel, "Login" | "Password">,
     callback: (result: Result<AuthContextPerson>) => void
