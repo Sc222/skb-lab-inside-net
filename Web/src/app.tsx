@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { AuthPageRestriction } from "./Components/PageRestrictions/authPageRestriction";
-import { AuthContextProvider, useAuthContext } from "./Contexts/authContext";
+import { AuthContextProvider } from "./Contexts/authContext";
 import { SiteRoute } from "./Typings/Enums/siteRoute";
 import { SearchPage } from "./Pages/Persons/searchPage";
 import { LoginPage } from "./Pages/loginPage";
@@ -17,30 +17,7 @@ import { LoggedOutOnlyPageRestriction } from "./Components/PageRestrictions/logg
 import { PersonalPageRestriction } from "./Components/PageRestrictions/personalPageRestriction";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { appTheme } from "./appTheme";
-
-//todo debug view, remove later
-const AuthStatus: React.FunctionComponent = () => {
-  let authContext = useAuthContext();
-
-  let navigate = useNavigate();
-
-  if (!authContext.person) {
-    return <p>You are not logged in.</p>;
-  }
-
-  return (
-    <p>
-      DEBUG VIEW: {authContext.person.personId}!
-      <button
-        onClick={() => {
-          authContext.signOut(() => navigate("/"));
-        }}
-      >
-        Sign out
-      </button>
-    </p>
-  );
-};
+import { HomePage } from "./Pages/homePage";
 
 interface AppProps {}
 
@@ -64,10 +41,9 @@ export class App extends Component<AppProps, AppState> {
       <ThemeProvider theme={appTheme}>
         <CssBaseline />
         <AuthContextProvider>
-          <AuthStatus />
           <Routes>
             {/* LOGGED IN USER SHOULD BE REDIRECTED FROM HOME, LOGIN AND REGISTER*/}
-            <Route path={SiteRoute.home} element={<div>root "landing" page, redirect if logged in (like in gh)</div>} />
+            <Route path={SiteRoute.home} element={<HomePage />} />
             <Route
               path={SiteRoute.login}
               element={
