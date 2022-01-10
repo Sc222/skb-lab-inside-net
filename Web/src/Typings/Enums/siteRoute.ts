@@ -14,8 +14,8 @@ export enum SiteRoute {
 
     // persons/:personId nested routes
     profile = "profile",
-    editProfile = "edit-profile",
+    settings = "settings",
     manageAccess = "manage-access", //todo add TABS nav using search params (?tab=SOMETHING)
-    timeOff = "time-off",
+    calendar = "calendar",
     //TODO!!! all new extended plugin links go here (ex. timetable, ...)
 }

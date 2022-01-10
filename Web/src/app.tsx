@@ -10,7 +10,7 @@ import { AuthScopesSets } from "./Utils/authScopeSets";
 import { PersonsPage } from "./Pages/personsPage";
 import { SpecificPersonPage } from "./Pages/Persons/specificPersonPage";
 import { ProfilePage } from "./Pages/Persons/Person/profilePage";
-import { EditProfilePage } from "./Pages/Persons/Person/editProfilePage";
+import { SettingsPage } from "./Pages/Persons/Person/settingsPage";
 import { ManageAccessPage } from "./Pages/Persons/Person/manageAccessPage";
 import { NotFoundDefaultRedirection } from "./Components/notFoundDefaultRedirection";
 import { LoggedOutOnlyPageRestriction } from "./Components/PageRestrictions/loggedOutOnlyPageRestriction";
@@ -18,6 +18,7 @@ import { PersonalPageRestriction } from "./Components/PageRestrictions/personalP
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { appTheme } from "./appTheme";
 import { HomePage } from "./Pages/homePage";
+import { CalendarPage } from "./Pages/Persons/Person/calendarPage";
 
 interface AppProps {}
 
@@ -73,12 +74,19 @@ export class App extends Component<AppProps, AppState> {
                 <Route path={SiteRoute.profile} element={<ProfilePage />} />
                 {/*TODO inside profile  show CALENDAR info for all users*/}
                 {/*TODO: calendar has 3 event types: studying, time-off, командировка*/}
-                {/*!!! TODO !!! make privatePersonArea here*/}
                 <Route
-                  path={SiteRoute.editProfile}
+                  path={SiteRoute.calendar}
                   element={
                     <PersonalPageRestriction>
-                      <EditProfilePage />
+                      <CalendarPage />
+                    </PersonalPageRestriction>
+                  }
+                />
+                <Route
+                  path={SiteRoute.settings}
+                  element={
+                    <PersonalPageRestriction>
+                      <SettingsPage />
                     </PersonalPageRestriction>
                   }
                 />
