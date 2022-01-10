@@ -5,6 +5,8 @@ import { PersonModel } from "../Api/Models/personModel";
 import { LocalStorageService } from "../Services/localStorageService";
 import { Result, ResultBuilder } from "../Utils/result";
 import { AuthScope } from "../Typings/Enums/authScope";
+import { PersonsApi } from "../Api/personsApi";
+import { Api } from "../Api/api";
 
 interface AuthContextType {
   authInfo: AuthContextPerson | null;
@@ -14,6 +16,7 @@ interface AuthContextType {
   ) => Promise<void>;
   signOut: (callback: () => void) => Promise<void>;
   getAuthScope: (callback: (result: Result<AuthScope>) => void) => Promise<void>;
+  getPersonInfo: (callback: (result: Result<PersonModel>) => void) => Promise<void>;
 }
 
 const AuthContext = React.createContext<AuthContextType>({
@@ -25,6 +28,9 @@ const AuthContext = React.createContext<AuthContextType>({
     /*do nothing*/
   },
   getAuthScope: async () => {
+    /*do nothing*/
+  },
+  getPersonInfo: async () => {
     /*do nothing*/
   },
 });
@@ -65,7 +71,20 @@ export const AuthContextProvider: FunctionComponent = ({ children }) => {
     callback(result);
   };
 
-  let value = { authInfo, signIn, signOut, getAuthScope };
+  let getPersonInfo = async (callback: (result: Result<PersonModel>) => void): Promise<void> => {
+    let result = ResultBuilder.Error<PersonModel>("Не удалось получить информацию об авторизированном пользователе");
+    if (authInfo) {
+      let response = await PersonsApi.GetPersonById(authInfo.personId, authInfo.token);
+      if (!Api.IsRequestSuccess(response) || !response.data) {
+        result = ResultBuilder.Error(response.error);
+      } else {
+        result = ResultBuilder.Success(response.data);
+      }
+    }
+    callback(result);
+  };
+
+  let value = { authInfo, signIn, signOut, getAuthScope, getPersonInfo };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
