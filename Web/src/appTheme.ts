@@ -134,10 +134,10 @@ export const appTheme: Theme = createTheme({
         },
     },
     palette: {
-        /* custom palette for navbar (remove it later)*/
+        /* custom palette for sidebar */
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        neutral: {
+        sidebar: {
             100: "#F3F4F6",
             200: "#E5E7EB",
             300: "#D1D5DB",
@@ -162,16 +162,16 @@ export const appTheme: Theme = createTheme({
         },
         divider: "#E6E8F0",
         primary: {
-            main: "#5048E5",
-            light: "#828DF8",
-            dark: "#3832A0",
+            main: "#00A0A3",
             contrastText: "#FFFFFF",
+            light: "#00B5B8",
+            dark: "#00A0A3",
         },
         secondary: {
-            main: "#10B981",
-            light: "#3FC79A",
-            dark: "#0B815A",
+            main: "#5582C5",
             contrastText: "#FFFFFF",
+            light: "#678FCB",
+            dark: "#3E6EB6",
         },
         success: {
             main: "#14B8A6",

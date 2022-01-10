@@ -34,9 +34,9 @@ export const NavItem: FunctionComponent<NavItemProps> = ({ onClick, to, icon, ti
               startIcon={icon}
               disableRipple
               sx={{
-                backgroundColor: isActive ? "rgba(255,255,255, 0.08)" : undefined,
+                backgroundColor: isActive ? "rgba(255,255,255, 0.1)" : undefined,
                 borderRadius: 1,
-                color: isActive ? "secondary.main" : "neutral.300",
+                color: isActive ? "secondary.light" : "sidebar.100",
                 fontWeight: isActive ? "fontWeightBold" : undefined,
                 justifyContent: "flex-start",
                 px: 3,
@@ -44,10 +44,10 @@ export const NavItem: FunctionComponent<NavItemProps> = ({ onClick, to, icon, ti
                 textTransform: "none",
                 width: "100%",
                 "& .MuiButton-startIcon": {
-                  color: isActive ? "secondary.main" : "neutral.400",
+                  color: isActive ? "secondary.light" : "sidebar.200",
                 },
                 "&:hover": {
-                  backgroundColor: "rgba(255,255,255, 0.08)",
+                  backgroundColor: "rgba(255,255,255, 0.09)",
                 },
               }}
             >

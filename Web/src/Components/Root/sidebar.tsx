@@ -86,39 +86,9 @@ export const Sidebar: FunctionComponent<SidebarProps> = ({ open, onClose, items 
             Inside Net
           </Typography>
         </Box>
-        {/*  <Box sx={{ px: 2 }}>
-            <Box
-              sx={{
-                alignItems: "center",
-                backgroundColor: "rgba(255, 255, 255, 0.04)",
-                cursor: "pointer",
-                display: "flex",
-                justifyContent: "space-between",
-                px: 3,
-                py: "11px",
-                borderRadius: 1,
-              }}
-            >
-              <div>
-                <Typography color="inherit" variant="subtitle1">
-                  Inside Net
-                </Typography>
-                <Typography color="neutral.400" variant="body2">
-                  Your tier : Premium
-                </Typography>
-              </div>
-              <SelectorIcon
-                sx={{
-                  color: "neutral.500",
-                  width: 14,
-                  height: 14,
-                }}
-              />
-            </Box>
-          </Box>*/}
         <Divider
           sx={{
-            borderColor: "#2D3748",
+            borderColor: "sidebar.700",
             my: 3,
           }}
         />
@@ -126,17 +96,6 @@ export const Sidebar: FunctionComponent<SidebarProps> = ({ open, onClose, items 
           {items?.map((item) => (
             <NavItem onClick={onNavItemClick} key={item.title} icon={item.icon} to={item.to} title={item.title} />
           ))}
-        </Box>
-        <Divider sx={{ borderColor: "#2D3748" }} />
-        <Box
-          sx={{
-            px: 2,
-            py: 2,
-          }}
-        >
-          <Typography color="neutral.500" variant="body2">
-            Hardcode Team
-          </Typography>
         </Box>
       </Box>
     </>
@@ -150,7 +109,8 @@ export const Sidebar: FunctionComponent<SidebarProps> = ({ open, onClose, items 
         open
         PaperProps={{
           sx: {
-            backgroundColor: "neutral.900",
+            backgroundColor: "#0F2027",
+            background: "linear-gradient( 109.6deg,  rgba(20,30,48,1) 11.2%, rgba(36,59,85,1) 91.1% )",
             color: "#FFFFFF",
             width: 280,
           },
@@ -169,7 +129,8 @@ export const Sidebar: FunctionComponent<SidebarProps> = ({ open, onClose, items 
       open={open}
       PaperProps={{
         sx: {
-          backgroundColor: "neutral.900",
+          backgroundColor: "#0F2027",
+          background: "linear-gradient( 109.6deg,  rgba(20,30,48,1) 11.2%, rgba(36,59,85,1) 91.1% )",
           color: "#FFFFFF",
           width: 280,
         },
