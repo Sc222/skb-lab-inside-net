@@ -15,6 +15,8 @@ import { ManageSlackAccessPage } from "./Pages/Persons/Person/manageSlackAccessP
 import { NotFoundDefaultRedirection } from "./Components/notFoundDefaultRedirection";
 import { LoggedOutOnlyPageRestriction } from "./Components/PageRestrictions/loggedOutOnlyPageRestriction";
 import { PersonalPageRestriction } from "./Components/PageRestrictions/personalPageRestriction";
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import { appTheme } from "./appTheme";
 
 //todo debug view, remove later
 const AuthStatus: React.FunctionComponent = () => {
@@ -59,65 +61,68 @@ export class App extends Component<AppProps, AppState> {
 
   public render(): JSX.Element {
     return (
-      <AuthContextProvider>
-        <AuthStatus />
-        <Routes>
-          {/* LOGGED IN USER SHOULD BE REDIRECTED FROM HOME, LOGIN AND REGISTER*/}
-          <Route path={SiteRoute.home} element={<div>root "landing" page, redirect if logged in (like in gh)</div>} />
-          <Route
-            path={SiteRoute.login}
-            element={
-              <LoggedOutOnlyPageRestriction>
-                <LoginPage />
-              </LoggedOutOnlyPageRestriction>
-            }
-          />
-          <Route
-            path={SiteRoute.register}
-            element={
-              <LoggedOutOnlyPageRestriction>
-                <RegisterPage />
-              </LoggedOutOnlyPageRestriction>
-            }
-          />
-          <Route
-            path={SiteRoute.persons}
-            element={
-              <AuthPageRestriction acceptedScopes={AuthScopesSets.All}>
-                <PersonsPage /> {/*THERE SHOULD BE TOOLBAR + SIDE MENU*/}
-              </AuthPageRestriction>
-            }
-          >
-            <Route path={SiteRoute.search} element={<SearchPage />} />
-            <Route path={SiteRoute.personId} element={<SpecificPersonPage />}>
-              <Route path={SiteRoute.profile} element={<ProfilePage />} />
-              {/*TODO inside profile  show CALENDAR info for all users*/}
-              {/*TODO: calendar has 3 event types: studying, time-off, командировка*/}
-              {/*!!! TODO !!! make privatePersonArea here*/}
-              <Route
-                path={SiteRoute.editProfile}
-                element={
-                  <PersonalPageRestriction>
-                    <EditProfilePage />
-                  </PersonalPageRestriction>
-                }
-              />
-              <Route
-                path={SiteRoute.manageSlackAccess}
-                element={
-                  <PersonalPageRestriction>
-                    <ManageSlackAccessPage />
-                  </PersonalPageRestriction>
-                }
-              />
+      <ThemeProvider theme={appTheme}>
+        <CssBaseline />
+        <AuthContextProvider>
+          <AuthStatus />
+          <Routes>
+            {/* LOGGED IN USER SHOULD BE REDIRECTED FROM HOME, LOGIN AND REGISTER*/}
+            <Route path={SiteRoute.home} element={<div>root "landing" page, redirect if logged in (like in gh)</div>} />
+            <Route
+              path={SiteRoute.login}
+              element={
+                <LoggedOutOnlyPageRestriction>
+                  <LoginPage />
+                </LoggedOutOnlyPageRestriction>
+              }
+            />
+            <Route
+              path={SiteRoute.register}
+              element={
+                <LoggedOutOnlyPageRestriction>
+                  <RegisterPage />
+                </LoggedOutOnlyPageRestriction>
+              }
+            />
+            <Route
+              path={SiteRoute.persons}
+              element={
+                <AuthPageRestriction acceptedScopes={AuthScopesSets.All}>
+                  <PersonsPage /> {/*THERE SHOULD BE TOOLBAR + SIDE MENU*/}
+                </AuthPageRestriction>
+              }
+            >
+              <Route path={SiteRoute.search} element={<SearchPage />} />
+              <Route path={SiteRoute.personId} element={<SpecificPersonPage />}>
+                <Route path={SiteRoute.profile} element={<ProfilePage />} />
+                {/*TODO inside profile  show CALENDAR info for all users*/}
+                {/*TODO: calendar has 3 event types: studying, time-off, командировка*/}
+                {/*!!! TODO !!! make privatePersonArea here*/}
+                <Route
+                  path={SiteRoute.editProfile}
+                  element={
+                    <PersonalPageRestriction>
+                      <EditProfilePage />
+                    </PersonalPageRestriction>
+                  }
+                />
+                <Route
+                  path={SiteRoute.manageSlackAccess}
+                  element={
+                    <PersonalPageRestriction>
+                      <ManageSlackAccessPage />
+                    </PersonalPageRestriction>
+                  }
+                />
+                <Route path={"*"} element={<NotFoundDefaultRedirection />} />
+                {/* New profile routes can be added here*/}
+              </Route>
               <Route path={"*"} element={<NotFoundDefaultRedirection />} />
-              {/* New profile routes can be added here*/}
             </Route>
             <Route path={"*"} element={<NotFoundDefaultRedirection />} />
-          </Route>
-          <Route path={"*"} element={<NotFoundDefaultRedirection />} />
-        </Routes>
-      </AuthContextProvider>
+          </Routes>
+        </AuthContextProvider>
+      </ThemeProvider>
     );
   }
 }
