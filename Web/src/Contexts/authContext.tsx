@@ -9,7 +9,7 @@ import { AuthScope } from "../Typings/Enums/authScope";
 interface AuthContextType {
   person: AuthContextPerson | null;
   signIn: (
-    authData: Pick<PersonModel, "Login" | "Password">,
+    authData: Pick<PersonModel, "Email" | "Password">,
     callback: (result: Result<AuthContextPerson>) => void
   ) => Promise<void>;
   signOut: (callback: () => void) => Promise<void>;
@@ -38,14 +38,14 @@ export const AuthContextProvider: React.FunctionComponent = ({ children }) => {
   //FIXME SECURITY!!! for safety purposes try gettingUserId from token!!! (because userId in local storage may be WRONG)
 
   let signIn = async (
-    authData: Pick<PersonModel, "Login" | "Password">,
+    authData: Pick<PersonModel, "Email" | "Password">,
     callback: (result: Result<AuthContextPerson>) => void
   ): Promise<void> => {
     let result = await authenticationService.signIn(authData);
     if (result.success) {
-      let person = result.success;
-      setPerson(person);
-      localStorageService.addPersonInfo(person);
+      let fetchedPerson = result.success;
+      setPerson(fetchedPerson);
+      localStorageService.addPersonInfo(fetchedPerson);
     }
     callback(result);
   };
@@ -58,7 +58,7 @@ export const AuthContextProvider: React.FunctionComponent = ({ children }) => {
   };
 
   let getAuthScope = async (callback: (result: Result<AuthScope>) => void): Promise<void> => {
-    let result = ResultBuilder.Error<AuthScope>("person is not logged in");
+    let result = ResultBuilder.Error<AuthScope>("Вход не выполнен");
     if (person) {
       result = await authenticationService.getAuthScope(person.personId, person.token);
     }

@@ -9,7 +9,7 @@ type AuthenticateResponse = { person: PersonModel; token: string; expires: numbe
 
 export class PersonsApi {
     public static async Authenticate(
-        authData: Pick<PersonModel, "Login" | "Password">,
+        authData: Pick<PersonModel, "Email" | "Password">,
         useTestingMocks = true
     ): Promise<ApiResponse<AuthenticateResponse>> {
         if (useTestingMocks) {
@@ -17,10 +17,10 @@ export class PersonsApi {
             let result: ApiResponse<AuthenticateResponse> = {
                 data: null,
                 status: 400,
-                error: "Wrong login or password",
+                error: "Неверная почта или пароль",
             };
             let person = allPersons.find(
-                (value) => value.Login === authData.Login && value.Password === authData.Password
+                (value) => value.Email === authData.Email && value.Password === authData.Password
             );
             if (person) {
                 result = {
@@ -52,7 +52,6 @@ export class PersonsApi {
                 return result;
             })
             .catch((reason: AxiosError) => {
-                console.log(reason);
                 let result: ApiResponse<AuthenticateResponse> = {
                     data: null,
                     status: reason.response?.status ?? -1,
@@ -72,7 +71,7 @@ export class PersonsApi {
             let result: ApiResponse<PersonModel> = {
                 data: null,
                 status: 404,
-                error: "Person not found",
+                error: "Профиль не найден",
             };
             if (person) {
                 result = {
