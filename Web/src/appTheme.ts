@@ -132,7 +132,10 @@ export const appTheme: Theme = createTheme({
         },
     },
     palette: {
-        /*      neutral: {
+        /* custom palette for navbar (remove it later)*/
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        neutral: {
             100: "#F3F4F6",
             200: "#E5E7EB",
             300: "#D1D5DB",
@@ -142,7 +145,7 @@ export const appTheme: Theme = createTheme({
             700: "#374151",
             800: "#1F2937",
             900: "#111827",
-        },*/
+        },
         action: {
             active: "#6B7280",
             focus: "rgba(55, 65, 81, 0.12)",
