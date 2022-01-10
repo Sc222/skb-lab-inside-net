@@ -2,9 +2,10 @@ import React, { FunctionComponent } from "react";
 import { styled } from "@mui/material/styles";
 import { AppBar, Avatar, Badge, Box, IconButton, Toolbar, Tooltip } from "@mui/material";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
+import { SearchInput } from "./searchInput";
+import { ToolbarProfileMenu } from "./toolbarProfileMenu";
 
 const CustomToolbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -14,9 +15,27 @@ const CustomToolbarRoot = styled(AppBar)(({ theme }) => ({
 interface CustomToolbarProps {
   onSidebarOpen: () => void;
   avatarUrl?: string;
+  fullName?: string;
 }
 
-export const CustomToolbar: FunctionComponent<CustomToolbarProps> = ({ onSidebarOpen, avatarUrl, ...other }) => {
+export const CustomToolbar: FunctionComponent<CustomToolbarProps> = ({
+  onSidebarOpen,
+  avatarUrl,
+  fullName,
+  ...other
+}) => {
+  const [profileMenuAnchorEl, setProfileMenuAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  const setProfileMenuAnchor = (event: React.MouseEvent<HTMLElement>) => {
+    if (!profileMenuAnchorEl) {
+      setProfileMenuAnchorEl(event.currentTarget);
+    }
+  };
+
+  const resetProfileMenuAnchor = () => {
+    setProfileMenuAnchorEl(null);
+  };
+
   return (
     <>
       <CustomToolbarRoot
@@ -45,18 +64,15 @@ export const CustomToolbar: FunctionComponent<CustomToolbarProps> = ({ onSidebar
                 xs: "inline-flex",
                 lg: "none",
               },
+              mr: { xs: 1.5, lg: 0 },
             }}
           >
             <MenuOutlinedIcon fontSize="small" />
           </IconButton>
-          <Tooltip title="Search">
-            <IconButton sx={{ ml: 1 }}>
-              <SearchOutlinedIcon fontSize="small" />
-            </IconButton>
-          </Tooltip>
-          <Box sx={{ flexGrow: 1 }} />
+          <SearchInput />
+          <Box sx={{ flexGrow: 1, ml: 1.5 }} />
           <Tooltip title="Уведомления">
-            <IconButton sx={{ ml: 1 }}>
+            <IconButton>
               {/*todo notifications badge and menu*/}
               <Badge badgeContent={undefined} color="primary" variant="dot">
                 <NotificationsOutlinedIcon fontSize="small" />
@@ -64,7 +80,6 @@ export const CustomToolbar: FunctionComponent<CustomToolbarProps> = ({ onSidebar
             </IconButton>
           </Tooltip>
 
-          {/*todo avatar menu*/}
           <Avatar
             sx={{
               height: 40,
@@ -72,9 +87,16 @@ export const CustomToolbar: FunctionComponent<CustomToolbarProps> = ({ onSidebar
               ml: 1,
             }}
             src={avatarUrl}
+            onClick={setProfileMenuAnchor}
           >
             <AccountCircleOutlinedIcon fontSize="small" />
           </Avatar>
+          <ToolbarProfileMenu
+            onClose={resetProfileMenuAnchor}
+            anchorEl={profileMenuAnchorEl}
+            avatarUrl={avatarUrl}
+            fullName={fullName}
+          />
         </Toolbar>
       </CustomToolbarRoot>
     </>

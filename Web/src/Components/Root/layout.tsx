@@ -57,7 +57,11 @@ export const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
           {children}
         </Box>
       </LayoutRoot>
-      <CustomToolbar onSidebarOpen={() => setSidebarOpen(true)} avatarUrl={personInfoForLayout?.AvatarUrl} />
+      <CustomToolbar
+        onSidebarOpen={() => setSidebarOpen(true)}
+        avatarUrl={personInfoForLayout?.AvatarUrl}
+        fullName={personInfoForLayout?.FullName}
+      />
 
       {/* fixme refactor dynamic items loading */}
       <Sidebar
