@@ -19,6 +19,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { appTheme } from "./appTheme";
 import { HomePage } from "./Pages/homePage";
 import { CalendarPage } from "./Pages/Persons/Person/calendarPage";
+import { ContactsPage } from "./Pages/Persons/Person/contactsPage";
 
 interface AppProps {}
 
@@ -83,10 +84,10 @@ export class App extends Component<AppProps, AppState> {
                   }
                 />
                 <Route
-                  path={SiteRoute.settings}
+                  path={SiteRoute.contacts}
                   element={
                     <PersonalPageRestriction>
-                      <SettingsPage />
+                      <ContactsPage />
                     </PersonalPageRestriction>
                   }
                 />
@@ -95,6 +96,14 @@ export class App extends Component<AppProps, AppState> {
                   element={
                     <PersonalPageRestriction>
                       <ManageAccessPage />
+                    </PersonalPageRestriction>
+                  }
+                />
+                <Route
+                  path={SiteRoute.settings}
+                  element={
+                    <PersonalPageRestriction>
+                      <SettingsPage />
                     </PersonalPageRestriction>
                   }
                 />
