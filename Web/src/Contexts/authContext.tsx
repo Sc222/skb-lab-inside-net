@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { FunctionComponent } from "react";
 import { AuthContextPerson } from "../Typings/Interfaces/authContextPerson";
 import { AuthenticationService } from "../Services/authenticationService";
 import { PersonModel } from "../Api/Models/personModel";
@@ -29,7 +29,7 @@ const AuthContext = React.createContext<AuthContextType>({
   },
 });
 
-export const AuthContextProvider: React.FunctionComponent = ({ children }) => {
+export const AuthContextProvider: FunctionComponent = ({ children }) => {
   let localStorageService = new LocalStorageService();
   let authenticationService = new AuthenticationService();
 

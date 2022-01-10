@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { FunctionComponent } from "react";
 import { useEffect } from "react";
 import { PersonModel } from "../Api/Models/personModel";
 import { PersonsApi } from "../Api/personsApi";
@@ -19,7 +19,7 @@ interface PersonContextProps {
   personId: string | null;
 }
 
-export const PersonContextProvider: React.FunctionComponent<PersonContextProps> = ({ personId, children }) => {
+export const PersonContextProvider: FunctionComponent<PersonContextProps> = ({ personId, children }) => {
   let auth = useAuthContext();
 
   let [person, setPerson] = React.useState<PersonModel | null>(null);

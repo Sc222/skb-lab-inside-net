@@ -1,15 +1,15 @@
+import React, { FunctionComponent } from "react";
 import { useFormik } from "formik";
 import { Alert, Box, Button, Container, Link, TextField, Typography } from "@mui/material";
 import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import React from "react";
 import { SiteRoute } from "../Typings/Enums/siteRoute";
 import * as yup from "yup";
 import { useAuthContext } from "../Contexts/authContext";
 
 interface LoginPageProps {}
 
-export const LoginPage: React.FunctionComponent<LoginPageProps> = () => {
+export const LoginPage: FunctionComponent<LoginPageProps> = () => {
   const [loginError, setLoginError] = React.useState<string | null>(null);
 
   const navigate = useNavigate();

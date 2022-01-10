@@ -15,7 +15,7 @@ export enum SiteRoute {
     // persons/:personId nested routes
     profile = "profile",
     editProfile = "edit-profile",
-    manageSlackAccess = "manage-slack-access", //todo add TABS nav using search params (?tab=SOMETHING)
+    manageAccess = "manage-access", //todo add TABS nav using search params (?tab=SOMETHING)
     timeOff = "time-off",
     //TODO!!! all new extended plugin links go here (ex. timetable, ...)
 }

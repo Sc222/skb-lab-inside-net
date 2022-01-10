@@ -1,5 +1,5 @@
 import { AuthScope } from "../../Typings/Enums/authScope";
-import * as React from "react";
+import React, { FunctionComponent } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { useAuthContext } from "../../Contexts/authContext";
@@ -9,7 +9,7 @@ interface AuthPageRestriction {
   acceptedScopes: Set<Exclude<AuthScope, AuthScope.unknown>>;
 }
 
-export const AuthPageRestriction: React.FunctionComponent<AuthPageRestriction> = ({ acceptedScopes, children }) => {
+export const AuthPageRestriction: FunctionComponent<AuthPageRestriction> = ({ acceptedScopes, children }) => {
   let [authProfileScope, setAuthProfileScope] = React.useState<AuthScope | null>(null);
 
   let auth = useAuthContext();

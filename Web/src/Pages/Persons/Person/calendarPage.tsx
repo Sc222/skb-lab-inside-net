@@ -1,7 +1,7 @@
-import * as React from "react";
+import React, { FunctionComponent } from "react";
 
 interface CalendarPageProps {}
 
-export const CalendarPage: React.FunctionComponent<CalendarPageProps> = () => {
+export const CalendarPage: FunctionComponent<CalendarPageProps> = () => {
   return <div>CALENDAR PAGE</div>;
 };

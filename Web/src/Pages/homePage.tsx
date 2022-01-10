@@ -1,11 +1,11 @@
 // todo: beautiful landing from template  OR: redirect to login \ redirect to person profile
-import React from "react";
+import React, { FunctionComponent } from "react";
 import { useAuthContext } from "../Contexts/authContext";
 import { useNavigate } from "react-router-dom";
 
 interface HomePageProps {}
 
-export const HomePage: React.FunctionComponent<HomePageProps> = () => {
+export const HomePage: FunctionComponent<HomePageProps> = () => {
   return (
     <div>
       <AuthStatus />
@@ -15,7 +15,7 @@ export const HomePage: React.FunctionComponent<HomePageProps> = () => {
 };
 
 //todo debug view, remove later
-const AuthStatus: React.FunctionComponent = () => {
+const AuthStatus: FunctionComponent = () => {
   let authContext = useAuthContext();
 
   let navigate = useNavigate();
