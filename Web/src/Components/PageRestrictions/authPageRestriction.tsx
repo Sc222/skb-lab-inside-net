@@ -31,7 +31,7 @@ export const AuthPageRestriction: FunctionComponent<AuthPageRestriction> = ({ ac
     getAuthScope();
   });
 
-  if (!auth.person) {
+  if (!auth.authInfo) {
     // Redirect them to the /login page, but save the current location they were
     // trying to go to when they were redirected. This allows us to send them
     // along to that page after they login, which is a nicer user experience
@@ -45,7 +45,7 @@ export const AuthPageRestriction: FunctionComponent<AuthPageRestriction> = ({ ac
   }
 
   if (authProfileScope === AuthScope.unknown || !acceptedScopes.has(authProfileScope)) {
-    return <Navigate to={`${SiteRoute.persons}/${auth.person.personId}`} state={{ from: location }} replace />;
+    return <Navigate to={`${SiteRoute.persons}/${auth.authInfo.personId}`} state={{ from: location }} replace />;
   }
 
   return <>{children}</>;

@@ -1,7 +1,7 @@
 import { AuthContextPerson } from "../Typings/Interfaces/authContextPerson";
 
 export class LocalStorageService {
-    public addPersonInfo(authContextPerson: AuthContextPerson): void {
+    public addAuthInfo(authContextPerson: AuthContextPerson): void {
         localStorage.setItem("token", authContextPerson.token);
         localStorage.setItem("expires", authContextPerson.expires.toString());
         localStorage.setItem("personId", authContextPerson.personId);
@@ -13,7 +13,7 @@ export class LocalStorageService {
         localStorage.removeItem("personId");
     }
 
-    public getPersonInfo(): AuthContextPerson | null {
+    public getAuthInfo(): AuthContextPerson | null {
         let token = localStorage.getItem("token");
         let expiresStr = localStorage.getItem("expires");
         let expires = Number(localStorage.getItem("expires"));

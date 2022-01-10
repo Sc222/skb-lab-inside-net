@@ -24,7 +24,7 @@ export const PersonalPageRestriction: FunctionComponent<PersonalPageRestrictionP
   }
 
   // Navigate to main person section
-  if (auth.person?.personId !== personId) {
+  if (auth.authInfo?.personId !== personId) {
     return <Navigate to={`${SiteRoute.persons}/${personId}/${SiteRoute.profile}`} replace />;
   }
 

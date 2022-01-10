@@ -27,18 +27,18 @@ export const PersonContextProvider: FunctionComponent<PersonContextProps> = ({ p
 
   useEffect(() => {
     const getPersonById = async (personId: string | null) => {
-      if (!personId || !auth.person?.token) {
+      if (!personId || !auth.authInfo?.token) {
         setPerson(null);
         setIsLoading(false);
         return;
       }
-      let response = await PersonsApi.GetPersonById(personId, auth.person?.token, true);
+      let response = await PersonsApi.GetPersonById(personId, auth.authInfo?.token, true);
       let person = !Api.IsRequestSuccess(response) || !response.data ? null : response.data;
       setPerson(person);
       setIsLoading(false);
     };
     getPersonById(personId);
-  }, [personId, auth.person?.token]);
+  }, [personId, auth.authInfo?.token]);
 
   let value = { person, isLoading };
   return <PersonContext.Provider value={value}>{children}</PersonContext.Provider>;

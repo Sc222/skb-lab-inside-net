@@ -8,8 +8,8 @@ interface NotFoundDefaultRedirectionProps {}
 export const NotFoundDefaultRedirection: FunctionComponent<NotFoundDefaultRedirectionProps> = () => {
   let auth = useAuthContext();
 
-  let redirectionLink = auth.person
-    ? `${SiteRoute.persons}/${auth.person.personId}/${SiteRoute.profile}`
+  let redirectionLink = auth.authInfo
+    ? `${SiteRoute.persons}/${auth.authInfo.personId}/${SiteRoute.profile}`
     : SiteRoute.home;
 
   return <Navigate to={redirectionLink} replace />;

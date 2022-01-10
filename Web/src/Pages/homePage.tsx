@@ -20,13 +20,13 @@ const AuthStatus: FunctionComponent = () => {
 
   let navigate = useNavigate();
 
-  if (!authContext.person) {
+  if (!authContext.authInfo) {
     return <p>You are not logged in.</p>;
   }
 
   return (
     <p>
-      {authContext.person.personId}
+      {authContext.authInfo.personId}
       <br />
       <button
         onClick={() => {

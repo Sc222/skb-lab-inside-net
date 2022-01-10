@@ -9,8 +9,8 @@ interface LoggedOutOnlyPageRestriction {}
 export const LoggedOutOnlyPageRestriction: FunctionComponent<LoggedOutOnlyPageRestriction> = ({ children }) => {
   let auth = useAuthContext();
 
-  if (auth.person) {
-    return <Navigate to={`${SiteRoute.persons}/${auth.person.personId}/${SiteRoute.profile}`} replace />;
+  if (auth.authInfo) {
+    return <Navigate to={`${SiteRoute.persons}/${auth.authInfo.personId}/${SiteRoute.profile}`} replace />;
   }
   return <>{children}</>;
 };

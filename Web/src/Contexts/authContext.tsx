@@ -7,7 +7,7 @@ import { Result, ResultBuilder } from "../Utils/result";
 import { AuthScope } from "../Typings/Enums/authScope";
 
 interface AuthContextType {
-  person: AuthContextPerson | null;
+  authInfo: AuthContextPerson | null;
   signIn: (
     authData: Pick<PersonModel, "Email" | "Password">,
     callback: (result: Result<AuthContextPerson>) => void
@@ -17,7 +17,7 @@ interface AuthContextType {
 }
 
 const AuthContext = React.createContext<AuthContextType>({
-  person: null,
+  authInfo: null,
   signIn: async () => {
     /*do nothing*/
   },
@@ -33,7 +33,7 @@ export const AuthContextProvider: FunctionComponent = ({ children }) => {
   let localStorageService = new LocalStorageService();
   let authenticationService = new AuthenticationService();
 
-  let [person, setPerson] = React.useState<AuthContextPerson | null>(localStorageService.getPersonInfo());
+  let [authInfo, setAuthInfo] = React.useState<AuthContextPerson | null>(localStorageService.getAuthInfo());
 
   //FIXME SECURITY!!! for safety purposes try gettingUserId from token!!! (because userId in local storage may be WRONG)
 
@@ -44,28 +44,28 @@ export const AuthContextProvider: FunctionComponent = ({ children }) => {
     let result = await authenticationService.signIn(authData);
     if (result.success) {
       let fetchedPerson = result.success;
-      setPerson(fetchedPerson);
-      localStorageService.addPersonInfo(fetchedPerson);
+      setAuthInfo(fetchedPerson);
+      localStorageService.addAuthInfo(fetchedPerson);
     }
     callback(result);
   };
 
   let signOut = async (callback: () => void): Promise<void> => {
     await authenticationService.signOut();
-    setPerson(null);
+    setAuthInfo(null);
     localStorageService.clearPersonInfo();
     callback();
   };
 
   let getAuthScope = async (callback: (result: Result<AuthScope>) => void): Promise<void> => {
     let result = ResultBuilder.Error<AuthScope>("Вход не выполнен");
-    if (person) {
-      result = await authenticationService.getAuthScope(person.personId, person.token);
+    if (authInfo) {
+      result = await authenticationService.getAuthScope(authInfo.personId, authInfo.token);
     }
     callback(result);
   };
 
-  let value = { person, signIn, signOut, getAuthScope };
+  let value = { authInfo, signIn, signOut, getAuthScope };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
