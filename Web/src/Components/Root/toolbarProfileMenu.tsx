@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
-import { Avatar, Divider, ListItemIcon, Menu } from "@mui/material";
+import { Avatar, Divider, ListItemIcon, Menu, MenuList } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import { LogoutOutlined } from "@mui/icons-material";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
@@ -69,7 +69,7 @@ export const ToolbarProfileMenu: FunctionComponent<ToolbarProfileMenuProps> = ({
       anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
     >
       {auth.authInfo && (
-        <>
+        <MenuList>
           <MenuItem component={RouterLink} to={`${auth.authInfo.personId}/${SiteRoute.profile}`}>
             <Avatar
               sx={{
@@ -91,7 +91,7 @@ export const ToolbarProfileMenu: FunctionComponent<ToolbarProfileMenuProps> = ({
             </ListItemIcon>
             Настройки
           </MenuItem>
-        </>
+        </MenuList>
       )}
       <MenuItem onClick={signOut}>
         <ListItemIcon>

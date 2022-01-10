@@ -87,7 +87,12 @@ export const SearchInput: FunctionComponent<SearchInputProps> = () => {
         <SearchIconWrapper>
           <SearchIconOutlined color="primary" />
         </SearchIconWrapper>
-        <StyledInputBase placeholder="Поиск" inputProps={{ "aria-label": "search" }} onBlur={resetModalAnchor} />
+        <StyledInputBase
+          placeholder="Поиск"
+          inputProps={{ "aria-label": "search" }}
+          onBlur={resetModalAnchor}
+          value={searchText}
+        />
       </Search>
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl) && searchText.length > 0} autoFocus={false} disableAutoFocus>
         <MenuItem

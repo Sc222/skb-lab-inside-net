@@ -1,40 +1,21 @@
 // todo: beautiful landing from template  OR: redirect to login \ redirect to person profile
 import React, { FunctionComponent } from "react";
 import { useAuthContext } from "../Contexts/authContext";
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import { SiteRoute } from "../Typings/Enums/siteRoute";
 
 interface HomePageProps {}
 
 export const HomePage: FunctionComponent<HomePageProps> = () => {
-  return (
-    <div>
-      <AuthStatus />
-      HOME PAGE
-    </div>
-  );
-};
-
-//todo debug view, remove later
-const AuthStatus: FunctionComponent = () => {
-  let authContext = useAuthContext();
-
-  let navigate = useNavigate();
-
-  if (!authContext.authInfo) {
-    return <p>You are not logged in.</p>;
+  // temporary redirect while landing page is not ready
+  let auth = useAuthContext();
+  let redirectUrl: string = SiteRoute.login;
+  if (auth.authInfo) {
+    redirectUrl = `${SiteRoute.persons}/${auth.authInfo.personId}/${SiteRoute.profile}`;
   }
+  return <Navigate to={redirectUrl} />;
 
-  return (
-    <p>
-      {authContext.authInfo.personId}
-      <br />
-      <button
-        onClick={() => {
-          authContext.signOut(() => navigate("/"));
-        }}
-      >
-        Sign out
-      </button>
-    </p>
-  );
+  /* return (
+      {/!*TODO: HOME PAGE HERE !!!*!/}
+  );*/
 };
