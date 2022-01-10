@@ -1,5 +1,7 @@
 import { createTheme, Theme } from "@mui/material";
 
+export type AppTheme = typeof appTheme;
+
 export const appTheme: Theme = createTheme({
     breakpoints: {
         values: {
