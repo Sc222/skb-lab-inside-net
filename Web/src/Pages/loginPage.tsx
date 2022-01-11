@@ -2,10 +2,10 @@ import React, { FunctionComponent } from "react";
 import { useFormik } from "formik";
 import { Alert, Box, Button, Container, Link, TextField, Typography } from "@mui/material";
 import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { SiteRoute } from "../Typings/Enums/siteRoute";
 import * as yup from "yup";
 import { useAuthContext } from "../Contexts/authContext";
+import LogoAccent from "../assets/logo-accent.png";
 
 interface LoginPageProps {}
 
@@ -58,18 +58,44 @@ export const LoginPage: FunctionComponent<LoginPageProps> = () => {
       }}
     >
       <Container maxWidth="sm">
-        <RouterLink to={SiteRoute.home}>
-          <Button component="a" startIcon={<ArrowBackIcon fontSize="small" />}>
-            На главную
-          </Button>
-        </RouterLink>
         <form onSubmit={formik.handleSubmit}>
-          <Box sx={{ mt: 3, mb: 1 }}>
+          <Link
+            component={RouterLink}
+            to={SiteRoute.home}
+            sx={{ mt: 3, cursor: "pointer", color: "primary.light" }}
+            underline="none"
+          >
+            {/* TODO use old design on register page
+            <Box sx={{ mt: 3, mb: 1 }}>
             <Typography color="textPrimary" variant="h4">
               Войти
             </Typography>
             <Typography color="textSecondary" gutterBottom variant="body2">
               Вход в сервис Inside Net
+            </Typography>
+          </Box>
+            */}
+            <Box sx={{ p: 0, display: "flex", alignItems: "center", justifyContent: "start" }}>
+              <Box
+                component="img"
+                sx={{
+                  height: 54,
+                  width: 54,
+                }}
+                alt="Логотип компании"
+                src={LogoAccent}
+              />
+              <Typography color="inherit" variant="h5" sx={{ ml: 2 }}>
+                Inside Net
+              </Typography>
+            </Box>
+          </Link>
+          <Box sx={{ mt: 3, mb: 1 }}>
+            <Typography color="textPrimary" variant="h4">
+              Вход
+            </Typography>
+            <Typography color="textSecondary" gutterBottom variant="body2">
+              Для продолжения необходимо войти или зарегистрироваться
             </Typography>
           </Box>
           <TextField
