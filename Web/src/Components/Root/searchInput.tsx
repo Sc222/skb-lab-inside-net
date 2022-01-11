@@ -103,8 +103,14 @@ export const SearchInput: FunctionComponent<SearchInputProps> = () => {
           value={searchText}
         />
       </Search>
-      <Menu anchorEl={anchorEl} open={Boolean(anchorEl) && searchText.length > 0} autoFocus={false} disableAutoFocus>
-        <MenuItem onClick={navigateToSearchPage} sx={{ width: `${anchorEl?.clientWidth}px`, display: "flex" }}>
+      <Menu
+        onClick={navigateToSearchPage}
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl) && searchText.length > 0}
+        autoFocus={false}
+        disableAutoFocus
+      >
+        <MenuItem sx={{ width: `${anchorEl?.clientWidth}px`, display: "flex" }}>
           <Typography variant="body1" sx={{ flexGrow: 1, mr: 1, maxWidth: "calc(100% - 40px)" }}>
             Показать результаты поиска
           </Typography>

@@ -6,6 +6,8 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import { SearchInput } from "./searchInput";
 import { ToolbarProfileMenu } from "./toolbarProfileMenu";
+import { SiteRoute } from "../../Typings/Enums/siteRoute";
+import { useMatch } from "react-router-dom";
 
 const CustomToolbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -25,6 +27,8 @@ export const CustomToolbar: FunctionComponent<CustomToolbarProps> = ({
   ...other
 }) => {
   const [profileMenuAnchorEl, setProfileMenuAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  const isSearchPage = useMatch(`${SiteRoute.home}/${SiteRoute.persons}/${SiteRoute.search}`) !== null;
 
   const setProfileMenuAnchor = (event: React.MouseEvent<HTMLElement>) => {
     if (!profileMenuAnchorEl) {
@@ -69,7 +73,7 @@ export const CustomToolbar: FunctionComponent<CustomToolbarProps> = ({
           >
             <MenuOutlinedIcon fontSize="small" />
           </IconButton>
-          <SearchInput />
+          {!isSearchPage && <SearchInput />}
           <Box sx={{ flexGrow: 1, ml: 1.5 }} />
           <Tooltip title="Уведомления">
             <IconButton>
