@@ -1,6 +1,6 @@
 export class MockUtils {
     public static get LargeRequestDelay(): number {
-        return 500;
+        return 200;
     }
 
     public static get SmallRequestDelay(): number {
