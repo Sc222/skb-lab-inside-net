@@ -10,6 +10,8 @@ import { SiteRoute } from "../../Typings/Enums/siteRoute";
 import { Link as RouterLink } from "react-router-dom";
 import { SiteRouteQParam } from "src/Typings/Enums/siteRouteQParam";
 
+// FIXME: refactor searchInput using textField (see searchContactsToolbar)
+
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
