@@ -7,6 +7,7 @@ import { Result, ResultBuilder } from "../Utils/result";
 import { AuthScope } from "../Typings/Enums/authScope";
 import { PersonsApi } from "../Api/personsApi";
 import { Api } from "../Api/api";
+import { ContactsApi } from "../Api/contactsApi";
 
 interface AuthContextType {
   authInfo: AuthContextPerson | null;
@@ -16,6 +17,12 @@ interface AuthContextType {
   ) => Promise<void>;
   signOut: (callback: () => void) => Promise<void>;
   getAuthScope: (callback: (result: Result<AuthScope>) => void) => Promise<void>;
+  getPersonContacts: (callback: (result: Result<PersonModel[]>) => void) => Promise<void>;
+  removeFromPersonContacts: (
+    contactId: string,
+    callback: (result: Result<undefined | string>) => void
+  ) => Promise<void>;
+  addToPersonContacts: (contactId: string, callback: (result: Result<undefined | string>) => void) => Promise<void>;
   getPersonInfo: (callback: (result: Result<PersonModel>) => void) => Promise<void>;
 }
 
@@ -28,6 +35,15 @@ const AuthContext = React.createContext<AuthContextType>({
     /*do nothing*/
   },
   getAuthScope: async () => {
+    /*do nothing*/
+  },
+  getPersonContacts: async () => {
+    /*do nothing*/
+  },
+  removeFromPersonContacts: async () => {
+    /*do nothing*/
+  },
+  addToPersonContacts: async () => {
     /*do nothing*/
   },
   getPersonInfo: async () => {
@@ -71,6 +87,51 @@ export const AuthContextProvider: FunctionComponent = ({ children }) => {
     callback(result);
   };
 
+  let getPersonContacts = async (callback: (result: Result<PersonModel[]>) => void): Promise<void> => {
+    let result = ResultBuilder.Error<PersonModel[]>("Не удалось получить информацию о контактах пользователя");
+    if (authInfo) {
+      let response = await ContactsApi.GetPersonContacts(authInfo.personId, authInfo.token);
+      if (!Api.IsRequestSuccess(response) || !response.data) {
+        result = ResultBuilder.Error(response.error);
+      } else {
+        result = ResultBuilder.Success(response.data);
+      }
+    }
+    callback(result);
+  };
+
+  let removeFromPersonContacts = async (
+    contactId: string,
+    callback: (result: Result<string | undefined>) => void
+  ): Promise<void> => {
+    let result = ResultBuilder.Error<string | undefined>("Не удалось удалить контакт");
+    if (authInfo) {
+      let response = await ContactsApi.RemoveFromContacts(authInfo.personId, contactId, authInfo.token);
+      if (!Api.IsRequestSuccess(response) || !response.data) {
+        result = ResultBuilder.Error(response.error);
+      } else {
+        result = ResultBuilder.Success(response.data);
+      }
+    }
+    callback(result);
+  };
+
+  let addToPersonContacts = async (
+    contactId: string,
+    callback: (result: Result<string | undefined>) => void
+  ): Promise<void> => {
+    let result = ResultBuilder.Error<string | undefined>("Не удалось добавить контакт");
+    if (authInfo) {
+      let response = await ContactsApi.AddToContacts(authInfo.personId, contactId, authInfo.token);
+      if (!Api.IsRequestSuccess(response) || !response.data) {
+        result = ResultBuilder.Error(response.error);
+      } else {
+        result = ResultBuilder.Success(response.data);
+      }
+    }
+    callback(result);
+  };
+
   let getPersonInfo = async (callback: (result: Result<PersonModel>) => void): Promise<void> => {
     let result = ResultBuilder.Error<PersonModel>("Не удалось получить информацию об авторизированном пользователе");
     if (authInfo) {
@@ -84,7 +145,16 @@ export const AuthContextProvider: FunctionComponent = ({ children }) => {
     callback(result);
   };
 
-  let value = { authInfo, signIn, signOut, getAuthScope, getPersonInfo };
+  let value = {
+    authInfo,
+    signIn,
+    signOut,
+    getAuthScope,
+    getPersonContacts,
+    removeFromPersonContacts,
+    addToPersonContacts,
+    getPersonInfo,
+  };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 

@@ -1,5 +1,6 @@
 import { DepartmentModel } from "../Models/departmentModel";
 
+// Used as demo mock db, can be updated during run by "post", "update" and "put requests"
 export const MockDepartments: DepartmentModel[] = [
     {
         Id: "7bf8f0b8-9ad8-437d-9f04-9685ed417fad",

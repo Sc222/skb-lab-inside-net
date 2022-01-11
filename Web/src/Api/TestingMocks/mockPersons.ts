@@ -9,6 +9,7 @@ import AvatarRuslan from "../../assets/avatar-ruslan.jpg";
 import AvatarIgor from "../../assets/avatar-igor.jpg";
 import { MockDepartments } from "./mockDepartments";
 
+// Used as demo mock db, can be updated during run by "post", "update" and "put requests"
 export const MockPersons: Map<string, PersonModel> = new Map<string, PersonModel>([
     [
         "33bc751f-a56b-4704-bfb6-03239f04dcfc",
@@ -18,7 +19,7 @@ export const MockPersons: Map<string, PersonModel> = new Map<string, PersonModel
             Password: "123",
             FullName: "Крылова Анастасия Викторовна",
             AuthScope: AuthScope.regularUser,
-            Position: { Name: "Junior Android Разработчик" },
+            Position: { Name: "Junior Android разработчик" },
             IsNewbie: false,
             Email: "regular@mail.com",
             PhoneNumber: "+78005553535",
@@ -37,7 +38,7 @@ export const MockPersons: Map<string, PersonModel> = new Map<string, PersonModel
             Password: "maria",
             FullName: "Гусева Мария Владимировна",
             AuthScope: AuthScope.regularUser,
-            Position: { Name: "Middle Android Разработчик" },
+            Position: { Name: "Middle Android разработчик" },
             IsNewbie: false,
             Email: "i.am.maria@mail.com",
             PhoneNumber: "+78002343535",
@@ -56,7 +57,7 @@ export const MockPersons: Map<string, PersonModel> = new Map<string, PersonModel
             Password: "natalya",
             FullName: "Шульц Наталья Викторовна",
             AuthScope: AuthScope.regularUser,
-            Position: { Name: "Senior Android Разработчик" },
+            Position: { Name: "Senior Android разработчик" },
             IsNewbie: false,
             Email: "shulz@mail.com",
             PhoneNumber: "+78006783535",
@@ -75,7 +76,7 @@ export const MockPersons: Map<string, PersonModel> = new Map<string, PersonModel
             Password: "12345",
             FullName: "Афанасьев Андрей Дмитриевич",
             AuthScope: AuthScope.departmentManager,
-            Position: { Name: "Начальник отдела Android Разработки" },
+            Position: { Name: "Начальник отдела Android разработки" },
             IsNewbie: false,
             Email: "deparmentManager@mail.com",
             PhoneNumber: "+78309903535",
