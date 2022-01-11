@@ -28,7 +28,7 @@ export const SearchPage: FunctionComponent<SearchPageProps> = ({ searchOnEveryIn
   //FIXME initially selected departments are empty, make better validation
   useEffect(() => {
     const clearDepartmentsSearchParamsOnMount = () => {
-      setSearchParams(createSearchParams({ [ContactsSearchParam.name]: searchText }));
+      setSearchParams(createSearchParams({ [ContactsSearchParam.name]: searchText.trim() }));
     };
     clearDepartmentsSearchParamsOnMount();
   }, []); // it is intended
