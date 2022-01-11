@@ -48,9 +48,9 @@ export const SearchContactCard: FunctionComponent<SearchContactCardProps> = ({ c
       }
       secondary={
         <>
-          {contact.Department.Name}
-          <br />
           {contact.Position.Name}
+          <br />
+          {contact.Department.Name}
         </>
       }
     />
