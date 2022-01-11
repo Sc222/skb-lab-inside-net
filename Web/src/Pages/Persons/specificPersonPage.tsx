@@ -12,9 +12,7 @@ export const SpecificPersonPage: FunctionComponent<SpecificPersonPageProps> = ()
 
   return (
     <PersonContextProvider personId={personId}>
-      <div>
-        SPECIFIC PERSON PAGE (remove it and leave only outlet) <Outlet />
-      </div>
+      <Outlet />
     </PersonContextProvider>
   );
 };

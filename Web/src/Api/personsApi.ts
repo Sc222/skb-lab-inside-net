@@ -4,7 +4,7 @@ import { Api } from "./api";
 import { ApiResponse } from "./apiResponse";
 import { MockPersons } from "./TestingMocks/mockPersons";
 import { MockUtils } from "./TestingMocks/mockUtils";
-import { SiteRouteQParam } from "../Typings/Enums/siteRouteQParam";
+import { ContactsSearchParam } from "../Typings/Enums/contactsSearchParam";
 
 type AuthenticateResponse = { person: PersonModel; token: string; expires: number };
 
@@ -159,8 +159,8 @@ export class PersonsApi {
         if (useTestingMocks) {
             let allPersons = Array.from(MockPersons.values());
             let filteredPersons = allPersons.filter((p) => {
-                let text: string = searchParams.get(SiteRouteQParam.name) ?? p.FullName;
-                let department: string = searchParams.get(SiteRouteQParam.department) ?? p.Department.Name;
+                let text: string = searchParams.get(ContactsSearchParam.name) ?? p.FullName;
+                let department: string = searchParams.get(ContactsSearchParam.department) ?? p.Department.Name;
                 return p.FullName.toLowerCase().includes(text.toLowerCase()) && p.Department.Name === department;
             });
 

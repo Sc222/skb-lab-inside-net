@@ -7,8 +7,8 @@ import MenuItem from "@mui/material/MenuItem";
 import { Typography } from "@mui/material";
 import { ChevronRightOutlined } from "@mui/icons-material";
 import { SiteRoute } from "../../Typings/Enums/siteRoute";
-import { Link as RouterLink } from "react-router-dom";
-import { SiteRouteQParam } from "src/Typings/Enums/siteRouteQParam";
+import { createSearchParams, useNavigate } from "react-router-dom";
+import { ContactsSearchParam } from "src/Typings/Enums/contactsSearchParam";
 
 // FIXME: refactor searchInput using textField (see searchContactsToolbar)
 
@@ -62,6 +62,7 @@ interface SearchInputProps {}
 
 // TODO autocomplete searched contacts + better modal show\hide management !!!
 export const SearchInput: FunctionComponent<SearchInputProps> = () => {
+  const navigate = useNavigate();
   const [searchText, setSearchText] = React.useState("");
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -69,8 +70,14 @@ export const SearchInput: FunctionComponent<SearchInputProps> = () => {
     setSearchText(event.target.value);
   };
 
-  const clearSearchText = () => {
+  const navigateToSearchPage = () => {
     setSearchText("");
+    navigate({
+      pathname: `${SiteRoute.persons}/${SiteRoute.search}`,
+      search: `?${createSearchParams({
+        [ContactsSearchParam.name]: searchText,
+      })}`,
+    });
   };
 
   const setModalAnchor = (event: React.MouseEvent<HTMLInputElement>) => {
@@ -97,12 +104,7 @@ export const SearchInput: FunctionComponent<SearchInputProps> = () => {
         />
       </Search>
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl) && searchText.length > 0} autoFocus={false} disableAutoFocus>
-        <MenuItem
-          onClick={clearSearchText}
-          component={RouterLink}
-          to={`${SiteRoute.persons}/${SiteRoute.search}?${SiteRouteQParam.text}=${searchText}`}
-          sx={{ width: `${anchorEl?.clientWidth}px`, display: "flex" }}
-        >
+        <MenuItem onClick={navigateToSearchPage} sx={{ width: `${anchorEl?.clientWidth}px`, display: "flex" }}>
           <Typography variant="body1" sx={{ flexGrow: 1, mr: 1, maxWidth: "calc(100% - 40px)" }}>
             Показать результаты поиска
           </Typography>
