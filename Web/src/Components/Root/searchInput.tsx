@@ -67,6 +67,9 @@ export const SearchInput: FunctionComponent<SearchInputProps> = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const onSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!anchorEl) {
+      setAnchorEl(event.currentTarget);
+    }
     setSearchText(event.target.value);
   };
 
