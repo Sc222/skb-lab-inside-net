@@ -1,4 +1,5 @@
 import { PositionModel } from "./positionModel";
+import { DepartmentModel } from "./departmentModel";
 
 export interface PersonModel {
     readonly Id?: string;
@@ -6,7 +7,7 @@ export interface PersonModel {
     readonly Password: string;
     readonly FullName: string;
     readonly AuthScope: string;
-    readonly Position: PositionModel;
+    readonly Position: PositionModel; //TODO: who changes positions? admin?
     readonly IsNewbie: boolean;
     readonly Email: string;
     readonly PhoneNumber?: string;
@@ -14,6 +15,7 @@ export interface PersonModel {
     readonly Slack?: string;
     readonly SlackId?: string;
 
-    // Other
+    // Other (add them...)
     readonly AvatarUrl?: string; // url to avatar
+    readonly Department: DepartmentModel; //TODO: who changes positions? admin? + add to backend
 }
