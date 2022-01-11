@@ -165,7 +165,7 @@ export const appTheme: Theme = createTheme({
             main: "#00A0A3",
             contrastText: "#FFFFFF",
             light: "#00B5B8",
-            dark: "#00A0A3",
+            dark: "#00787A",
         },
         secondary: {
             main: "#5582C5",

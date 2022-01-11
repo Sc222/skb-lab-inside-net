@@ -136,7 +136,7 @@ export const SearchContactsToolbar: FunctionComponent<SearchContactsToolbarProps
                         </InputAdornment>
                       ),
                     }}
-                    placeholder="Имя сотрудника"
+                    placeholder="ФИО сотрудника"
                     variant="outlined"
                   />
                 </FormControl>

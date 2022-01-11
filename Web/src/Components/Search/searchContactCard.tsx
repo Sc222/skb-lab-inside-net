@@ -1,65 +1,58 @@
 import React, { FunctionComponent } from "react";
-import { Avatar, Box, Card, CardContent } from "@mui/material";
+import { Avatar, Button, Link, ListItem, ListItemAvatar, ListItemText } from "@mui/material";
 import { SearchContact } from "../../Typings/Types/searchContact";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import { Link as RouterLink } from "react-router-dom";
+import { SiteRoute } from "../../Typings/Enums/siteRoute";
 
 interface SearchContactCardProps {
   contact: SearchContact; // todo api request should return partial PersonModel for PERFORMANCE
 }
 
 export const SearchContactCard: FunctionComponent<SearchContactCardProps> = ({ contact }) => (
-  <Card
-    sx={{
-      display: "flex",
-      flexDirection: "column",
-      height: "100%",
-    }}
+  <ListItem
+    sx={{ py: 2 }}
+    disablePadding
+    secondaryAction={
+      <Button variant="outlined" component="span" size="small">
+        Удалить
+      </Button>
+    }
   >
-    <CardContent>
-      <Box
+    <ListItemAvatar>
+      <Avatar
         sx={{
-          display: "flex",
-          justifyContent: "center",
-          pb: 3,
+          mr: 2,
+          height: 60,
+          width: 60,
         }}
+        src={contact.AvatarUrl}
       >
-        <Avatar alt="Product" src={contact.AvatarUrl} variant="square" />
-      </Box>
-      {/*      <Typography align="center" color="textPrimary" gutterBottom variant="h5">
-        {product.title}
-      </Typography>
-      <Typography align="center" color="textPrimary" variant="body1">
-        {product.description}
-      </Typography>*/}
-    </CardContent>
-    {/* <Box sx={{ flexGrow: 1 }} />
-    <Divider />
-    <Box sx={{ p: 2 }}>
-      <Grid container spacing={2} sx={{ justifyContent: "space-between" }}>
-        <Grid
-          item
+        <AccountCircleOutlinedIcon fontSize="small" />
+      </Avatar>
+    </ListItemAvatar>
+    <ListItemText
+      primary={
+        <Link
+          component={RouterLink}
+          to={`${SiteRoute.persons}/${contact.Id}/${SiteRoute.profile}`}
+          variant="inherit"
+          color="inherit"
+          underline="hover"
           sx={{
-            alignItems: "center",
-            display: "flex",
+            cursor: "pointer",
           }}
         >
-          <ClockIcon color="action" />
-          <Typography color="textSecondary" display="inline" sx={{ pl: 1 }} variant="body2">
-            Updated 2hr ago
-          </Typography>
-        </Grid>
-        <Grid
-          item
-          sx={{
-            alignItems: "center",
-            display: "flex",
-          }}
-        >
-          <DownloadIcon color="action" />
-          <Typography color="textSecondary" display="inline" sx={{ pl: 1 }} variant="body2">
-            {product.totalDownloads} Downloads
-          </Typography>
-        </Grid>
-      </Grid>
-    </Box>*/}
-  </Card>
+          {contact.FullName}
+        </Link>
+      }
+      secondary={
+        <>
+          {contact.Department.Name}
+          <br />
+          {contact.Position.Name}
+        </>
+      }
+    />
+  </ListItem>
 );
