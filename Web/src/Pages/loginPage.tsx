@@ -112,33 +112,31 @@ export const LoginPage: FunctionComponent<LoginPageProps> = () => {
               Войти
             </Button>
           </Box>
-
           <Typography color="textSecondary" variant="body2">
-            <RouterLink to={SiteRoute.register}>
-              <Link
-                variant="subtitle2"
-                underline="hover"
-                sx={{
-                  cursor: "pointer",
-                }}
-              >
-                Зарегистрироваться
-              </Link>
-            </RouterLink>{" "}
-            или{" "}
-            <RouterLink to={SiteRoute.register}>
-              {/*TODO CREATE SPECIAL LDAP-REGISTER PAGE !!!*/}
-              <Link
-                color="secondary"
-                variant="subtitle2"
-                underline="hover"
-                sx={{
-                  cursor: "pointer",
-                }}
-              >
-                Войти через AD
-              </Link>
-            </RouterLink>
+            <Link
+              component={RouterLink}
+              to={SiteRoute.register}
+              variant="subtitle2"
+              underline="hover"
+              sx={{
+                cursor: "pointer",
+              }}
+            >
+              Зарегистрироваться
+            </Link>{" "}
+            или {/*TODO CREATE SPECIAL LDAP-REGISTER PAGE !!!*/}
+            <Link
+              component={RouterLink}
+              to={SiteRoute.register}
+              color="secondary"
+              variant="subtitle2"
+              underline="hover"
+              sx={{
+                cursor: "pointer",
+              }}
+            >
+              Войти через AD
+            </Link>
           </Typography>
           {loginError && (
             <Box sx={{ my: 2 }}>
