@@ -102,7 +102,7 @@ export const MockPersons: Map<string, PersonModel> = new Map<string, PersonModel
             Slack: "work-vitya",
             //SlackId: string,
             AvatarUrl: AvatarVictor,
-            Department: MockDepartments[1],
+            Department: MockDepartments[2],
         },
     ],
     [

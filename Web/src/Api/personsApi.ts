@@ -158,10 +158,11 @@ export class PersonsApi {
     ): Promise<ApiResponse<PersonModel[]>> {
         if (useTestingMocks) {
             let allPersons = Array.from(MockPersons.values());
+            let departments: Set<string> = new Set(searchParams.getAll(ContactsSearchParam.department));
             let filteredPersons = allPersons.filter((p) => {
                 let text: string = searchParams.get(ContactsSearchParam.name) ?? p.FullName;
-                let department: string = searchParams.get(ContactsSearchParam.department) ?? p.Department.Name;
-                return p.FullName.toLowerCase().includes(text.toLowerCase()) && p.Department.Name === department;
+                let hasDepartment = departments.size > 0 ? departments.has(p.Department.Name) : true;
+                return hasDepartment && p.FullName.toLowerCase().includes(text.toLowerCase());
             });
 
             let result = {
