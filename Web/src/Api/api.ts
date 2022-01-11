@@ -1,5 +1,7 @@
 import { ApiResponse } from "./apiResponse";
 
+//TODO: create generic axios response wrapper for all requests errors processing
+
 export class Api {
     public static get BaseUrl(): string {
         switch (process.env.NODE_ENV) {
