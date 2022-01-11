@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect } from "react";
-import { Box, Container, Grid, Pagination, Typography } from "@mui/material";
+import { Box, Container, Grid, SelectChangeEvent, Typography } from "@mui/material";
 import { SearchContactCard } from "../../Components/Search/searchContactCard";
 import { SearchContactsToolbar } from "../../Components/Search/searchContactsToolbar";
 import { SearchContact } from "../../Typings/Types/searchContact";
@@ -8,16 +8,45 @@ import { ContactsSearchParam } from "../../Typings/Enums/contactsSearchParam";
 import { useAuthContext } from "../../Contexts/authContext";
 import { PersonsApi } from "../../Api/personsApi";
 import { Api } from "../../Api/api";
+import { DepartmentModel } from "../../Api/Models/departmentModel";
+import { DepartmentsApi } from "../../Api/departmentsApi";
 
-interface SearchPageProps {}
+interface SearchPageProps {
+  searchOnEveryInput: boolean;
+}
 
 //TODO think about possibility to search NOT ONLY CONTACTS
 
-export const SearchPage: FunctionComponent<SearchPageProps> = () => {
+export const SearchPage: FunctionComponent<SearchPageProps> = ({ searchOnEveryInput }) => {
   const auth = useAuthContext();
   const [contacts, setContacts] = React.useState<SearchContact[] | null>(null);
+  const [departments, setDepartments] = React.useState<DepartmentModel[] | null>(null); // all departments list
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchText, setSearchText] = React.useState<string>(searchParams.get(ContactsSearchParam.name) ?? "");
+  const [selectedDepartments, setSelectedDepartments] = React.useState<string[]>([]);
+
+  //FIXME initially selected departments are empty, make better validation
+  useEffect(() => {
+    const clearDepartmentsSearchParamsOnMount = () => {
+      setSearchParams(createSearchParams({ [ContactsSearchParam.name]: searchText }));
+    };
+    clearDepartmentsSearchParamsOnMount();
+  }, []); // it is intended
+
+  useEffect(() => {
+    const getDepartments = async () => {
+      if (!auth.authInfo?.token) {
+        setDepartments(null);
+        return;
+      }
+      let response = await DepartmentsApi.GetAll(auth.authInfo.token, true);
+      let departments = !Api.IsRequestSuccess(response) || !response.data ? null : response.data;
+      setDepartments(departments);
+    };
+    getDepartments();
+  }, [auth.authInfo?.token]);
+
+  //console.log("departments: ", searchParams.getAll(ContactsSearchParam.department));
 
   useEffect(() => {
     const getContacts = async (searchParams: URLSearchParams) => {
@@ -27,31 +56,42 @@ export const SearchPage: FunctionComponent<SearchPageProps> = () => {
       }
       let response = await PersonsApi.Find(searchParams, auth.authInfo.token, true);
       let persons = !Api.IsRequestSuccess(response) || !response.data ? null : response.data;
-      console.log("FETCHED");
-      setContacts(persons);
+
+      // Exclude yourself from the list
+      setContacts(persons ? persons.filter((p) => p.Id !== auth.authInfo?.personId) : null);
     };
     getContacts(searchParams);
-  }, [searchParams, auth.authInfo?.token]);
+  }, [searchParams, auth.authInfo]);
 
-  // text + department, list of departments is fetched !!!
+  //FIXME use departmentModel, not string
 
-  //FILTER MUST USE SEARCH PARAMS INSIDE
-  const filteredContactsCount: number | undefined = contacts?.filter((c) => c).length;
+  const updateSearchParams = (text: string, departments: string[]) => {
+    setSearchParams(
+      createSearchParams({
+        [ContactsSearchParam.name]: text,
+        [ContactsSearchParam.department]: departments,
+      })
+    );
+  };
 
-  //TODO:  fetch contacts from server + add WORKING filters !!!
-  /*useEffect(() => {
-    setContacts(Array.from(MockPersons.values()));
-  });*/
+  //fixme use DepartmentsModel, "string" value never goes here if keyboard input is disable
+  const onDepartmentsChange = (event: SelectChangeEvent<typeof selectedDepartments>) => {
+    let value = event.target.value;
+    let newDepartments = typeof value === "string" ? value.split(",") : value;
+    setSelectedDepartments(newDepartments);
+    updateSearchParams(searchText, newDepartments);
+  };
 
   const onTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("changed text: " + event.target.value);
     setSearchText(event.target.value);
+    if (searchOnEveryInput) {
+      updateSearchParams(event.target.value, selectedDepartments);
+    }
   };
 
   const onTextKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      //todo do not forget about DEPARTMENT FILTERS
-      setSearchParams(createSearchParams({ [ContactsSearchParam.name]: searchText }));
+      updateSearchParams(searchText, selectedDepartments);
     }
   };
 
@@ -66,10 +106,13 @@ export const SearchPage: FunctionComponent<SearchPageProps> = () => {
       >
         <Container maxWidth="lg">
           <SearchContactsToolbar
-            resultCount={filteredContactsCount}
+            resultCount={contacts?.length}
             searchText={searchText}
+            departments={departments}
+            selectedDepartments={selectedDepartments}
             onTextChange={onTextChange}
             onTextKeyDown={onTextKeyDown}
+            onSelectedDepartmentsChange={onDepartmentsChange}
           />
           <Box sx={{ pt: 3 }}>
             <Grid container spacing={3}>
@@ -83,15 +126,6 @@ export const SearchPage: FunctionComponent<SearchPageProps> = () => {
                 <Typography>Загрузка... {/*TODO LOADING INDICATOR*/}</Typography>
               )}
             </Grid>
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              pt: 3,
-            }}
-          >
-            <Pagination color="primary" count={3} size="small" />
           </Box>
         </Container>
       </Box>
