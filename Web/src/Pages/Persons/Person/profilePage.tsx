@@ -1,16 +1,18 @@
 import React, { FunctionComponent, useEffect } from "react";
 import { useAuthContext } from "../../../Contexts/authContext";
-import { Box, Card, CardContent, Container } from "@mui/material";
+import { Box, Card, CardContent, CardHeader, Container, Divider, Grid, List } from "@mui/material";
 import { usePersonContext } from "../../../Contexts/personContext";
 import { ProfileToolbar } from "../../../Components/Profile/profileToolbar";
-import { PersonModel } from "../../../Api/Models/personModel";
+import { ProfileContactItem } from "../../../Components/Profile/profileContactItem";
+import { MailOutlined, PhoneOutlined } from "@mui/icons-material";
+import { SlackOutlined } from "../../../Components/Icons/slackOutlined";
+import { TelegramOutlined } from "../../../Components/Icons/telegramOutlined";
 
 interface ProfilePageProps {}
 
 export const ProfilePage: FunctionComponent<ProfilePageProps> = () => {
   const auth = useAuthContext();
   const personContext = usePersonContext(); // context for person if it's not authenticated person profile
-  const [authPersonContacts, setAuthPersonContacts] = React.useState<PersonModel[] | null>(null);
   const [isPersonInContacts, setIsPersonInContacts] = React.useState<boolean | null>(null);
 
   const profilePerson = personContext.person;
@@ -18,12 +20,12 @@ export const ProfilePage: FunctionComponent<ProfilePageProps> = () => {
 
   // it can be authPersonPage or anotherPersonPage
   // null -> data not ready
-  const isAuthPersonProfilePage = (): boolean | null => {
+  const isAuthPersonProfilePage = ((): boolean | null => {
     if (!authInfo || !profilePerson) {
       return null;
     }
     return authInfo.personId === profilePerson.Id;
-  };
+  })();
 
   //todo optimize this string for large contacts count
   // null -> data not ready
@@ -35,20 +37,18 @@ export const ProfilePage: FunctionComponent<ProfilePageProps> = () => {
     const getAuthPersonContacts = async () => {
       await auth.getPersonContacts((result) => {
         if (result.success) {
-          setAuthPersonContacts(result.success);
-
           //FIXME seems like a place for possible bugs
           if (profilePerson) {
             setIsPersonInContacts(result.success.findIndex((p) => p.Id === profilePerson.Id) > -1);
           }
         } else {
           // todo process errors somehow
-          setAuthPersonContacts(null);
+          setIsPersonInContacts(null);
         }
       });
     };
     getAuthPersonContacts();
-  }, [auth.authInfo, profilePerson]);
+  }, [auth, profilePerson]);
 
   const toggleIsPersonInContacts = (isInContacts: boolean) => {
     if (profilePerson) {
@@ -77,36 +77,54 @@ export const ProfilePage: FunctionComponent<ProfilePageProps> = () => {
         }}
       >
         <Container maxWidth="md">
-          <ProfileToolbar
-            person={personContext.person}
-            authPersonId={authInfo ? authInfo.personId : null}
-            isAuthPersonProfilePage={isAuthPersonProfilePage()}
-            isPersonInContacts={isPersonInContacts}
-            onIsInContactsChange={toggleIsPersonInContacts}
-          />
-          <Box sx={{ mt: 3 }}>
-            <Card>
-              <CardContent sx={{ py: "0 !important" }}>
-                {/*                {contacts ? (
-                  <List>
-                    {contacts.map((contact, index) => (
-                      <div key={contact.Id}>
-                        <SearchContactCard contact={contact} />
-                        {index !== contacts.length - 1 && <Divider variant="middle" />}
-                      </div>
-                    ))}
-                    {contacts.length === 0 && (
-                      <Typography sx={{ py: 2 }} textAlign="center" variant="body2">
-                        Ничего не найдено
-                      </Typography>
-                    )}
-                  </List>
-                ) : (
-                  <Typography>Загрузка... TODO LOADING INDICATOR</Typography>
-                )}*/}
-              </CardContent>
-            </Card>
-          </Box>
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <ProfileToolbar
+                person={profilePerson}
+                authPersonId={authInfo ? authInfo.personId : null}
+                isAuthPersonProfilePage={isAuthPersonProfilePage}
+                isPersonInContacts={isPersonInContacts}
+                onIsInContactsChange={toggleIsPersonInContacts}
+              />
+            </Grid>
+
+            {/*not auth person layout*/}
+            {!isAuthPersonProfilePage && profilePerson && (
+              <>
+                <Grid item xs={12}>
+                  <Card>
+                    <CardHeader sx={{ py: 2 }} title="Контактная информация" />
+                    <Divider />
+                    <CardContent sx={{ py: "0 !important" }}>
+                      {/*TODO CORRECT LINKS*/}
+                      <List dense>
+                        <ProfileContactItem
+                          icon={<MailOutlined />}
+                          link={`mailto:${profilePerson.Email}`}
+                          text={profilePerson.Email}
+                        />
+                        <ProfileContactItem
+                          icon={<PhoneOutlined />}
+                          link={`tel:${profilePerson.PhoneNumber}`}
+                          text={profilePerson.PhoneNumber ?? "Не указан"}
+                        />
+                        <ProfileContactItem
+                          icon={<TelegramOutlined />}
+                          link={profilePerson.Telegram ? `https://t.me/${profilePerson.Telegram}` : undefined}
+                          text={profilePerson.Telegram ?? "Не указан"}
+                        />
+                        <ProfileContactItem
+                          icon={<SlackOutlined />}
+                          link={profilePerson.Slack}
+                          text={profilePerson.Slack ? "Ссылка на профиль" : "Не указан"}
+                        />
+                      </List>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              </>
+            )}
+          </Grid>
         </Container>
       </Box>
     </>
