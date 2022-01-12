@@ -59,13 +59,21 @@ export const MockContacts: { PersonId: string; ContactsIds: Set<string> }[] = [
         //FullName: "Купатов Руслан Дмитриевич",
         //Отдел бекенд разработки
         PersonId: "419c3781-75ad-4792-9ad1-da30021bcbe7",
-        ContactsIds: new Set(["1d5aee70-b83a-4f11-a744-993b8b3bfc26", "0a3bba87-2322-493f-995c-f5f560d9f49b"]),
+        ContactsIds: new Set([
+            "1d5aee70-b83a-4f11-a744-993b8b3bfc26",
+            "0a3bba87-2322-493f-995c-f5f560d9f49b",
+            "ad59dd3c-bdec-4cc8-bb72-e460479a77e7",
+        ]),
     },
 
     {
         //FullName: "Чемозин Игорь Петрович",
         //Отдел администрирования
         PersonId: "1d5aee70-b83a-4f11-a744-993b8b3bfc26",
-        ContactsIds: new Set(["419c3781-75ad-4792-9ad1-da30021bcbe7", "0a3bba87-2322-493f-995c-f5f560d9f49b"]),
+        ContactsIds: new Set([
+            "419c3781-75ad-4792-9ad1-da30021bcbe7",
+            "0a3bba87-2322-493f-995c-f5f560d9f49b",
+            "ad59dd3c-bdec-4cc8-bb72-e460479a77e7",
+        ]),
     },
 ];

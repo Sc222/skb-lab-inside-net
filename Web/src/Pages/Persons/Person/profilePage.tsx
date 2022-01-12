@@ -158,15 +158,6 @@ export const ProfilePage: FunctionComponent<ProfilePageProps> = () => {
                         </CardContent>
                       </Card>
                     </Grid>
-                    <Grid item xs={12}>
-                      <Card>
-                        <CardHeader title="Slack каналы" />
-                        <Divider />
-                        <CardContent>
-                          <Typography>Нужны ли каналы?</Typography>
-                        </CardContent>
-                      </Card>
-                    </Grid>
                   </>
                 )}
                 {/*auth person layout*/}
@@ -192,7 +183,7 @@ export const ProfilePage: FunctionComponent<ProfilePageProps> = () => {
                             {/*URL TO CONTACTS PROFILE*/}
                             {authPersonContacts &&
                               authPersonContacts
-                                .filter((c, index) => index < 6)
+                                .filter((c, index) => index < 3)
                                 .map((c) => (
                                   <Grid
                                     item

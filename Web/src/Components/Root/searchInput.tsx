@@ -23,7 +23,7 @@ const Search = styled("div")(({ theme }) => ({
     borderColor: theme.palette.action.active,
   },
   width: "100%",
-  [theme.breakpoints.up("sm")]: {
+  [theme.breakpoints.up("md")]: {
     width: "auto",
   },
 }));
@@ -109,13 +109,13 @@ export const SearchInput: FunctionComponent<SearchInputProps> = () => {
       <Menu
         onClick={navigateToSearchPage}
         anchorEl={anchorEl}
-        open={Boolean(anchorEl) && searchText.length > 0}
+        open={Boolean(anchorEl)}
         autoFocus={false}
         disableAutoFocus
       >
         <MenuItem sx={{ width: `${anchorEl?.clientWidth}px`, display: "flex" }}>
           <Typography variant="body1" sx={{ flexGrow: 1, mr: 1, maxWidth: "calc(100% - 40px)" }}>
-            Показать результаты поиска
+            {searchText.length > 0 ? "Показать результаты поиска" : "В раздел поиска"}
           </Typography>
           <ChevronRightOutlined fontSize="medium" color="primary" />
         </MenuItem>
