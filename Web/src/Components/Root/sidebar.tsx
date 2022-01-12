@@ -20,11 +20,6 @@ export const getDefaultItems = (personId: string): { to: string; icon: ReactNode
     title: "Профиль",
   },
   {
-    to: `${personId}/${SiteRoute.calendar}`,
-    icon: <TodayOutlinedIcon fontSize="small" />,
-    title: "Календарь",
-  },
-  {
     to: `${personId}/${SiteRoute.contacts}`,
     icon: <PeopleOutlinedIcon fontSize="small" />,
     title: "Контакты",
@@ -33,6 +28,11 @@ export const getDefaultItems = (personId: string): { to: string; icon: ReactNode
     to: `${personId}/${SiteRoute.manageAccess}`,
     icon: <LockOutlinedIcon fontSize="small" />,
     title: "Права доступа",
+  },
+  {
+    to: `${personId}/${SiteRoute.calendar}`,
+    icon: <TodayOutlinedIcon fontSize="small" />,
+    title: "Календарь",
   },
   {
     to: `${personId}/${SiteRoute.settings}`,
