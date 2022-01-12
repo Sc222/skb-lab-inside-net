@@ -2,6 +2,8 @@ import { DepartmentModel } from "./Models/departmentModel";
 import { MockDepartments } from "./TestingMocks/mockDepartments";
 import { ApiResponse } from "./apiResponse";
 import { MockUtils } from "./TestingMocks/mockUtils";
+import axios, { AxiosError } from "axios";
+import { Api } from "./api";
 
 export class DepartmentsApi {
     public static async GetById(
