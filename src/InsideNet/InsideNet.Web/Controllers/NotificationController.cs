@@ -23,7 +23,7 @@ public class NotificationController : ControllerBase
 
     [HttpGet("{personId}")]
     [AccessFor(null, true)]
-    public NotificationModel[] GetUserNotifications(Guid personId)
+    public NotificationModel[] GetPesronNotifications(Guid personId)
     {
         var notifications = notificationService.GetNotificationsByPerson(personId);
         return mapper.Map<NotificationModel[]>(notifications);
