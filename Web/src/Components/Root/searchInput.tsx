@@ -100,20 +100,14 @@ export const SearchInput: FunctionComponent<SearchInputProps> = () => {
           <SearchIconOutlined color="primary" />
         </SearchIconWrapper>
         <StyledInputBase
-          placeholder="Поиск"
+          placeholder="Глобальный поиск"
           inputProps={{ "aria-label": "search" }}
           onBlur={resetModalAnchor}
           value={searchText}
         />
       </Search>
-      <Menu
-        onClick={navigateToSearchPage}
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        autoFocus={false}
-        disableAutoFocus
-      >
-        <MenuItem sx={{ width: `${anchorEl?.clientWidth}px`, display: "flex" }}>
+      <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} autoFocus={false} disableAutoFocus>
+        <MenuItem onClick={navigateToSearchPage} sx={{ width: `${anchorEl?.clientWidth}px`, display: "flex" }}>
           <Typography variant="body1" sx={{ flexGrow: 1, mr: 1, maxWidth: "calc(100% - 40px)" }}>
             {searchText.length > 0 ? "Показать результаты поиска" : "В раздел поиска"}
           </Typography>
