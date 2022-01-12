@@ -5,6 +5,7 @@ import { ApiResponse } from "./apiResponse";
 import { MockPersons } from "./TestingMocks/mockPersons";
 import { MockUtils } from "./TestingMocks/mockUtils";
 import { MockContacts } from "./TestingMocks/mockContacts";
+import { ContactsSearchParam } from "../Typings/Enums/contactsSearchParam";
 
 export class ContactsApi {
     public static async RemoveFromContacts(
@@ -136,11 +137,14 @@ export class ContactsApi {
                 let ids = contactsIds.ContactsIds;
                 let allPersons = Array.from(MockPersons.values());
                 let contacts = allPersons.filter((p) => ids.has(p.Id!));
-
                 if (searchParams) {
-
+                    let departments: Set<string> = new Set(searchParams.getAll(ContactsSearchParam.department));
+                    contacts = contacts.filter((p) => {
+                        let text: string = searchParams.get(ContactsSearchParam.name) ?? p.FullName;
+                        let hasDepartment = departments.size > 0 ? departments.has(p.Department.Name) : true;
+                        return hasDepartment && p.FullName.toLowerCase().includes(text.toLowerCase());
+                    });
                 }
-
                 result.data = contacts;
             }
 

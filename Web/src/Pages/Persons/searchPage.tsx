@@ -165,7 +165,7 @@ export const SearchPage: FunctionComponent<SearchPageProps> = ({ searchOnEveryIn
                           </div>
                         ))}
                         {contacts.length === 0 && (
-                          <Typography sx={{ py: 2 }} textAlign="center" variant="body2">
+                          <Typography sx={{ py: 2 }} textAlign="center" variant="h6">
                             Ничего не найдено
                           </Typography>
                         )}

@@ -1,15 +1,30 @@
 import React, { FunctionComponent, useEffect } from "react";
-import { Box, Card, CardContent, Container, Divider, List, SelectChangeEvent, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Container,
+  Divider,
+  Link,
+  List,
+  SelectChangeEvent,
+  Typography,
+} from "@mui/material";
 import { useAuthContext } from "src/Contexts/authContext";
 import { SearchContact } from "../../../Typings/Types/searchContact";
 import { DepartmentModel } from "../../../Api/Models/departmentModel";
 import { ContactsSearchParam } from "../../../Typings/Enums/contactsSearchParam";
-import { createSearchParams, useSearchParams } from "react-router-dom";
+import { createSearchParams, Link as RouterLink, useSearchParams } from "react-router-dom";
 import { DepartmentsApi } from "../../../Api/departmentsApi";
 import { PersonsApi } from "../../../Api/personsApi";
 import { Api } from "../../../Api/api";
 import { SearchContactsToolbar } from "../../../Components/Search/searchContactsToolbar";
 import { SearchContactCard } from "../../../Components/Search/searchContactCard";
+import { MyContactsToolbar } from "../../../Components/Contacts/myContactsToolbar";
+import { MyContactCard } from "../../../Components/Contacts/myContactCard";
+import { MyContact } from "../../../Typings/Types/myContact";
+import { SiteRoute } from "../../../Typings/Enums/siteRoute";
 
 interface ContactPageProps {
   searchOnEveryInput: boolean;
@@ -20,7 +35,7 @@ interface ContactPageProps {
 //FIXME: DRY !!!
 export const ContactsPage: FunctionComponent<ContactPageProps> = ({ searchOnEveryInput }) => {
   const auth = useAuthContext();
-  const [authPersonContacts, setAuthPersonContacts] = React.useState<SearchContact[] | null>(null);
+  const [authPersonContacts, setAuthPersonContacts] = React.useState<MyContact[] | null>(null);
   const [departments, setDepartments] = React.useState<DepartmentModel[] | null>(null); // all departments list
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchText, setSearchText] = React.useState<string>(searchParams.get(ContactsSearchParam.name) ?? "");
@@ -32,6 +47,7 @@ export const ContactsPage: FunctionComponent<ContactPageProps> = ({ searchOnEver
     const getAuthPersonContacts = async (searchParams: URLSearchParams) => {
       await auth.getPersonContacts(searchParams, (result) => {
         if (result.success) {
+          console.log("result: ", result.success);
           setAuthPersonContacts(result.success);
         } else {
           // todo process errors somehow
@@ -95,18 +111,14 @@ export const ContactsPage: FunctionComponent<ContactPageProps> = ({ searchOnEver
   };
 
   //Todo rethink this, maybe it will work bad for large lists
-  const onContactRemove = (contactId: string, isInContacts: boolean) => {
-    if (!isInContacts) {
-      auth.removeFromPersonContacts(contactId, () => {
-        /*process errors here*/
-      });
+  const onContactDelete = (contactId: string) => {
+    auth.removeFromPersonContacts(contactId, () => {
+      /*process errors here*/
+    });
 
-      //fixme optimize using dict or hashset
-      const newAuthPersonContacts = authPersonContacts ? authPersonContacts.filter((c) => c.Id !== contactId) : [];
-      setAuthPersonContacts(newAuthPersonContacts); //FIXME: positive rendering, is it ok?
-    } else {
-      //you can't add contact from contacts page, go to search instead
-    }
+    //fixme optimize using dict or hashset
+    const newAuthPersonContacts = authPersonContacts ? authPersonContacts.filter((c) => c.Id !== contactId) : [];
+    setAuthPersonContacts(newAuthPersonContacts); //FIXME: positive rendering, is it ok?
   };
 
   return (
@@ -119,7 +131,7 @@ export const ContactsPage: FunctionComponent<ContactPageProps> = ({ searchOnEver
         }}
       >
         <Container maxWidth="md">
-          <SearchContactsToolbar
+          <MyContactsToolbar
             resultCount={authPersonContacts?.length}
             searchText={searchText}
             departments={departments}
@@ -136,18 +148,34 @@ export const ContactsPage: FunctionComponent<ContactPageProps> = ({ searchOnEver
                   <List>
                     {authPersonContacts.map((contact, index) => (
                       <div key={contact.Id}>
-                        <SearchContactCard
-                          contact={contact}
-                          isInContacts={authPersonContactsIds.has(contact.Id!)}
-                          onIsInContactsChange={onContactRemove}
-                        />
+                        <MyContactCard contact={contact} onDelete={onContactDelete} />
                         {index !== authPersonContacts.length - 1 && <Divider variant="middle" />}
                       </div>
                     ))}
+
+                    {/* nothing found*/}
                     {authPersonContacts.length === 0 && (
-                      <Typography sx={{ py: 2 }} textAlign="center" variant="body2">
-                        Ничего не найдено
-                      </Typography>
+                      <Box sx={{ py: 2, display: "flex", alignItems: "center", flexDirection: "column" }}>
+                        <Typography textAlign="center" variant="h6">
+                          Ничего не найдено
+                        </Typography>
+                        <Box sx={{ mt: 0.5, display: "flex", alignItems: "center" }}>
+                          <Typography sx={{ mr: 1 }} textAlign="center" variant="body2" component="span">
+                            Вы можете воспользоваться
+                          </Typography>
+                          <Link
+                            component={RouterLink}
+                            to={`${SiteRoute.persons}/${SiteRoute.search}?${searchParams.toString()}`}
+                            variant="subtitle2"
+                            underline="hover"
+                            sx={{
+                              cursor: "pointer",
+                            }}
+                          >
+                            глобальным поиском
+                          </Link>
+                        </Box>
+                      </Box>
                     )}
                   </List>
                 ) : (
