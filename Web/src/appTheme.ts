@@ -46,13 +46,15 @@ export const appTheme: Theme = createTheme({
                 disableRipple: true,
             },
         },
+        MuiCard: {
+            defaultProps: {
+                variant: "outlined",
+            },
+        },
         MuiCardContent: {
             styleOverrides: {
                 root: {
                     padding: "32px 24px",
-                    "&:last-child": {
-                        paddingBottom: "32px",
-                    },
                 },
             },
         },
@@ -67,7 +69,7 @@ export const appTheme: Theme = createTheme({
             },
             styleOverrides: {
                 root: {
-                    padding: "32px 24px",
+                    padding: "16px 24px",
                 },
             },
         },
