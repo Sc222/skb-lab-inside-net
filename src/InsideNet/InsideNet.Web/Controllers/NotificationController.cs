@@ -38,7 +38,7 @@ public class NotificationController : ControllerBase
 
     [HttpDelete("{personId}")]
     [AccessFor(null, true)]
-    public void DeleteByUser(Guid personId)
+    public void DeleteAllByPerson(Guid personId)
     {
         notificationService.DeleteByPerson(personId);
     }
