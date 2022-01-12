@@ -76,12 +76,11 @@ export const ToolbarProfileMenu: FunctionComponent<ToolbarProfileMenuProps> = ({
                 height: 32,
                 width: 32,
                 ml: 1,
-                bgcolor: "secondary.light",
                 fontSize: "20px",
               }}
               src={avatarUrl}
             >
-              <AccountCircleOutlinedIcon fontSize="inherit" />
+              <AccountCircleOutlinedIcon color="primary" fontSize="inherit" />
             </Avatar>
             {fullName ?? "Меню профиля"}
           </MenuItem>

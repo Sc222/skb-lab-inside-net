@@ -89,13 +89,12 @@ export const CustomToolbar: FunctionComponent<CustomToolbarProps> = ({
               height: 40,
               width: 40,
               ml: 1,
-              bgcolor: "secondary.light",
               fontSize: "24px",
             }}
             src={avatarUrl}
             onClick={setProfileMenuAnchor}
           >
-            <AccountCircleOutlinedIcon fontSize="inherit" />
+            <AccountCircleOutlinedIcon color="primary" fontSize="inherit" />
           </Avatar>
           <ToolbarProfileMenu
             onClose={resetProfileMenuAnchor}
