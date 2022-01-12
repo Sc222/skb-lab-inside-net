@@ -58,7 +58,7 @@ export const ProfileToolbar: FunctionComponent<ProfileToolbarProps> = ({
                       component="span"
                       size="medium"
                     >
-                      {isPersonInContacts ? "Удалить контакт" : "Добавить"}
+                      {isPersonInContacts ? "Удалить" : "Добавить"}
                     </Button>
                   )}
                 </>

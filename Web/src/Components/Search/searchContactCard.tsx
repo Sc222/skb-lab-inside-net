@@ -7,15 +7,26 @@ import { SiteRoute } from "../../Typings/Enums/siteRoute";
 
 interface SearchContactCardProps {
   contact: SearchContact; // todo api request should return partial PersonModel for PERFORMANCE
+  isInContacts: boolean;
+  onIsInContactsChange: (contactId: string, value: boolean) => void;
 }
 
-export const SearchContactCard: FunctionComponent<SearchContactCardProps> = ({ contact }) => (
+export const SearchContactCard: FunctionComponent<SearchContactCardProps> = ({
+  contact,
+  isInContacts,
+  onIsInContactsChange,
+}) => (
   <ListItem
     sx={{ py: 2 }}
     disablePadding
     secondaryAction={
-      <Button variant="outlined" component="span" size="small">
-        Удалить
+      <Button
+        onClick={() => onIsInContactsChange(contact.Id!, !isInContacts)}
+        variant={isInContacts ? "outlined" : "contained"}
+        component="span"
+        size="small"
+      >
+        {isInContacts ? "Удалить" : "Добавить"}
       </Button>
     }
   >

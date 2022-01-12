@@ -19,11 +19,26 @@ interface SearchPageProps {
 
 export const SearchPage: FunctionComponent<SearchPageProps> = ({ searchOnEveryInput }) => {
   const auth = useAuthContext();
+  const [authPersonContactIds, setAuthPersonContactIds] = React.useState<Set<string> | null>(null);
   const [contacts, setContacts] = React.useState<SearchContact[] | null>(null);
   const [departments, setDepartments] = React.useState<DepartmentModel[] | null>(null); // all departments list
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchText, setSearchText] = React.useState<string>(searchParams.get(ContactsSearchParam.name) ?? "");
   const [selectedDepartments, setSelectedDepartments] = React.useState<string[]>([]);
+
+  useEffect(() => {
+    const getAuthPersonContacts = async () => {
+      await auth.getPersonContacts((result) => {
+        if (result.success) {
+          setAuthPersonContactIds(new Set(result.success.map((r) => r.Id!)));
+        } else {
+          // todo process errors somehow
+          setAuthPersonContactIds(null);
+        }
+      });
+    };
+    getAuthPersonContacts();
+  }, [auth]);
 
   //FIXME initially selected departments are empty, make better validation
   useEffect(() => {
@@ -95,6 +110,23 @@ export const SearchPage: FunctionComponent<SearchPageProps> = ({ searchOnEveryIn
     }
   };
 
+  //Todo rethink this, maybe it will work bad for large lists
+  const onIsInContactsChange = (contactId: string, isInContacts: boolean) => {
+    let newContactIds = new Set(authPersonContactIds?.values());
+    if (isInContacts) {
+      auth.addToPersonContacts(contactId, () => {
+        /*process errors here*/
+      });
+      newContactIds.add(contactId);
+    } else {
+      auth.removeFromPersonContacts(contactId, () => {
+        /*process errors here*/
+      });
+      newContactIds.delete(contactId);
+    }
+    setAuthPersonContactIds(newContactIds); //FIXME: positive rendering, is it ok?
+  };
+
   return (
     <>
       <Box
@@ -118,24 +150,30 @@ export const SearchPage: FunctionComponent<SearchPageProps> = ({ searchOnEveryIn
           <Box sx={{ mt: 3 }}>
             <Card>
               <CardContent sx={{ py: "0 !important" }}>
-                {contacts ? (
-                  <List>
-                    {contacts.map((contact, index) => (
-                      <div key={contact.Id}>
-                        <SearchContactCard contact={contact} />
-                        {index !== contacts.length - 1 && <Divider variant="middle" />}
-                      </div>
-                    ))}
-                    {contacts.length === 0 && (
-                      <Typography sx={{ py: 2 }} textAlign="center" variant="body2">
-                        Ничего не найдено
-                      </Typography>
+                {authPersonContactIds && (
+                  <>
+                    {contacts ? (
+                      <List>
+                        {contacts.map((contact, index) => (
+                          <div key={contact.Id}>
+                            <SearchContactCard
+                              contact={contact}
+                              isInContacts={authPersonContactIds.has(contact.Id!)}
+                              onIsInContactsChange={onIsInContactsChange}
+                            />
+                            {index !== contacts.length - 1 && <Divider variant="middle" />}
+                          </div>
+                        ))}
+                        {contacts.length === 0 && (
+                          <Typography sx={{ py: 2 }} textAlign="center" variant="body2">
+                            Ничего не найдено
+                          </Typography>
+                        )}
+                      </List>
+                    ) : (
+                      <Typography>Загрузка... {/*TODO LOADING INDICATOR*/}</Typography>
                     )}
-                  </List>
-                ) : (
-                  <Typography>Загрузка... {/*TODO LOADING INDICATOR*/}</Typography>
-                )}
-                {/* <Grid container spacing={3}>
+                    {/* <Grid container spacing={3}>
               {contacts ? (
                 contacts.map((contact) => (
                   <Grid item key={contact.Id} xs={12}>
@@ -146,6 +184,8 @@ export const SearchPage: FunctionComponent<SearchPageProps> = ({ searchOnEveryIn
                 <Typography>Загрузка... TODO LOADING INDICATOR</Typography>
               )}
             </Grid>*/}
+                  </>
+                )}
               </CardContent>
             </Card>
           </Box>

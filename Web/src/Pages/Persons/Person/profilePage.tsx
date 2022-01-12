@@ -32,7 +32,7 @@ export const ProfilePage: FunctionComponent<ProfilePageProps> = () => {
 
   // get logged in person contacts
   useEffect(() => {
-    const getAuthScope = async () => {
+    const getAuthPersonContacts = async () => {
       await auth.getPersonContacts((result) => {
         if (result.success) {
           setAuthPersonContacts(result.success);
@@ -47,8 +47,8 @@ export const ProfilePage: FunctionComponent<ProfilePageProps> = () => {
         }
       });
     };
-    getAuthScope();
-  }, [auth.authInfo, profilePerson]);
+    getAuthPersonContacts();
+  }, [auth, profilePerson]);
 
   const toggleIsPersonInContacts = (isInContacts: boolean) => {
     if (profilePerson) {
