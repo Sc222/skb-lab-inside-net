@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect } from "react";
 import { useAuthContext } from "../../../Contexts/authContext";
-import { Box, Card, CardContent, CardHeader, Container, Divider, Grid, List } from "@mui/material";
+import { Box, Card, CardContent, CardHeader, Container, Divider, Grid, List, Typography } from "@mui/material";
 import { usePersonContext } from "../../../Contexts/personContext";
 import { ProfileToolbar } from "../../../Components/Profile/profileToolbar";
 import { ProfileContactItem } from "../../../Components/Profile/profileContactItem";
@@ -87,13 +87,11 @@ export const ProfilePage: FunctionComponent<ProfilePageProps> = () => {
                 onIsInContactsChange={toggleIsPersonInContacts}
               />
             </Grid>
-
-            {/*not auth person layout*/}
-            {!isAuthPersonProfilePage && profilePerson && (
+            {profilePerson && (
               <>
                 <Grid item xs={12}>
                   <Card>
-                    <CardHeader sx={{ py: 2 }} title="Контактная информация" />
+                    <CardHeader title="Контактная информация" />
                     <Divider />
                     <CardContent sx={{ py: "0 !important" }}>
                       {/*TODO CORRECT LINKS*/}
@@ -122,6 +120,32 @@ export const ProfilePage: FunctionComponent<ProfilePageProps> = () => {
                     </CardContent>
                   </Card>
                 </Grid>
+
+                {/* TODO: IS SLACK CHANNELS LIST PUBLIC?*/}
+
+                {/*not auth person layout*/}
+                {!isAuthPersonProfilePage && (
+                  <>
+                    <Grid item xs={12}>
+                      <Card>
+                        <CardHeader title="Календарь" />
+                        <Divider />
+                        <CardContent>
+                          <Typography>Здесь будет календарь</Typography>
+                        </CardContent>
+                      </Card>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Card>
+                        <CardHeader title="Slack каналы" />
+                        <Divider />
+                        <CardContent>
+                          <Typography>Нужны ли каналы?</Typography>
+                        </CardContent>
+                      </Card>
+                    </Grid>
+                  </>
+                )}
               </>
             )}
           </Grid>
