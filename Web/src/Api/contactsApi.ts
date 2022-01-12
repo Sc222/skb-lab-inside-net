@@ -110,7 +110,15 @@ export class ContactsApi {
             });
     }
 
+    /**
+     * Get persons contacts with filtering
+     * @param searchParams currently available search params: 'name' and 'department'
+     * @param personId id of person
+     * @param token auth token
+     * @param useTestingMocks use mock-data or not
+     */
     public static async GetPersonContacts(
+        searchParams: URLSearchParams | null,
         personId: string,
         token: string,
         useTestingMocks = true
@@ -128,6 +136,11 @@ export class ContactsApi {
                 let ids = contactsIds.ContactsIds;
                 let allPersons = Array.from(MockPersons.values());
                 let contacts = allPersons.filter((p) => ids.has(p.Id!));
+
+                if (searchParams) {
+
+                }
+
                 result.data = contacts;
             }
 
@@ -138,9 +151,10 @@ export class ContactsApi {
             });
         }
 
-        let axiosInstance = axios.create({ baseURL: Api.BaseUrl });
+        const axiosInstance = axios.create({ baseURL: Api.BaseUrl });
+        const requestUrl = searchParams ? `/contacts/${personId}?${searchParams.toString()}` : `/contacts/${personId}`;
         return axiosInstance
-            .get<PersonModel[]>(`/contacts/${personId}`, Api.AuthorizationHeaders(token))
+            .get<PersonModel[]>(requestUrl, Api.AuthorizationHeaders(token))
             .then((response) => {
                 let result: ApiResponse<PersonModel[]> = {
                     data: response.data,

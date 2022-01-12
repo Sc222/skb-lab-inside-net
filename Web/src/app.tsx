@@ -70,7 +70,7 @@ export class App extends Component<AppProps, AppState> {
                 </AuthPageRestriction>
               }
             >
-              <Route path={SiteRoute.search} element={<SearchPage searchOnEveryInput/>} />
+              <Route path={SiteRoute.search} element={<SearchPage searchOnEveryInput />} />
               <Route path={SiteRoute.personId} element={<SpecificPersonPage />}>
                 <Route path={SiteRoute.profile} element={<ProfilePage />} />
                 {/*TODO inside profile  show CALENDAR info for all users*/}
@@ -87,7 +87,7 @@ export class App extends Component<AppProps, AppState> {
                   path={SiteRoute.contacts}
                   element={
                     <PersonalPageRestriction>
-                      <ContactsPage />
+                      <ContactsPage searchOnEveryInput />
                     </PersonalPageRestriction>
                   }
                 />

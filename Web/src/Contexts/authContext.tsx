@@ -17,7 +17,10 @@ interface AuthContextType {
   ) => Promise<void>;
   signOut: (callback: () => void) => Promise<void>;
   getAuthScope: (callback: (result: Result<AuthScope>) => void) => Promise<void>;
-  getPersonContacts: (callback: (result: Result<PersonModel[]>) => void) => Promise<void>;
+  getPersonContacts: (
+    searchParams: null | URLSearchParams,
+    callback: (result: Result<PersonModel[]>) => void
+  ) => Promise<void>;
   removeFromPersonContacts: (
     contactId: string,
     callback: (result: Result<undefined | string>) => void
@@ -87,10 +90,13 @@ export const AuthContextProvider: FunctionComponent = ({ children }) => {
     callback(result);
   };
 
-  let getPersonContacts = async (callback: (result: Result<PersonModel[]>) => void): Promise<void> => {
+  let getPersonContacts = async (
+    searchParams: null | URLSearchParams,
+    callback: (result: Result<PersonModel[]>) => void
+  ): Promise<void> => {
     let result = ResultBuilder.Error<PersonModel[]>("Не удалось получить информацию о контактах пользователя");
     if (authInfo) {
-      let response = await ContactsApi.GetPersonContacts(authInfo.personId, authInfo.token);
+      let response = await ContactsApi.GetPersonContacts(searchParams, authInfo.personId, authInfo.token);
       if (!Api.IsRequestSuccess(response) || !response.data) {
         result = ResultBuilder.Error(response.error);
       } else {

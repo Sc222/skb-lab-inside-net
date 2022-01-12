@@ -52,7 +52,7 @@ export const ProfilePage: FunctionComponent<ProfilePageProps> = () => {
   // get logged in person contacts
   useEffect(() => {
     const getAuthPersonContacts = async () => {
-      await auth.getPersonContacts((result) => {
+      await auth.getPersonContacts(null, (result) => {
         if (result.success) {
           //FIXME seems like a place for possible bugs
           if (profilePerson) {

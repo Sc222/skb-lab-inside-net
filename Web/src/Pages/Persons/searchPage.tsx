@@ -28,7 +28,7 @@ export const SearchPage: FunctionComponent<SearchPageProps> = ({ searchOnEveryIn
 
   useEffect(() => {
     const getAuthPersonContacts = async () => {
-      await auth.getPersonContacts((result) => {
+      await auth.getPersonContacts(null, (result) => {
         if (result.success) {
           setAuthPersonContactIds(new Set(result.success.map((r) => r.Id!)));
         } else {
