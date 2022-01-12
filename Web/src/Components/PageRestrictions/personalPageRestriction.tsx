@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useMatch } from "react-router-dom";
 import { useAuthContext } from "../../Contexts/authContext";
 import { SiteRoute } from "../../Typings/Enums/siteRoute";
 import { NotFoundDefaultRedirection } from "../notFoundDefaultRedirection";
@@ -11,9 +11,11 @@ interface PersonalPageRestrictionProps {}
 // MUST BE INSIDE personContext
 export const PersonalPageRestriction: FunctionComponent<PersonalPageRestrictionProps> = ({ children }) => {
   let auth = useAuthContext();
-  let personContext = usePersonContext();
+  let personContext = usePersonContext(); //fixme seems strange
 
-  if (personContext.isLoading) {
+  const isPageAccessible = useMatch(`${SiteRoute.persons}/${auth.authInfo?.personId}/*`);
+
+  if (!auth.authInfo || personContext.isLoading) {
     return <>Loading...</>;
   }
 
@@ -24,7 +26,7 @@ export const PersonalPageRestriction: FunctionComponent<PersonalPageRestrictionP
   }
 
   // Navigate to main person section
-  if (auth.authInfo?.personId !== personId) {
+  if (!isPageAccessible) {
     return <Navigate to={`${SiteRoute.persons}/${personId}/${SiteRoute.profile}`} replace />;
   }
 

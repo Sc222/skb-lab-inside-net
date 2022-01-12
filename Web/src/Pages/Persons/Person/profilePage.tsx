@@ -48,7 +48,7 @@ export const ProfilePage: FunctionComponent<ProfilePageProps> = () => {
       });
     };
     getAuthPersonContacts();
-  }, [auth, profilePerson]);
+  }, [auth.authInfo, profilePerson]);
 
   const toggleIsPersonInContacts = (isInContacts: boolean) => {
     if (profilePerson) {

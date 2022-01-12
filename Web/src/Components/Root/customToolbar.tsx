@@ -28,7 +28,7 @@ export const CustomToolbar: FunctionComponent<CustomToolbarProps> = ({
 }) => {
   const [profileMenuAnchorEl, setProfileMenuAnchorEl] = React.useState<null | HTMLElement>(null);
 
-  const isSearchPage = useMatch(`${SiteRoute.home}/${SiteRoute.persons}/${SiteRoute.search}`) !== null;
+  const isSearchPage = useMatch(`${SiteRoute.persons}/${SiteRoute.search}`) !== null;
 
   const setProfileMenuAnchor = (event: React.MouseEvent<HTMLElement>) => {
     if (!profileMenuAnchorEl) {
