@@ -72,10 +72,12 @@ export const ProfileToolbar: FunctionComponent<ProfileToolbarProps> = ({
                 mr: 4,
                 height: 128,
                 width: 128,
+                bgcolor: "secondary.light",
+                fontSize: "96px",
               }}
               src={person?.AvatarUrl}
             >
-              <AccountCircleOutlinedIcon fontSize="small" />
+              <AccountCircleOutlinedIcon fontSize="inherit" />
             </Avatar>
           </ListItemAvatar>
           {person && (

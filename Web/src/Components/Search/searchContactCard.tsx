@@ -36,10 +36,12 @@ export const SearchContactCard: FunctionComponent<SearchContactCardProps> = ({
           mr: 2,
           height: 60,
           width: 60,
+          bgcolor: "secondary.light",
+          fontSize: "48px",
         }}
         src={contact.AvatarUrl}
       >
-        <AccountCircleOutlinedIcon fontSize="small" />
+        <AccountCircleOutlinedIcon fontSize="inherit" />
       </Avatar>
     </ListItemAvatar>
     <ListItemText

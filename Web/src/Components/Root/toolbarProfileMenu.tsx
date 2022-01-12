@@ -73,13 +73,15 @@ export const ToolbarProfileMenu: FunctionComponent<ToolbarProfileMenuProps> = ({
           <MenuItem component={RouterLink} to={`${auth.authInfo.personId}/${SiteRoute.profile}`}>
             <Avatar
               sx={{
-                height: 40,
-                width: 40,
+                height: 32,
+                width: 32,
                 ml: 1,
+                bgcolor: "secondary.light",
+                fontSize: "20px",
               }}
               src={avatarUrl}
             >
-              <AccountCircleOutlinedIcon fontSize="small" />
+              <AccountCircleOutlinedIcon fontSize="inherit" />
             </Avatar>
             {fullName ?? "Меню профиля"}
           </MenuItem>
