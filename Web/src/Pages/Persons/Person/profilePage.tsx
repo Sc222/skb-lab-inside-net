@@ -132,8 +132,12 @@ export const ProfilePage: FunctionComponent<ProfilePageProps> = () => {
                         />
                         <ProfileContactItem
                           icon={<SlackOutlined />}
-                          link={profilePerson.Slack}
-                          text={profilePerson.Slack ? "Ссылка на профиль" : "Не указан"}
+                          link={
+                            profilePerson.Slack
+                              ? `https://companydomain.slack.com/team/${profilePerson.Slack}`
+                              : undefined
+                          }
+                          text={profilePerson.Slack ?? "Не указан"}
                         />
                       </List>
                     </CardContent>
