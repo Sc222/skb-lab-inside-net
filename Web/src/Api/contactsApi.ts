@@ -22,7 +22,7 @@ export class ContactsApi {
                 error: "Не удалось удалить контакт",
             };
 
-            if (personContactsIndex === -1) {
+            if (personContactsIndex !== -1) {
                 let personContacts = MockContacts[personContactsIndex];
                 personContacts.ContactsIds.delete(contactId);
                 result = {
@@ -73,8 +73,7 @@ export class ContactsApi {
                 status: 500,
                 error: "Не удалось добавить контакт",
             };
-
-            if (personContactsIndex === -1) {
+            if (personContactsIndex !== -1) {
                 let personContacts = MockContacts[personContactsIndex];
                 personContacts.ContactsIds.add(contactId);
                 result = {
