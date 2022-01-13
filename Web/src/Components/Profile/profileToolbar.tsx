@@ -17,6 +17,7 @@ import { PersonModel } from "../../Api/Models/personModel";
 
 interface ProfileToolbarProps {
   person: PersonModel | null;
+  isLoading: boolean;
   isAuthPersonProfilePage: boolean | null;
   authPersonId: string | null;
   isPersonInContacts: boolean | null;
@@ -26,6 +27,7 @@ interface ProfileToolbarProps {
 // FIXME make more responsive on mobile
 export const ProfileToolbar: FunctionComponent<ProfileToolbarProps> = ({
   person,
+  isLoading,
   authPersonId,
   isAuthPersonProfilePage,
   isPersonInContacts,
@@ -33,7 +35,7 @@ export const ProfileToolbar: FunctionComponent<ProfileToolbarProps> = ({
 }) => {
   return (
     <>
-      {person && (
+      {!isLoading && person && (
         <Card>
           <CardContent sx={{ py: "0 !important" }}>
             <ListItem
@@ -84,7 +86,6 @@ export const ProfileToolbar: FunctionComponent<ProfileToolbarProps> = ({
                   <AccountCircleOutlinedIcon color="primary" fontSize="inherit" />
                 </Avatar>
               </ListItemAvatar>
-
               <ListItemText
                 primary={<Typography variant="h4">{person.FullName}</Typography>}
                 secondary={

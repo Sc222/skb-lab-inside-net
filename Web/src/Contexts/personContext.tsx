@@ -37,6 +37,7 @@ export const PersonContextProvider: FunctionComponent<PersonContextProps> = ({ p
       setPerson(person);
       setIsLoading(false);
     };
+    setIsLoading(true); // person is changed, so it is loading
     getPersonById(personId);
   }, [personId, auth.authInfo?.token]);
 

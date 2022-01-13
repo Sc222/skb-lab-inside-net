@@ -41,7 +41,7 @@ export const AuthPageRestriction: FunctionComponent<AuthPageRestriction> = ({ ac
 
   if (!authProfileScope) {
     // TODO: LOADER HERE
-    return <>Loading...</>;
+    return <></>;
   }
 
   if (authProfileScope === AuthScope.unknown || !acceptedScopes.has(authProfileScope)) {

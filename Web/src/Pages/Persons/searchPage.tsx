@@ -170,19 +170,8 @@ export const SearchPage: FunctionComponent<SearchPageProps> = ({ searchOnEveryIn
                       )}
                     </List>
                   ) : (
-                    <Typography>Загрузка... {/*TODO LOADING INDICATOR*/}</Typography>
+                    <Typography>{/*TODO LOADING INDICATOR*/}</Typography>
                   )}
-                  {/* <Grid container spacing={3}>
-              {contacts ? (
-                contacts.map((contact) => (
-                  <Grid item key={contact.Id} xs={12}>
-                    <SearchContactCard contact={contact} />
-                  </Grid>
-                ))
-              ) : (
-                <Typography>Загрузка... TODO LOADING INDICATOR</Typography>
-              )}
-            </Grid>*/}
                 </>
               )}
             </CardContent>

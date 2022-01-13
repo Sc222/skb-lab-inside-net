@@ -16,7 +16,7 @@ export const PersonalPageRestriction: FunctionComponent<PersonalPageRestrictionP
   const isPageAccessible = useMatch(`${SiteRoute.persons}/${auth.authInfo?.personId}/*`);
 
   if (!auth.authInfo || personContext.isLoading) {
-    return <>Loading...</>;
+    return <></>;
   }
 
   let personId = personContext.person?.Id;
