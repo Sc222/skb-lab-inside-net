@@ -59,14 +59,16 @@ export const ProfileToolbar: FunctionComponent<ProfileToolbarProps> = ({
                           )}
                         </>
                       ) : (
-                        <Button
-                          onClick={() => onIsInContactsChange(!isPersonInContacts)}
-                          variant={isPersonInContacts ? "outlined" : "contained"}
-                          component="span"
-                          size="medium"
-                        >
-                          {isPersonInContacts ? "Удалить" : "Добавить"}
-                        </Button>
+                        <>
+                          <Button
+                            onClick={() => onIsInContactsChange(!isPersonInContacts)}
+                            variant={isPersonInContacts ? "outlined" : "contained"}
+                            component="span"
+                            size="medium"
+                          >
+                            {isPersonInContacts ? "Удалить" : "Добавить"}
+                          </Button>
+                        </>
                       )}
                     </>
                   )}
