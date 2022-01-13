@@ -1,15 +1,15 @@
 import React, { FunctionComponent, useEffect } from "react";
-import { Box, CardContent, Divider, List, Typography } from "@mui/material";
+import { Box, Divider, List, Typography } from "@mui/material";
 import { useAuthContext } from "src/Contexts/authContext";
 import { SlackChannelModel } from "../../Api/Models/slackChannelModel";
-import { MySlackChannelListItem } from "./mySlackChannelListItem";
+import { MyChannelListItem } from "./myChannelListItem";
 
-interface MySlackChannelsProps {}
+interface PendingChannelRequestsAccessTabProps {}
 
 //TODO think about possibility to search NOT ONLY CONTACTS
 
 //FIXME: DRY !!!
-export const MySlackChannels: FunctionComponent<MySlackChannelsProps> = () => {
+export const PendingChannelRequestsAccessTab: FunctionComponent<PendingChannelRequestsAccessTabProps> = () => {
   const auth = useAuthContext();
   const [personChannels, setPersonChannels] = React.useState<SlackChannelModel[] | null>(null);
 
@@ -28,12 +28,12 @@ export const MySlackChannels: FunctionComponent<MySlackChannelsProps> = () => {
   }, [auth]);
 
   return (
-  <>
+    <>
       {personChannels ? (
         <List>
           {personChannels.map((channel, index) => (
             <div key={channel.ChannelId}>
-              <MySlackChannelListItem channel={channel} />
+              <MyChannelListItem channel={channel} />
               {index !== personChannels.length - 1 && <Divider variant="middle" />}
             </div>
           ))}
@@ -55,17 +55,6 @@ export const MySlackChannels: FunctionComponent<MySlackChannelsProps> = () => {
       ) : (
         <Typography>{/*TODO LOADING INDICATOR*/}</Typography>
       )}
-      {/* <Grid container spacing={3}>
-              {contacts ? (
-                contacts.map((contact) => (
-                  <Grid item key={contact.Id} xs={12}>
-                    <SearchContactCard contact={contact} />
-                  </Grid>
-                ))
-              ) : (
-                <Typography>Загрузка... TODO LOADING INDICATOR</Typography>
-              )}
-            </Grid>*/}
     </>
   );
 };

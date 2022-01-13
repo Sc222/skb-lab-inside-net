@@ -5,4 +5,5 @@ export interface SlackChannelModel {
 
     //Other
     readonly ChannelDescription: string;
+    readonly IsRequested: boolean;//todo временно, затем вместо этого поля запрашивать AccessRequest'ы
 }

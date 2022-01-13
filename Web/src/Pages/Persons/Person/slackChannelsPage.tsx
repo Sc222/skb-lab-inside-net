@@ -6,9 +6,12 @@ import { SlackChannelsToolbar, TabPanel } from "../../../Components/SlackChannel
 import { Card, CardContent, Container } from "@mui/material";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import { MySlackChannels } from "../../../Components/SlackChannels/mySlackChannels";
+import { MyChannelsTab } from "../../../Components/SlackChannels/myChannelsTab";
+import { RequestChannelAccessTab } from "../../../Components/SlackChannels/requestChannelAccessTab";
 
 interface SlackChannelsPageProps {}
+
+//TODO: where should we show DISAPPROVED channel requests ???
 
 export const SlackChannelsPage: FunctionComponent<SlackChannelsPageProps> = () => {
   const [currentTab, setCurrentTab] = React.useState(0);
@@ -29,7 +32,7 @@ export const SlackChannelsPage: FunctionComponent<SlackChannelsPageProps> = () =
       });
     };
     getAuthScope();
-  }, []);
+  }, [auth]);
 
   const onTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setCurrentTab(newValue);
@@ -57,25 +60,31 @@ export const SlackChannelsPage: FunctionComponent<SlackChannelsPageProps> = () =
           <Card>
             <CardContent sx={{ px: 1, py: "0 !important" }}>
               <Box sx={{ py: 1 }}>
-                <Tabs value={currentTab} onChange={onTabChange} aria-label="basic tabs example">
-                  <Tab label="Мои каналы" {...generateTabProps(0)} />
-                  <Tab label="Запрос доступа" {...generateTabProps(1)} />
-                  {authProfileScope === AuthScope.slackAdmin && <Tab label="Выдача доступа" {...generateTabProps(2)} />}
-                </Tabs>
+                {authProfileScope && (
+                  <Tabs value={currentTab} onChange={onTabChange} aria-label="basic tabs example">
+                    <Tab label="Мои каналы" {...generateTabProps(0)} />
+                    <Tab label="Запросить доступ" {...generateTabProps(1)} />
+                    {authProfileScope === AuthScope.slackAdmin && (
+                      <Tab label="Выдача доступа" {...generateTabProps(2)} />
+                    )}
+                  </Tabs>
+                )}
               </Box>
             </CardContent>
             <CardContent sx={{ py: "0 !important", minHeight: 100 }}>
-              <TabPanel value={currentTab} index={0}>
-                <MySlackChannels />
-              </TabPanel>
-              <TabPanel value={currentTab} index={1}>
-                Item Two
-              </TabPanel>
-              {authProfileScope === AuthScope.slackAdmin && (
-                <TabPanel value={currentTab} index={2}>
-                  Item Three
+              <>
+                <TabPanel value={currentTab} index={0}>
+                  <MyChannelsTab />
                 </TabPanel>
-              )}
+                <TabPanel value={currentTab} index={1}>
+                  <RequestChannelAccessTab />
+                </TabPanel>
+                {authProfileScope === AuthScope.slackAdmin && (
+                  <TabPanel value={currentTab} index={2}>
+                    Item Three
+                  </TabPanel>
+                )}
+              </>
             </CardContent>
           </Card>
         </Box>

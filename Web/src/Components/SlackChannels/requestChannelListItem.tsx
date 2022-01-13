@@ -1,16 +1,34 @@
 import React, { FunctionComponent } from "react";
-import { Avatar, Link, ListItem, ListItemAvatar, ListItemText } from "@mui/material";
-import { Link as RouterLink } from "react-router-dom";
+import { Button, Link, ListItem, ListItemAvatar, ListItemText } from "@mui/material";
 import { SlackChannelModel } from "../../Api/Models/slackChannelModel";
 import { TextAvatar } from "../Common/textAvatar";
 
-interface MyChannelListItemProps {
+interface RequestChannelListItemProps {
   channel: SlackChannelModel;
-  dense?: boolean;
+  isRequestSent: boolean;
+  onRequestAccess: (channelId: string) => void;
 }
 
-export const MySlackChannelListItem: FunctionComponent<MyChannelListItemProps> = ({ channel, dense = false }) => (
-  <ListItem sx={{ py: dense ? 0.75 : 2 }} disablePadding>
+export const RequestChannelListItem: FunctionComponent<RequestChannelListItemProps> = ({
+  channel,
+  isRequestSent,
+  onRequestAccess,
+}) => (
+  <ListItem
+    sx={{ py: 2 }}
+    disablePadding
+    secondaryAction={
+      <Button
+        onClick={isRequestSent ? () => onRequestAccess(channel.ChannelId) : undefined}
+        disabled={isRequestSent}
+        variant={"contained"}
+        component="span"
+        size="small"
+      >
+        {isRequestSent ? "Запрос обрабатывается" : "Запросить"}
+      </Button>
+    }
+  >
     <ListItemAvatar>
       <TextAvatar
         sx={{

@@ -27,7 +27,7 @@ export function TabPanel(props: TabPanelProps): JSX.Element {
 
 interface SlackChannelsToolbar {}
 
-export const SlackChannelsToolbar: FunctionComponent<SlackChannelsToolbar> = ({}) => {
+export const SlackChannelsToolbar: FunctionComponent<SlackChannelsToolbar> = () => {
   return (
     <>
       <Box
