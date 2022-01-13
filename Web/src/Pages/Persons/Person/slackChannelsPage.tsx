@@ -71,7 +71,10 @@ export const SlackChannelsPage: FunctionComponent<SlackChannelsPageProps> = () =
                   <Tabs value={Number(currentTab)} onChange={onTabChange} aria-label="basic tabs example">
                     <Tab label="Мои каналы" {...generateTabProps("0")} />
                     <Tab label="Запросить доступ" {...generateTabProps("1")} />
-                    <Divider orientation="vertical" flexItem variant="middle" />
+                    {/*fixme refactor navigation*/}
+                    {authProfileScope === AuthScope.slackAdmin && (
+                      <Divider orientation="vertical" flexItem variant="middle" />
+                    )}
                     {authProfileScope === AuthScope.slackAdmin && (
                       <Tab label="Активные запросы" {...generateTabProps("3")} />
                     )}
