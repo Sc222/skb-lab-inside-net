@@ -128,52 +128,51 @@ export const SearchPage: FunctionComponent<SearchPageProps> = ({ searchOnEveryIn
   };
 
   return (
-    <>
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          py: 8,
-        }}
-      >
-        <Container maxWidth="md">
-          <SearchContactsToolbar
-            resultCount={contacts?.length}
-            searchText={searchText}
-            departments={departments}
-            selectedDepartments={selectedDepartments}
-            onTextChange={onTextChange}
-            onTextKeyDown={onTextKeyDown}
-            onSelectedDepartmentsChange={onDepartmentsChange}
-          />
+    <Box
+      component="main"
+      sx={{
+        flexGrow: 1,
+        py: 8,
+      }}
+    >
+      <Container maxWidth="md">
+        <SearchContactsToolbar
+          resultCount={contacts?.length}
+          searchText={searchText}
+          departments={departments}
+          selectedDepartments={selectedDepartments}
+          onTextChange={onTextChange}
+          onTextKeyDown={onTextKeyDown}
+          onSelectedDepartmentsChange={onDepartmentsChange}
+        />
 
-          <Box sx={{ mt: 3 }}>
-            <Card>
-              <CardContent sx={{ py: "0 !important" }}>
-                {authPersonContactIds && (
-                  <>
-                    {contacts ? (
-                      <List>
-                        {contacts.map((contact, index) => (
-                          <div key={contact.Id}>
-                            <SearchContactCard
-                              contact={contact}
-                              isInContacts={authPersonContactIds.has(contact.Id!)}
-                              onIsInContactsChange={onIsInContactsChange}
-                            />
-                            {index !== contacts.length - 1 && <Divider variant="middle" />}
-                          </div>
-                        ))}
-                        {contacts.length === 0 && (
-                          <Typography sx={{ py: 2 }} textAlign="center" variant="h6">
-                            Ничего не найдено
-                          </Typography>
-                        )}
-                      </List>
-                    ) : (
-                      <Typography>Загрузка... {/*TODO LOADING INDICATOR*/}</Typography>
-                    )}
-                    {/* <Grid container spacing={3}>
+        <Box sx={{ mt: 3 }}>
+          <Card>
+            <CardContent sx={{ py: "0 !important" }}>
+              {authPersonContactIds && (
+                <>
+                  {contacts ? (
+                    <List>
+                      {contacts.map((contact, index) => (
+                        <div key={contact.Id}>
+                          <SearchContactCard
+                            contact={contact}
+                            isInContacts={authPersonContactIds.has(contact.Id!)}
+                            onIsInContactsChange={onIsInContactsChange}
+                          />
+                          {index !== contacts.length - 1 && <Divider variant="middle" />}
+                        </div>
+                      ))}
+                      {contacts.length === 0 && (
+                        <Typography sx={{ py: 2 }} textAlign="center" variant="h6">
+                          Ничего не найдено
+                        </Typography>
+                      )}
+                    </List>
+                  ) : (
+                    <Typography>Загрузка... {/*TODO LOADING INDICATOR*/}</Typography>
+                  )}
+                  {/* <Grid container spacing={3}>
               {contacts ? (
                 contacts.map((contact) => (
                   <Grid item key={contact.Id} xs={12}>
@@ -184,13 +183,12 @@ export const SearchPage: FunctionComponent<SearchPageProps> = ({ searchOnEveryIn
                 <Typography>Загрузка... TODO LOADING INDICATOR</Typography>
               )}
             </Grid>*/}
-                  </>
-                )}
-              </CardContent>
-            </Card>
-          </Box>
-        </Container>
-      </Box>
-    </>
+                </>
+              )}
+            </CardContent>
+          </Card>
+        </Box>
+      </Container>
+    </Box>
   );
 };

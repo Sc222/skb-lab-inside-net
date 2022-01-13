@@ -122,66 +122,65 @@ export const ContactsPage: FunctionComponent<ContactPageProps> = ({ searchOnEver
   };
 
   return (
-    <>
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          py: 8,
-        }}
-      >
-        <Container maxWidth="md">
-          <MyContactsToolbar
-            resultCount={authPersonContacts?.length}
-            searchText={searchText}
-            departments={departments}
-            selectedDepartments={selectedDepartments}
-            onTextChange={onTextChange}
-            onTextKeyDown={onTextKeyDown}
-            onSelectedDepartmentsChange={onDepartmentsChange}
-          />
+    <Box
+      component="main"
+      sx={{
+        flexGrow: 1,
+        py: 8,
+      }}
+    >
+      <Container maxWidth="md">
+        <MyContactsToolbar
+          resultCount={authPersonContacts?.length}
+          searchText={searchText}
+          departments={departments}
+          selectedDepartments={selectedDepartments}
+          onTextChange={onTextChange}
+          onTextKeyDown={onTextKeyDown}
+          onSelectedDepartmentsChange={onDepartmentsChange}
+        />
 
-          <Box sx={{ mt: 3 }}>
-            <Card>
-              <CardContent sx={{ py: "0 !important" }}>
-                {authPersonContacts ? (
-                  <List>
-                    {authPersonContacts.map((contact, index) => (
-                      <div key={contact.Id}>
-                        <MyContactCard contact={contact} onDelete={onContactDelete} />
-                        {index !== authPersonContacts.length - 1 && <Divider variant="middle" />}
-                      </div>
-                    ))}
+        <Box sx={{ mt: 3 }}>
+          <Card>
+            <CardContent sx={{ py: "0 !important" }}>
+              {authPersonContacts ? (
+                <List>
+                  {authPersonContacts.map((contact, index) => (
+                    <div key={contact.Id}>
+                      <MyContactCard contact={contact} onDelete={onContactDelete} />
+                      {index !== authPersonContacts.length - 1 && <Divider variant="middle" />}
+                    </div>
+                  ))}
 
-                    {/* nothing found*/}
-                    {authPersonContacts.length === 0 && (
-                      <Box sx={{ py: 2, display: "flex", alignItems: "center", flexDirection: "column" }}>
-                        <Typography textAlign="center" variant="h6">
-                          Ничего не найдено
+                  {/* nothing found*/}
+                  {authPersonContacts.length === 0 && (
+                    <Box sx={{ py: 2, display: "flex", alignItems: "center", flexDirection: "column" }}>
+                      <Typography textAlign="center" variant="h6">
+                        Ничего не найдено
+                      </Typography>
+                      <Box sx={{ mt: 0.5, display: "flex", alignItems: "center" }}>
+                        <Typography sx={{ mr: 1 }} textAlign="center" variant="body2" component="span">
+                          Вы можете воспользоваться
                         </Typography>
-                        <Box sx={{ mt: 0.5, display: "flex", alignItems: "center" }}>
-                          <Typography sx={{ mr: 1 }} textAlign="center" variant="body2" component="span">
-                            Вы можете воспользоваться
-                          </Typography>
-                          <Link
-                            component={RouterLink}
-                            to={`${SiteRoute.persons}/${SiteRoute.search}?${searchParams.toString()}`}
-                            variant="subtitle2"
-                            underline="hover"
-                            sx={{
-                              cursor: "pointer",
-                            }}
-                          >
-                            глобальным поиском
-                          </Link>
-                        </Box>
+                        <Link
+                          component={RouterLink}
+                          to={`${SiteRoute.persons}/${SiteRoute.search}?${searchParams.toString()}`}
+                          variant="subtitle2"
+                          underline="hover"
+                          sx={{
+                            cursor: "pointer",
+                          }}
+                        >
+                          глобальным поиском
+                        </Link>
                       </Box>
-                    )}
-                  </List>
-                ) : (
-                  <Typography>Загрузка... {/*TODO LOADING INDICATOR*/}</Typography>
-                )}
-                {/* <Grid container spacing={3}>
+                    </Box>
+                  )}
+                </List>
+              ) : (
+                <Typography>Загрузка... {/*TODO LOADING INDICATOR*/}</Typography>
+              )}
+              {/* <Grid container spacing={3}>
               {contacts ? (
                 contacts.map((contact) => (
                   <Grid item key={contact.Id} xs={12}>
@@ -192,11 +191,10 @@ export const ContactsPage: FunctionComponent<ContactPageProps> = ({ searchOnEver
                 <Typography>Загрузка... TODO LOADING INDICATOR</Typography>
               )}
             </Grid>*/}
-              </CardContent>
-            </Card>
-          </Box>
-        </Container>
-      </Box>
-    </>
+            </CardContent>
+          </Card>
+        </Box>
+      </Container>
+    </Box>
   );
 };
