@@ -63,6 +63,6 @@ export const MockChannels: {
         ChannelId: "C1155GHSF",
         ChannelName: "#dev-ops",
         ChannelDescription: "Все, связанное с CI/CD",
-        PersonsInChannel: new Set<string>(["1d5aee70-b83a-4f11-a744-993b8b3bfc26"]),
+        PersonsInChannel: new Set<string>([]),
     },
 ];

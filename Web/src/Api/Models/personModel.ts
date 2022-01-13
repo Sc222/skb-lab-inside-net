@@ -13,7 +13,7 @@ export interface PersonModel {
     readonly PhoneNumber?: string;
     readonly Telegram?: string;
     readonly Slack?: string;
-    readonly SlackId?: string;
+    readonly SlackId: string; //fixme make it required
 
     // Other (add them...)
     readonly AvatarUrl?: string; // url to avatar
