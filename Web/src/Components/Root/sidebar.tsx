@@ -10,6 +10,7 @@ import TodayOutlinedIcon from "@mui/icons-material/TodayOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import { SiteRoute } from "../../Typings/Enums/siteRoute";
 import { AppTheme } from "../../appTheme";
+import {SlackOutlined} from "../Icons/slackOutlined";
 
 //todo ref should be based on user id
 // TODO make sidebarItems dynamic
@@ -25,9 +26,9 @@ export const getDefaultItems = (personId: string): { to: string; icon: ReactNode
     title: "Контакты",
   },
   {
-    to: `${personId}/${SiteRoute.manageAccess}`,
-    icon: <LockOutlinedIcon fontSize="small" />,
-    title: "Права доступа",
+    to: `${personId}/${SiteRoute.slackChannels}`,
+    icon: <SlackOutlined fontSize="small" />,
+    title: "Slack каналы",
   },
   {
     to: `${personId}/${SiteRoute.calendar}`,

@@ -16,7 +16,7 @@ export enum SiteRoute {
     profile = "profile",
     calendar = "calendar",
     contacts = "contacts",
-    manageAccess = "manage-access", //todo add TABS nav using search params (?tab=SOMETHING)
+    slackChannels = "slack-channels", //todo add TABS nav using search params (?tab=SOMETHING)
     settings = "settings",
 
     //TODO!!! all new extended plugin links go here (ex. timetable, ...)

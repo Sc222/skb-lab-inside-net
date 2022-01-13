@@ -246,7 +246,7 @@ export const ProfilePage: FunctionComponent<ProfilePageProps> = () => {
                           <Stack direction="row" alignItems="baseline" justifyContent="start" spacing={1}>
                             <Link
                               component={RouterLink}
-                              to={`${SiteRoute.persons}/${authInfo.personId}/${SiteRoute.manageAccess}`}
+                              to={`${SiteRoute.persons}/${authInfo.personId}/${SiteRoute.slackChannels}`}
                               sx={{ cursor: "pointer", color: "inherit" }}
                               underline="hover"
                             >

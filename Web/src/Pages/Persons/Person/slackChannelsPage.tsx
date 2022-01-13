@@ -3,14 +3,14 @@ import Box from "@mui/material/Box";
 import { AuthScope } from "../../../Typings/Enums/authScope";
 import { useAuthContext } from "../../../Contexts/authContext";
 import { SlackChannelsToolbar, TabPanel } from "../../../Components/SlackChannels/slackChannelsToolbar";
-import { Card, CardContent, CardHeader, Container } from "@mui/material";
+import { Card, CardContent, Container } from "@mui/material";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import { MySlackChannels } from "../../../Components/SlackChannels/mySlackChannels";
 
-interface ManageAccessPageProps {}
+interface SlackChannelsPageProps {}
 
-export const ManageAccessPage: FunctionComponent<ManageAccessPageProps> = () => {
+export const SlackChannelsPage: FunctionComponent<SlackChannelsPageProps> = () => {
   const [currentTab, setCurrentTab] = React.useState(0);
   const [authProfileScope, setAuthProfileScope] = React.useState<AuthScope | null>(null);
   const auth = useAuthContext();
@@ -60,9 +60,7 @@ export const ManageAccessPage: FunctionComponent<ManageAccessPageProps> = () => 
                 <Tabs value={currentTab} onChange={onTabChange} aria-label="basic tabs example">
                   <Tab label="Мои каналы" {...generateTabProps(0)} />
                   <Tab label="Запрос доступа" {...generateTabProps(1)} />
-                  {authProfileScope === AuthScope.slackAdmin && (
-                    <Tab label="Выдача доступа" {...generateTabProps(2)} />
-                  )}
+                  {authProfileScope === AuthScope.slackAdmin && <Tab label="Выдача доступа" {...generateTabProps(2)} />}
                 </Tabs>
               </Box>
             </CardContent>

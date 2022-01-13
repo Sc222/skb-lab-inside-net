@@ -11,7 +11,7 @@ import { PersonsPage } from "./Pages/personsPage";
 import { SpecificPersonPage } from "./Pages/Persons/specificPersonPage";
 import { ProfilePage } from "./Pages/Persons/Person/profilePage";
 import { SettingsPage } from "./Pages/Persons/Person/settingsPage";
-import { ManageAccessPage } from "./Pages/Persons/Person/manageAccessPage";
+import { SlackChannelsPage } from "./Pages/Persons/Person/slackChannelsPage";
 import { NotFoundDefaultRedirection } from "./Components/notFoundDefaultRedirection";
 import { LoggedOutOnlyPageRestriction } from "./Components/PageRestrictions/loggedOutOnlyPageRestriction";
 import { PersonalPageRestriction } from "./Components/PageRestrictions/personalPageRestriction";
@@ -92,10 +92,10 @@ export class App extends Component<AppProps, AppState> {
                   }
                 />
                 <Route
-                  path={SiteRoute.manageAccess}
+                  path={SiteRoute.slackChannels}
                   element={
                     <PersonalPageRestriction>
-                      <ManageAccessPage />
+                      <SlackChannelsPage />
                     </PersonalPageRestriction>
                   }
                 />
