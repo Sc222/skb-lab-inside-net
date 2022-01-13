@@ -4,23 +4,23 @@ import Typography from "@mui/material/Typography";
 
 interface TabPanelProps {
   children?: React.ReactNode;
-  index: number;
-  value: number;
+  name: string;
+  value: string;
 }
 
 //TODO rewrite using TS
 export function TabPanel(props: TabPanelProps): JSX.Element {
-  const { children, value, index, ...other } = props;
+  const { children, value, name, ...other } = props;
 
   return (
     <div
       role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
+      hidden={value !== name}
+      id={`simple-tabpanel-${name}`}
+      aria-labelledby={`simple-tab-${name}`}
       {...other}
     >
-      {value === index && children}
+      {value === name && children}
     </div>
   );
 }

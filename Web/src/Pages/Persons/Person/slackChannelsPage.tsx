@@ -8,14 +8,20 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import { MyChannelsTab } from "../../../Components/SlackChannels/myChannelsTab";
 import { RequestChannelAccessTab } from "../../../Components/SlackChannels/requestChannelAccessTab";
+import { GrantChannelsAccessTab } from "../../../Components/SlackChannels/grantChannelsAccessTab";
+import { useSearchParams } from "react-router-dom";
+import { SlackChannelsSearchParam } from "../../../Typings/Enums/slackChannelsSearchParam";
 
 interface SlackChannelsPageProps {}
 
 //TODO: where should we show DISAPPROVED channel requests ???
 
 export const SlackChannelsPage: FunctionComponent<SlackChannelsPageProps> = () => {
-  const [currentTab, setCurrentTab] = React.useState(0);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchParamsTab = searchParams.get(SlackChannelsSearchParam.tab);
+  const currentTab = searchParamsTab !== null && Number.isFinite(Number(searchParamsTab)) ? searchParamsTab : "0"; //todo typings
   const [authProfileScope, setAuthProfileScope] = React.useState<AuthScope | null>(null);
+
   const auth = useAuthContext();
 
   // must be memoized callback
@@ -35,13 +41,13 @@ export const SlackChannelsPage: FunctionComponent<SlackChannelsPageProps> = () =
   }, [auth]);
 
   const onTabChange = (event: React.SyntheticEvent, newValue: number) => {
-    setCurrentTab(newValue);
+    setSearchParams({ [SlackChannelsSearchParam.tab]: String(newValue) });
   };
 
-  const generateTabProps = (index: number) => {
+  const generateTabProps = (value: string) => {
     return {
-      id: `simple-tab-${index}`,
-      "aria-controls": `simple-tabpanel-${index}`,
+      id: `simple-tab-${value}`,
+      "aria-controls": `simple-tabpanel-${value}`,
     };
   };
 
@@ -61,11 +67,11 @@ export const SlackChannelsPage: FunctionComponent<SlackChannelsPageProps> = () =
             <CardContent sx={{ px: 1, py: "0 !important" }}>
               <Box sx={{ py: 1 }}>
                 {authProfileScope && (
-                  <Tabs value={currentTab} onChange={onTabChange} aria-label="basic tabs example">
-                    <Tab label="Мои каналы" {...generateTabProps(0)} />
-                    <Tab label="Запросить доступ" {...generateTabProps(1)} />
+                  <Tabs value={Number(currentTab)} onChange={onTabChange} aria-label="basic tabs example">
+                    <Tab label="Мои каналы" {...generateTabProps("0")} />
+                    <Tab label="Запросить доступ" {...generateTabProps("1")} />
                     {authProfileScope === AuthScope.slackAdmin && (
-                      <Tab label="Выдача доступа" {...generateTabProps(2)} />
+                      <Tab label="Выдача доступа" {...generateTabProps("2")} />
                     )}
                   </Tabs>
                 )}
@@ -73,15 +79,15 @@ export const SlackChannelsPage: FunctionComponent<SlackChannelsPageProps> = () =
             </CardContent>
             <CardContent sx={{ py: "0 !important", minHeight: 100 }}>
               <>
-                <TabPanel value={currentTab} index={0}>
+                <TabPanel value={currentTab} name={"0"}>
                   <MyChannelsTab />
                 </TabPanel>
-                <TabPanel value={currentTab} index={1}>
+                <TabPanel value={currentTab} name={"1"}>
                   <RequestChannelAccessTab />
                 </TabPanel>
                 {authProfileScope === AuthScope.slackAdmin && (
-                  <TabPanel value={currentTab} index={2}>
-                    Item Three
+                  <TabPanel value={currentTab} name={"2"}>
+                    <GrantChannelsAccessTab />
                   </TabPanel>
                 )}
               </>
