@@ -1,52 +1,72 @@
 import React, { FunctionComponent, useEffect } from "react";
 import { Box, Divider, List, Typography } from "@mui/material";
 import { useAuthContext } from "src/Contexts/authContext";
-import { SlackChannelModel } from "../../Api/Models/slackChannelModel";
-import { MyChannelListItem } from "./myChannelListItem";
+import { SlackAccessesApi } from "../../Api/slackAccessesApi";
+import { SlackAccessRequestModel } from "../../Api/Models/slackAccessRequestModel";
+import { SlackAccessRequestModelExtended } from "../../Api/Models/slackAccessRequestModelExtended";
+import { GrantChannelAccessListItem } from "./grantChannelAccessListItem";
+import { Api } from "../../Api/api";
 
-interface PendingChannelRequestsAccessTabProps {}
-
-//TODO think about possibility to search NOT ONLY CONTACTS
+interface GrantChannelsAccessTabProps {}
 
 //FIXME: DRY !!!
-export const PendingChannelRequestsAccessTab: FunctionComponent<PendingChannelRequestsAccessTabProps> = () => {
+//FIXME: also output declined and resolved requests somewhere (think about it...)
+//FIXME: split accessRequests by different types (admin_1 can resolve some types of requests but others can be resolved only by admin_2)
+export const GrantChannelsAccessTab: FunctionComponent<GrantChannelsAccessTabProps> = () => {
   const auth = useAuthContext();
-  const [personChannels, setPersonChannels] = React.useState<SlackChannelModel[] | null>(null);
+  const [pendingAccessRequests, setPendingAccessRequests] = React.useState<SlackAccessRequestModelExtended[] | null>(
+    null
+  );
+
+  const getAllAccessRequests = async () => {
+    // todo think about access right, should they be checked here or not?
+    if (auth.authInfo) {
+      const response = await SlackAccessesApi.GetAllAccessRequests(auth.authInfo.token);
+      if (Api.IsRequestSuccess(response) && response.data) {
+        setPendingAccessRequests(response.data.filter((r) => r.Status === "pending"));
+      } else {
+        //todo process error
+        setPendingAccessRequests(null);
+      }
+    }
+  };
 
   useEffect(() => {
-    const getSlackChannels = async () => {
-      await auth.getPersonSlackChannelsInfo((result) => {
-        if (result.success) {
-          setPersonChannels(result.success.filter((c) => c.IsInChannel));
-        } else {
-          // todo process errors somehow
-          setPersonChannels(null);
-        }
-      });
-    };
-    getSlackChannels();
+    getAllAccessRequests();
   }, [auth]);
+
+  const onChangeRequestStatus = async (request: SlackAccessRequestModel) => {
+    if (auth.authInfo) {
+      if (request.Status) {
+        await SlackAccessesApi.DisapproveAccessRequest(request, auth.authInfo.token);
+      } else {
+        await SlackAccessesApi.ApproveAccessRequest(request, auth.authInfo.token);
+      }
+      //FIXME: reloading data, is it ok?
+      getAllAccessRequests();
+    }
+  };
 
   return (
     <>
-      {personChannels ? (
+      {pendingAccessRequests ? (
         <List>
-          {personChannels.map((channel, index) => (
-            <div key={channel.ChannelId}>
-              <MyChannelListItem channel={channel} />
-              {index !== personChannels.length - 1 && <Divider variant="middle" />}
+          {pendingAccessRequests.map((request, index) => (
+            <div key={request.Id}>
+              <GrantChannelAccessListItem accessRequest={request} onChangeRequestStatus={onChangeRequestStatus} />
+              {index !== pendingAccessRequests.length - 1 && <Divider variant="fullWidth" />}
             </div>
           ))}
 
           {/* nothing found*/}
-          {personChannels.length === 0 && (
+          {pendingAccessRequests.length === 0 && (
             <Box sx={{ py: 2, display: "flex", alignItems: "center", flexDirection: "column" }}>
               <Typography textAlign="center" variant="h6">
-                Нет доступных каналов
+                Нет новых запросов
               </Typography>
               <Box sx={{ mt: 0.5, display: "flex", alignItems: "center" }}>
                 <Typography sx={{ mr: 1 }} textAlign="center" variant="body2" component="span">
-                  Вы можете запросить доступы к каналам в соседней вкладке
+                  На данный момент обработаны все запросы на доступ к Slack каналам
                 </Typography>
               </Box>
             </Box>

@@ -7,7 +7,6 @@ import { SlackAccessesApi } from "../../Api/slackAccessesApi";
 import { SlackAccessRequestModel } from "../../Api/Models/slackAccessRequestModel";
 import { PersonModel } from "../../Api/Models/personModel";
 
-
 interface RequestChannelAccessTabProps {}
 
 //FIXME: DRY !!!
@@ -60,8 +59,8 @@ export const RequestChannelAccessTab: FunctionComponent<RequestChannelAccessTabP
     if (auth.authInfo && personInfo && personInfo.SlackId) {
       let request: Omit<SlackAccessRequestModel, "Id"> = {
         ChannelId: channelId,
-        DisapproveReason: "",
-        IsDisapproved: false,
+        AdminMessage: "",
+        Status: "pending",
         PersonId: personInfo.Id!,
       };
       await SlackAccessesApi.CreateAccessRequest(request, auth.authInfo.token);
@@ -77,6 +76,7 @@ export const RequestChannelAccessTab: FunctionComponent<RequestChannelAccessTabP
         <List>
           {personChannels.map((channel, index) => (
             <div key={channel.ChannelId}>
+              {/*fixme optimize findIndex*/}
               <RequestChannelListItem
                 channel={channel}
                 isRequestSent={personRequests?.findIndex((r) => r.ChannelId === channel.ChannelId) !== -1}

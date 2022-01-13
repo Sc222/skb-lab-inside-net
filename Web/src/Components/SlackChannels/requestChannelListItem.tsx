@@ -16,6 +16,7 @@ export const RequestChannelListItem: FunctionComponent<RequestChannelListItemPro
 }) => {
   const onClick = (_: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
     if (!isRequestSent) {
+      // fixme debounce to prevent multiple requests
       onRequestAccess(channel.ChannelId);
     }
   };
