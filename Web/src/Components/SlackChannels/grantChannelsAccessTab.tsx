@@ -23,7 +23,7 @@ export const GrantChannelsAccessTab: FunctionComponent<GrantChannelsAccessTabPro
     if (auth.authInfo) {
       const response = await SlackAccessesApi.GetAllAccessRequests(auth.authInfo.token);
       if (Api.IsRequestSuccess(response) && response.data) {
-        setPendingAccessRequests(response.data.filter((r) => r.Status === "pending"));
+        setPendingAccessRequests(response.data.filter((r) => r.Status === "pending").reverse());
       } else {
         //todo process error
         setPendingAccessRequests(null);

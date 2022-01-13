@@ -71,7 +71,7 @@ export const MockSlackAccessRequests: Map<string, SlackAccessRequestModel> = new
             Id: "5552dfe1-eeee-4547-ffff-0237e9e32555",
             ChannelId: "C4755SHSK",
             PersonId: "419c3781-75ad-4792-9ad1-da30021bcbe7",
-            Status: "approved",
+            Status: "pending",
             AdminMessage: "",
         },
     ],
