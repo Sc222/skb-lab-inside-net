@@ -1,26 +1,11 @@
 import React, { FunctionComponent, useEffect } from "react";
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  Container,
-  Divider,
-  Link,
-  List,
-  SelectChangeEvent,
-  Typography,
-} from "@mui/material";
+import { Box, Card, CardContent, Container, Divider, Link, List, SelectChangeEvent, Typography } from "@mui/material";
 import { useAuthContext } from "src/Contexts/authContext";
-import { SearchContact } from "../../../Typings/Types/searchContact";
 import { DepartmentModel } from "../../../Api/Models/departmentModel";
 import { ContactsSearchParam } from "../../../Typings/Enums/contactsSearchParam";
 import { createSearchParams, Link as RouterLink, useSearchParams } from "react-router-dom";
 import { DepartmentsApi } from "../../../Api/departmentsApi";
-import { PersonsApi } from "../../../Api/personsApi";
 import { Api } from "../../../Api/api";
-import { SearchContactsToolbar } from "../../../Components/Search/searchContactsToolbar";
-import { SearchContactCard } from "../../../Components/Search/searchContactCard";
 import { MyContactsToolbar } from "../../../Components/Contacts/myContactsToolbar";
 import { MyContactCard } from "../../../Components/Contacts/myContactCard";
 import { MyContact } from "../../../Typings/Types/myContact";
@@ -40,8 +25,6 @@ export const ContactsPage: FunctionComponent<ContactPageProps> = ({ searchOnEver
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchText, setSearchText] = React.useState<string>(searchParams.get(ContactsSearchParam.name) ?? "");
   const [selectedDepartments, setSelectedDepartments] = React.useState<string[]>([]);
-
-  const authPersonContactsIds = new Set<string>(authPersonContacts?.map((c) => c.Id!));
 
   useEffect(() => {
     const getAuthPersonContacts = async (searchParams: URLSearchParams) => {

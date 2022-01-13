@@ -5,12 +5,11 @@ import LogoAccent from "./../../assets/logo-accent.png";
 import { NavItem } from "./navItem";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import TodayOutlinedIcon from "@mui/icons-material/TodayOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import { SiteRoute } from "../../Typings/Enums/siteRoute";
 import { AppTheme } from "../../appTheme";
-import {SlackOutlined} from "../Icons/slackOutlined";
+import { SlackOutlined } from "../Icons/slackOutlined";
 
 //todo ref should be based on user id
 // TODO make sidebarItems dynamic

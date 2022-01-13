@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from "react";
-import { Avatar, Button, Link, ListItem, ListItemAvatar, ListItemText, Typography } from "@mui/material";
-import { SearchContact } from "../../Typings/Types/searchContact";
+import { Avatar, Button, Link, ListItem, ListItemAvatar, ListItemText } from "@mui/material";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { Link as RouterLink } from "react-router-dom";
 import { SiteRoute } from "../../Typings/Enums/siteRoute";
