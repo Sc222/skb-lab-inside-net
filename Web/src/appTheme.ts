@@ -13,6 +13,13 @@ export const appTheme: Theme = createTheme({
         },
     },
     components: {
+        MuiTab: {
+            styleOverrides: {
+                root: {
+                    textTransform: "none",
+                },
+            },
+        },
         MuiButton: {
             defaultProps: {
                 disableElevation: true,

@@ -8,6 +8,8 @@ import { AuthScope } from "../Typings/Enums/authScope";
 import { PersonsApi } from "../Api/personsApi";
 import { Api } from "../Api/api";
 import { ContactsApi } from "../Api/contactsApi";
+import { SlackChannelModel } from "../Api/Models/slackChannelModel";
+import { SlackAccessesApi } from "../Api/slackAccessesApi";
 
 interface AuthContextType {
   authInfo: AuthContextPerson | null;
@@ -27,6 +29,7 @@ interface AuthContextType {
   ) => Promise<void>;
   addToPersonContacts: (contactId: string, callback: (result: Result<undefined | string>) => void) => Promise<void>;
   getPersonInfo: (callback: (result: Result<PersonModel>) => void) => Promise<void>;
+  getPersonSlackChannelsInfo: (callback: (result: Result<SlackChannelModel[]>) => void) => Promise<void>;
 }
 
 const AuthContext = React.createContext<AuthContextType>({
@@ -52,17 +55,20 @@ const AuthContext = React.createContext<AuthContextType>({
   getPersonInfo: async () => {
     /*do nothing*/
   },
+  getPersonSlackChannelsInfo: async () => {
+    /*do nothing*/
+  },
 });
 
 export const AuthContextProvider: FunctionComponent = ({ children }) => {
-  let localStorageService = new LocalStorageService();
-  let authenticationService = new AuthenticationService();
+  const localStorageService = new LocalStorageService();
+  const authenticationService = new AuthenticationService();
 
-  let [authInfo, setAuthInfo] = React.useState<AuthContextPerson | null>(localStorageService.getAuthInfo());
+  const [authInfo, setAuthInfo] = React.useState<AuthContextPerson | null>(localStorageService.getAuthInfo());
 
   //FIXME SECURITY!!! for safety purposes try gettingUserId from token!!! (because userId in local storage may be WRONG)
 
-  let signIn = async (
+  const signIn = async (
     authData: Pick<PersonModel, "Email" | "Password">,
     callback: (result: Result<AuthContextPerson>) => void
   ): Promise<void> => {
@@ -75,14 +81,14 @@ export const AuthContextProvider: FunctionComponent = ({ children }) => {
     callback(result);
   };
 
-  let signOut = async (callback: () => void): Promise<void> => {
+  const signOut = async (callback: () => void): Promise<void> => {
     await authenticationService.signOut();
     setAuthInfo(null);
     localStorageService.clearPersonInfo();
     callback();
   };
 
-  let getAuthScope = async (callback: (result: Result<AuthScope>) => void): Promise<void> => {
+  const getAuthScope = async (callback: (result: Result<AuthScope>) => void): Promise<void> => {
     let result = ResultBuilder.Error<AuthScope>("Вход не выполнен");
     if (authInfo) {
       result = await authenticationService.getAuthScope(authInfo.personId, authInfo.token);
@@ -90,7 +96,7 @@ export const AuthContextProvider: FunctionComponent = ({ children }) => {
     callback(result);
   };
 
-  let getPersonContacts = async (
+  const getPersonContacts = async (
     searchParams: null | URLSearchParams,
     callback: (result: Result<PersonModel[]>) => void
   ): Promise<void> => {
@@ -106,7 +112,7 @@ export const AuthContextProvider: FunctionComponent = ({ children }) => {
     callback(result);
   };
 
-  let removeFromPersonContacts = async (
+  const removeFromPersonContacts = async (
     contactId: string,
     callback: (result: Result<string | undefined>) => void
   ): Promise<void> => {
@@ -122,7 +128,7 @@ export const AuthContextProvider: FunctionComponent = ({ children }) => {
     callback(result);
   };
 
-  let addToPersonContacts = async (
+  const addToPersonContacts = async (
     contactId: string,
     callback: (result: Result<string | undefined>) => void
   ): Promise<void> => {
@@ -138,10 +144,25 @@ export const AuthContextProvider: FunctionComponent = ({ children }) => {
     callback(result);
   };
 
-  let getPersonInfo = async (callback: (result: Result<PersonModel>) => void): Promise<void> => {
+  const getPersonInfo = async (callback: (result: Result<PersonModel>) => void): Promise<void> => {
     let result = ResultBuilder.Error<PersonModel>("Не удалось получить информацию об авторизированном пользователе");
     if (authInfo) {
       let response = await PersonsApi.GetPersonById(authInfo.personId, authInfo.token);
+      if (!Api.IsRequestSuccess(response) || !response.data) {
+        result = ResultBuilder.Error(response.error);
+      } else {
+        result = ResultBuilder.Success(response.data);
+      }
+    }
+    callback(result);
+  };
+
+  const getPersonSlackChannelsInfo = async (callback: (result: Result<SlackChannelModel[]>) => void): Promise<void> => {
+    let result = ResultBuilder.Error<SlackChannelModel[]>(
+      "Не удалось получить информацию об Slack каналах пользователя"
+    );
+    if (authInfo) {
+      let response = await SlackAccessesApi.GetSlackChannels(authInfo.personId, authInfo.token);
       if (!Api.IsRequestSuccess(response) || !response.data) {
         result = ResultBuilder.Error(response.error);
       } else {
@@ -160,6 +181,7 @@ export const AuthContextProvider: FunctionComponent = ({ children }) => {
     removeFromPersonContacts,
     addToPersonContacts,
     getPersonInfo,
+    getPersonSlackChannelsInfo,
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
