@@ -88,7 +88,7 @@ export class SlackAccessesApi {
                 Api.PostRequestHeaders(token)
             )
             .then((response) => {
-                let result: ApiResponse<string > = {
+                let result: ApiResponse<string> = {
                     data: response.data,
                     status: response.status,
                     error: null,
@@ -96,7 +96,7 @@ export class SlackAccessesApi {
                 return result;
             })
             .catch((reason: AxiosError) => {
-                let result: ApiResponse<string > = {
+                let result: ApiResponse<string> = {
                     data: null,
                     status: reason.response?.status ?? -1,
                     error: reason.response?.data,
@@ -126,6 +126,7 @@ export class SlackAccessesApi {
                 return {
                     ...r,
                     PersonName: person.FullName,
+                    PersonPosition: person.Position.Name,
                     SlackUserId: person.SlackId,
                     PersonAvatar: person.AvatarUrl,
                     ChannelName: channel.ChannelName,
@@ -182,12 +183,13 @@ export class SlackAccessesApi {
                 return {
                     ...r,
                     PersonName: person.FullName,
+                    PersonPosition: person.Position.Name,
                     SlackUserId: person.SlackId,
                     PersonAvatar: person.AvatarUrl,
                     ChannelName: channel.ChannelName,
                 };
             });
-            result.data = allRequestsExtended.filter(r=>r.PersonId===personId);
+            result.data = allRequestsExtended.filter((r) => r.PersonId === personId);
 
             return new Promise((resolve) => {
                 setTimeout(() => {
@@ -212,6 +214,109 @@ export class SlackAccessesApi {
             })
             .catch((reason: AxiosError) => {
                 let result: ApiResponse<SlackAccessRequestModelExtended[]> = {
+                    data: null,
+                    status: reason.response?.status ?? -1,
+                    error: reason.response?.data,
+                };
+                return result;
+            });
+    }
+
+    //FIXME DRY
+    public static async ApproveAccessRequest(
+        accessRequest: SlackAccessRequestModel,
+        token: string,
+        useTestingMocks = true
+    ): Promise<ApiResponse<string | undefined>> {
+        if (useTestingMocks) {
+            let currentAccessRequest = MockSlackAccessRequests.get(accessRequest.Id);
+
+            if (!currentAccessRequest) {
+                //todo process 404 error
+            }
+
+            MockSlackAccessRequests.set(accessRequest.Id, accessRequest);
+
+            let result: ApiResponse<string | undefined> = {
+                data: undefined,
+                status: 200,
+                error: null,
+            };
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve(result);
+                }, MockUtils.SmallRequestDelay);
+            });
+        }
+
+        let axiosInstance = axios.create({ baseURL: Api.BaseUrl });
+        return axiosInstance
+            .post<string | undefined>(
+                `/slackAccesses/accessRequests/approve`,
+                accessRequest,
+                Api.PostRequestHeaders(token)
+            )
+            .then((response) => {
+                let result: ApiResponse<string | undefined> = {
+                    data: response.data,
+                    status: response.status,
+                    error: null,
+                };
+                return result;
+            })
+            .catch((reason: AxiosError) => {
+                let result: ApiResponse<string | undefined> = {
+                    data: null,
+                    status: reason.response?.status ?? -1,
+                    error: reason.response?.data,
+                };
+                return result;
+            });
+    }
+
+    public static async DisapproveAccessRequest(
+        accessRequest: SlackAccessRequestModel,
+        token: string,
+        useTestingMocks = true
+    ): Promise<ApiResponse<string | undefined>> {
+        if (useTestingMocks) {
+            let currentAccessRequest = MockSlackAccessRequests.get(accessRequest.Id);
+
+            if (!currentAccessRequest) {
+                //todo process 404 error
+            }
+
+            MockSlackAccessRequests.set(accessRequest.Id, accessRequest);
+
+            let result: ApiResponse<string | undefined> = {
+                data: undefined,
+                status: 200,
+                error: null,
+            };
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve(result);
+                }, MockUtils.SmallRequestDelay);
+            });
+        }
+
+        let axiosInstance = axios.create({ baseURL: Api.BaseUrl });
+        return axiosInstance
+            .post<string | undefined>(
+                `/slackAccesses/accessRequests/disapprove`,
+                accessRequest,
+                Api.PostRequestHeaders(token)
+            )
+            .then((response) => {
+                let result: ApiResponse<string | undefined> = {
+                    data: response.data,
+                    status: response.status,
+                    error: null,
+                };
+                return result;
+            })
+            .catch((reason: AxiosError) => {
+                let result: ApiResponse<string | undefined> = {
                     data: null,
                     status: reason.response?.status ?? -1,
                     error: reason.response?.data,

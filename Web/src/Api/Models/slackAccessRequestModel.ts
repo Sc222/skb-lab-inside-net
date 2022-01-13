@@ -2,8 +2,8 @@ export interface SlackAccessRequestModel {
     readonly Id: string;
     readonly PersonId: string;
     readonly ChannelId: string;
-    readonly IsDisapproved: boolean;
-    readonly DisapproveReason: string;
+    readonly Status: "pending" | "approved" | "disapproved"; //todo: replace with status: pending, approved, disapproved
+    readonly AdminMessage: string;
 
     //readonly SlackUserId: string;
 
