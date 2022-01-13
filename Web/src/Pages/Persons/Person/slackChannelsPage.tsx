@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import { AuthScope } from "../../../Typings/Enums/authScope";
 import { useAuthContext } from "../../../Contexts/authContext";
 import { SlackChannelsToolbar, TabPanel } from "../../../Components/SlackChannels/slackChannelsToolbar";
-import { Card, CardContent, Container } from "@mui/material";
+import { Card, CardContent, Container, Divider } from "@mui/material";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import { MyChannelsTab } from "../../../Components/SlackChannels/myChannelsTab";
@@ -11,6 +11,7 @@ import { RequestChannelAccessTab } from "../../../Components/SlackChannels/reque
 import { GrantChannelsAccessTab } from "../../../Components/SlackChannels/grantChannelsAccessTab";
 import { useSearchParams } from "react-router-dom";
 import { SlackChannelsSearchParam } from "../../../Typings/Enums/slackChannelsSearchParam";
+import { ProcessedRequestsTab } from "src/Components/SlackChannels/processedRequestsTab";
 
 interface SlackChannelsPageProps {}
 
@@ -70,8 +71,12 @@ export const SlackChannelsPage: FunctionComponent<SlackChannelsPageProps> = () =
                   <Tabs value={Number(currentTab)} onChange={onTabChange} aria-label="basic tabs example">
                     <Tab label="Мои каналы" {...generateTabProps("0")} />
                     <Tab label="Запросить доступ" {...generateTabProps("1")} />
+                    <Divider orientation="vertical" flexItem variant="middle" />
                     {authProfileScope === AuthScope.slackAdmin && (
-                      <Tab label="Выдача доступа" {...generateTabProps("2")} />
+                      <Tab label="Активные запросы" {...generateTabProps("3")} />
+                    )}
+                    {authProfileScope === AuthScope.slackAdmin && (
+                      <Tab label="Обработанные запросы" {...generateTabProps("4")} />
                     )}
                   </Tabs>
                 )}
@@ -85,10 +90,16 @@ export const SlackChannelsPage: FunctionComponent<SlackChannelsPageProps> = () =
                 <TabPanel value={currentTab} name={"1"}>
                   <RequestChannelAccessTab />
                 </TabPanel>
+                {/*fixme 2 is divider, so it's skipped... damn*/}
                 {authProfileScope === AuthScope.slackAdmin && (
-                  <TabPanel value={currentTab} name={"2"}>
-                    <GrantChannelsAccessTab />
-                  </TabPanel>
+                  <>
+                    <TabPanel value={currentTab} name={"3"}>
+                      <GrantChannelsAccessTab />
+                    </TabPanel>
+                    <TabPanel value={currentTab} name={"4"}>
+                      <ProcessedRequestsTab />
+                    </TabPanel>
+                  </>
                 )}
               </>
             </CardContent>
