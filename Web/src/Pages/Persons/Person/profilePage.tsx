@@ -12,6 +12,7 @@ import {
   Grid,
   Link,
   List,
+  Stack,
   Typography,
 } from "@mui/material";
 import { usePersonContext } from "../../../Contexts/personContext";
@@ -23,6 +24,10 @@ import { TelegramOutlined } from "../../../Components/Icons/telegramOutlined";
 import { SiteRoute } from "../../../Typings/Enums/siteRoute";
 import { PersonModel } from "../../../Api/Models/personModel";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import { SlackChannelModel } from "../../../Api/Models/slackChannelModel";
+import { MySlackChannelListItem } from "../../../Components/SlackChannels/mySlackChannelListItem";
+
+//TODO: split profilePage by CARDS
 
 interface ProfilePageProps {}
 
@@ -31,6 +36,7 @@ export const ProfilePage: FunctionComponent<ProfilePageProps> = () => {
   const personContext = usePersonContext(); // context for person if it's not authenticated person profile
   const [isPersonInContacts, setIsPersonInContacts] = React.useState<boolean | null>(null); //fixme remove from state
   const [authPersonContacts, setAuthPersonContacts] = React.useState<PersonModel[] | null>(null);
+  const [authPersonSlackChannels, setAuthPersonSlackChannels] = React.useState<SlackChannelModel[] | null>(null);
 
   const profilePerson = personContext.person;
   const authInfo = auth.authInfo;
@@ -46,6 +52,22 @@ export const ProfilePage: FunctionComponent<ProfilePageProps> = () => {
 
   //todo optimize this string for large contacts count
   // null -> data not ready
+
+  // get slack-channels, request only if profilePage is authPersonPage
+  useEffect(() => {
+    const getAuthPersonSlackChannels = async () => {
+      await auth.getPersonSlackChannelsInfo((result) => {
+        if (result.success) {
+          setAuthPersonSlackChannels(result.success.filter((c) => c.IsInChannel));
+        } else {
+          setAuthPersonSlackChannels(null);
+        }
+      });
+    };
+    if (authInfo?.personId === profilePerson?.Id) {
+      getAuthPersonSlackChannels();
+    }
+  }, [auth, profilePerson]);
 
   //console.log("departments: ", searchParams.getAll(ContactsSearchParam.department));
 
@@ -163,17 +185,20 @@ export const ProfilePage: FunctionComponent<ProfilePageProps> = () => {
               {isAuthPersonProfilePage && authInfo && (
                 <>
                   <Grid item xs={12} sm={4}>
-                    <Card>
+                    <Card sx={{ height: "100%" }}>
                       <CardHeader
                         title={
-                          <Link
-                            component={RouterLink}
-                            to={`${SiteRoute.persons}/${authInfo.personId}/${SiteRoute.contacts}`}
-                            sx={{ cursor: "pointer", color: "inherit" }}
-                            underline="hover"
-                          >
-                            Контакты
-                          </Link>
+                          <Stack direction="row" alignItems="baseline" justifyContent="start" spacing={1}>
+                            <Link
+                              component={RouterLink}
+                              to={`${SiteRoute.persons}/${authInfo.personId}/${SiteRoute.contacts}`}
+                              sx={{ cursor: "pointer", color: "inherit" }}
+                              underline="hover"
+                            >
+                              Контакты
+                            </Link>
+                            <Typography variant="body2">{authPersonContacts?.length ?? ""}</Typography>
+                          </Stack>
                         }
                       />
                       <Divider />
@@ -182,7 +207,7 @@ export const ProfilePage: FunctionComponent<ProfilePageProps> = () => {
                           {/*URL TO CONTACTS PROFILE*/}
                           {authPersonContacts &&
                             authPersonContacts
-                              .filter((c, index) => index < 3)
+                              .filter((c, index) => index < 6)
                               .map((c) => (
                                 <Grid
                                   item
@@ -218,19 +243,31 @@ export const ProfilePage: FunctionComponent<ProfilePageProps> = () => {
                     <Card sx={{ height: "100%" }}>
                       <CardHeader
                         title={
-                          <Link
-                            component={RouterLink}
-                            to={`${SiteRoute.persons}/${authInfo.personId}/${SiteRoute.manageAccess}`}
-                            sx={{ cursor: "pointer", color: "inherit" }}
-                            underline="hover"
-                          >
-                            Права доступа
-                          </Link>
+                          <Stack direction="row" alignItems="baseline" justifyContent="start" spacing={1}>
+                            <Link
+                              component={RouterLink}
+                              to={`${SiteRoute.persons}/${authInfo.personId}/${SiteRoute.manageAccess}`}
+                              sx={{ cursor: "pointer", color: "inherit" }}
+                              underline="hover"
+                            >
+                              Slack каналы
+                            </Link>
+                            <Typography variant="body2">{authPersonSlackChannels?.length ?? ""}</Typography>
+                          </Stack>
                         }
                       />
                       <Divider />
-                      <CardContent>
-                        <Typography>ListItem первых 3-4 прав доступа</Typography>
+                      <CardContent sx={{ py: "0 !important", minHeight: 100 }}>
+                        <List>
+                          {authPersonSlackChannels &&
+                            authPersonSlackChannels
+                              .filter((c, i) => i < 3)
+                              .map((channel, index) => (
+                                <div key={channel.ChannelId}>
+                                  <MySlackChannelListItem channel={channel} dense />
+                                </div>
+                              ))}
+                        </List>
                       </CardContent>
                     </Card>
                   </Grid>

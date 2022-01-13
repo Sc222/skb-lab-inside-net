@@ -5,11 +5,12 @@ import { SlackChannelModel } from "../../Api/Models/slackChannelModel";
 import { TextAvatar } from "../Common/textAvatar";
 
 interface MyChannelListItemProps {
-  channel: SlackChannelModel; // todo api request should return partial PersonModel for PERFORMANCE
+  channel: SlackChannelModel;
+  dense?: boolean;
 }
 
-export const MySlackChannelListItem: FunctionComponent<MyChannelListItemProps> = ({ channel }) => (
-  <ListItem sx={{ py: 2 }} disablePadding>
+export const MySlackChannelListItem: FunctionComponent<MyChannelListItemProps> = ({ channel, dense = false }) => (
+  <ListItem sx={{ py: dense ? 0.75 : 2 }} disablePadding>
     <ListItemAvatar>
       <TextAvatar
         sx={{

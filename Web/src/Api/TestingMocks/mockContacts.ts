@@ -71,9 +71,11 @@ export const MockContacts: { PersonId: string; ContactsIds: Set<string> }[] = [
         //Отдел администрирования
         PersonId: "1d5aee70-b83a-4f11-a744-993b8b3bfc26",
         ContactsIds: new Set([
+            "33bc751f-a56b-4704-bfb6-03239f04dcfc",
             "419c3781-75ad-4792-9ad1-da30021bcbe7",
             "0a3bba87-2322-493f-995c-f5f560d9f49b",
             "ad59dd3c-bdec-4cc8-bb72-e460479a77e7",
+            "3f3b75de-efcd-48aa-a59e-e805496467e1",
         ]),
     },
 ];

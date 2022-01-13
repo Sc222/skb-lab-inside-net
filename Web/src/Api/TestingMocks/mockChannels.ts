@@ -6,7 +6,7 @@ export const MockChannels: {
     PersonsInChannel: Set<string>;
 }[] = [
     {
-        ChannelId: "C4155GHSD",
+        ChannelId: "C81A5GHKG",
         ChannelName: "#general",
         ChannelDescription: "Главный канал",
         PersonsInChannel: new Set<string>([
