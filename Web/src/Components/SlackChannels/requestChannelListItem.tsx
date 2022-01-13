@@ -13,53 +13,55 @@ export const RequestChannelListItem: FunctionComponent<RequestChannelListItemPro
   channel,
   isRequestSent,
   onRequestAccess,
-}) => (
-  <ListItem
-    sx={{ py: 2 }}
-    disablePadding
-    secondaryAction={
-      <Button
-        onClick={isRequestSent ? () => onRequestAccess(channel.ChannelId) : undefined}
-        disabled={isRequestSent}
-        variant={"contained"}
-        component="span"
-        size="small"
-      >
-        {isRequestSent ? "Запрос обрабатывается" : "Запросить"}
-      </Button>
+}) => {
+  const onClick = (_: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
+    if (!isRequestSent) {
+      onRequestAccess(channel.ChannelId);
     }
-  >
-    <ListItemAvatar>
-      <TextAvatar
-        sx={{
-          mr: 2,
-          height: 48,
-          width: 48,
-          fontSize: "32px",
-        }}
-        text={channel.ChannelName}
-        letterIndex={1}
-      />
-    </ListItemAvatar>
+  };
 
-    {/*TODO CORRECT LINKS*/}
-    <ListItemText
-      primary={
-        <Link
-          target="_blank"
-          rel="noopener"
-          href={`https://companydomain.slack.com/messages/${channel.ChannelId}`}
-          variant="inherit"
-          color="inherit"
-          underline="hover"
-          sx={{
-            cursor: "pointer",
-          }}
-        >
-          {channel.ChannelName}
-        </Link>
+  return (
+    <ListItem
+      sx={{ py: 2 }}
+      disablePadding
+      secondaryAction={
+        <Button onClick={onClick} disabled={isRequestSent} variant={"contained"} component="span" size="small">
+          {isRequestSent ? "Запрос обрабатывается" : "Запросить"}
+        </Button>
       }
-      secondary={channel.ChannelDescription}
-    />
-  </ListItem>
-);
+    >
+      <ListItemAvatar>
+        <TextAvatar
+          sx={{
+            mr: 2,
+            height: 48,
+            width: 48,
+            fontSize: "32px",
+          }}
+          text={channel.ChannelName}
+          letterIndex={1}
+        />
+      </ListItemAvatar>
+
+      {/*TODO CORRECT LINKS*/}
+      <ListItemText
+        primary={
+          <Link
+            target="_blank"
+            rel="noopener"
+            href={`https://companydomain.slack.com/messages/${channel.ChannelId}`}
+            variant="inherit"
+            color="inherit"
+            underline="hover"
+            sx={{
+              cursor: "pointer",
+            }}
+          >
+            {channel.ChannelName}
+          </Link>
+        }
+        secondary={channel.ChannelDescription}
+      />
+    </ListItem>
+  );
+};

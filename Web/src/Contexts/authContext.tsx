@@ -10,7 +10,10 @@ import { Api } from "../Api/api";
 import { ContactsApi } from "../Api/contactsApi";
 import { SlackChannelModel } from "../Api/Models/slackChannelModel";
 import { SlackAccessesApi } from "../Api/slackAccessesApi";
+import {SlackAccessRequestModel} from "../Api/Models/slackAccessRequestModel";
+import {SlackAccessRequestModelExtended} from "../Api/Models/slackAccessRequestModelExtended";
 
+//FIXME should person-related methods be here?
 interface AuthContextType {
   authInfo: AuthContextPerson | null;
   signIn: (
@@ -30,6 +33,7 @@ interface AuthContextType {
   addToPersonContacts: (contactId: string, callback: (result: Result<undefined | string>) => void) => Promise<void>;
   getPersonInfo: (callback: (result: Result<PersonModel>) => void) => Promise<void>;
   getPersonSlackChannelsInfo: (callback: (result: Result<SlackChannelModel[]>) => void) => Promise<void>;
+  getPersonSlackAccessRequestsChannels: (callback: (result: Result<SlackAccessRequestModelExtended[]>) => void) => Promise<void>;
 }
 
 const AuthContext = React.createContext<AuthContextType>({
@@ -57,6 +61,9 @@ const AuthContext = React.createContext<AuthContextType>({
   },
   getPersonSlackChannelsInfo: async () => {
     /*do nothing*/
+  },
+  getPersonSlackAccessRequestsChannels: async () => {
+    /*do nothin*/
   },
 });
 
@@ -172,6 +179,23 @@ export const AuthContextProvider: FunctionComponent = ({ children }) => {
     callback(result);
   };
 
+  const getPersonSlackAccessRequestsChannels = async (
+    callback: (result: Result<SlackAccessRequestModelExtended[]>) => void
+  ): Promise<void> => {
+    let result = ResultBuilder.Error<SlackAccessRequestModelExtended[]>(
+      "Не удалось получить информацию о запросах на доступ к Slack каналам"
+    );
+    if (authInfo) {
+      let response = await SlackAccessesApi.GetPersonAccessRequests(authInfo.personId, authInfo.token);
+      if (!Api.IsRequestSuccess(response) || !response.data) {
+        result = ResultBuilder.Error(response.error);
+      } else {
+        result = ResultBuilder.Success(response.data);
+      }
+    }
+    callback(result);
+  };
+
   let value = {
     authInfo,
     signIn,
@@ -182,6 +206,7 @@ export const AuthContextProvider: FunctionComponent = ({ children }) => {
     addToPersonContacts,
     getPersonInfo,
     getPersonSlackChannelsInfo,
+    getPersonSlackAccessRequestsChannels,
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
