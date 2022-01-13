@@ -23,6 +23,7 @@
         "react-player": "^2.9.0",
         "react-router": "6.2.1",
         "react-router-dom": "6.2.1",
+        "uuid": "^8.3.2",
         "yup": "^0.32.11"
     },
     "devDependencies": {
@@ -35,6 +36,7 @@
         "@types/node": "^16.6.1",
         "@types/react": "^17.0.14",
         "@types/react-dom": "^17.0.9",
+        "@types/uuid": "^8.3.4",
         "@types/yup": "^0.29.13",
         "@typescript-eslint/eslint-plugin": "^4.28.3",
         "@typescript-eslint/parser": "^4.28.3",
