@@ -213,10 +213,10 @@
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:layout_marginRight="@dimen/card_horizontal_margin"
                 android:foreground="?attr/selectableItemBackground"
+                app:cardElevation="4dp"
                 android:clickable="true"
                 android:focusable="true"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="0dp">
+                app:cardCornerRadius="8dp">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -412,6 +412,46 @@
                                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
                         </androidx.appcompat.widget.LinearLayoutCompat>
 
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="33"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="54dp"
+                                android:layout_height="54dp"
+                                android:layout_weight="25"
+                                android:layout_marginBottom="@dimen/items_vertical_spacing"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="@dimen/card_horizontal_margin"
+                                android:layout_marginTop="@dimen/activity_vertical_margin"
+                                android:layout_marginRight="@dimen/card_horizontal_margin"
+                                android:foreground="?attr/selectableItemBackground"
+                                android:clickable="true"
+                                android:focusable="true"
+                                app:cardCornerRadius="54dp"
+                                app:cardElevation="0dp">
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:background="?attr/selectableItemBackground"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:layout_width="54dp"
+                                    android:layout_height="54dp"
+                                    android:layout_weight="25"
+                                    android:adjustViewBounds="true"
+                                    android:scaleType="fitCenter"
+                                    app:srcCompat="@drawable/avatar_victor" />
+                            </androidx.cardview.widget.CardView>
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="Виктор"
+                                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
@@ -430,77 +470,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 app:cardCornerRadius="8dp"
-                app:cardElevation="4dp">
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:orientation="vertical"
-                    android:paddingLeft="@dimen/card_horizontal_padding"
-                    android:paddingTop="@dimen/card_vertical_padding"
-                    android:paddingRight="@dimen/card_horizontal_padding"
-                    android:paddingBottom="@dimen/card_vertical_padding">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableEnd="@drawable/ic_go_to_24dp"
-                        android:drawablePadding="8dp"
-                        android:gravity="start"
-                        android:text="Календарь"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                        android:textColor="@color/theme_light_primary" />
-
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/items_vertical_spacing"
-                        android:gravity="start"
-                        android:orientation="horizontal">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="@dimen/items_horizontal_spacing"
-                            android:text="Начало: "
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-                            android:textColor="?attr/colorControlNormal" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="9 июня 2021 года"
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-                            android:textColor="?attr/colorPrimary" />
-                    </androidx.appcompat.widget.LinearLayoutCompat>
-
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/items_vertical_spacing_dense"
-                        android:gravity="start"
-                        android:orientation="horizontal">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="16dp"
-                            android:text="Конец: "
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-                            android:textColor="?attr/colorControlNormal" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="30 июня 2021 года"
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-                            />
-                    </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-            </androidx.cardview.widget.CardView>
+                app:cardElevation="4dp"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.core.widget.NestedScrollView>
 
