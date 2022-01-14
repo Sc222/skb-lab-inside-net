@@ -238,13 +238,29 @@
                         android:text="Slack каналы"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
+                    <com.google.android.material.chip.ChipGroup
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/items_vertical_spacing"
-                        android:text="Пока что у вас нет доступных каналов"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-                        android:textColor="?attr/colorControlNormal" />
+                        android:layout_marginTop="@dimen/items_vertical_spacing_dense">
+
+                        <!-- TODO GENERATE CHIPS LIST DYNAMICALLY BY GETTING DATA FROM SERVER (permissions list and their default value - true or false)-->
+
+                        <com.google.android.material.chip.Chip
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:clickable="false"
+                            android:checked="true"
+                            android:text="#general" />
+
+                        <com.google.android.material.chip.Chip
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:clickable="false"
+                            android:checked="true"
+                            android:text="#random" />
+                    </com.google.android.material.chip.ChipGroup>
 
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
