@@ -17,15 +17,15 @@
 
     <fragment
         android:id="@+id/dataAccessFragment"
-        android:name="com.sc222.insidenet.ui.mainSections.fragments.dataAccess.DataAccessFragment"
-        android:label="@string/section_data_access"
-        tools:layout="@layout/fragment_data_access" />
+        android:name="com.sc222.insidenet.ui.mainSections.fragments.slack.SlackFragment"
+        android:label="@string/section_slack"
+        tools:layout="@layout/fragment_slack" />
 
     <fragment
-        android:id="@+id/holidaysFragment"
-        android:name="com.sc222.insidenet.ui.mainSections.fragments.holidays.HolidaysFragment"
-        android:label="@string/section_holidays"
-        tools:layout="@layout/fragment_holidays" />
+        android:id="@+id/calendarFragment"
+        android:name="com.sc222.insidenet.ui.mainSections.fragments.calendar.CalendarFragment"
+        android:label="@string/section_calendar"
+        tools:layout="@layout/fragment_calendar" />
 
     <fragment
         android:id="@+id/profileFragment"

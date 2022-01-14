@@ -8,13 +8,13 @@
 
     <item
         android:id="@+id/dataAccessFragment"
-        android:icon="@drawable/ic_section_data_access_24dp"
-        android:title="@string/section_data_access" />
+        android:icon="@drawable/ic_slack_24dp"
+        android:title="@string/section_slack" />
 
     <item
-        android:id="@+id/holidaysFragment"
-        android:icon="@drawable/ic_section_holidays_24dp"
-        android:title="@string/section_holidays" />
+        android:id="@+id/calendarFragment"
+        android:icon="@drawable/ic_section_calendar_24dp"
+        android:title="@string/section_calendar" />
 
     <item
         android:id="@+id/contactsFragment"

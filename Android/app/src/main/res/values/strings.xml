@@ -39,8 +39,8 @@
     <string name="register_next_page">Следующая страница</string>
     <string name="section_profile">Профиль</string>
     <string name="section_contacts">Контакты</string>
-    <string name="section_data_access">Права</string>
-    <string name="section_holidays">Отпуск</string>
+    <string name="section_slack">Slack</string>
+    <string name="section_calendar">Календарь</string>
     <string name="account_type_hint">Тип аккаунта</string>
     <string name="contacts_info_corporate_email_hint">*В разделе контактов также будет указана Ваша корпоративная почта</string>
 </resources>
