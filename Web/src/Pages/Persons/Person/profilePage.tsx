@@ -26,6 +26,8 @@ import { PersonModel } from "../../../Api/Models/personModel";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { SlackChannelModel } from "../../../Api/Models/slackChannelModel";
 import { MyChannelListItem } from "../../../Components/SlackChannels/myChannelListItem";
+import { PersonalCalendar } from "../../../Components/Calendar/PersonalCalendar/personalCalendar";
+import { CalendarSource } from "../../../Components/Calendar/PersonalCalendar/datasource";
 
 //TODO: split profilePage by CARDS
 //TODO: optimize rerenders
@@ -172,22 +174,6 @@ export const ProfilePage: FunctionComponent<ProfilePageProps> = () => {
                   </Card>
                 </Grid>
 
-                {/* TODO: IS SLACK CHANNELS LIST PUBLIC?*/}
-
-                {/*not auth person layout*/}
-                {!isAuthPersonProfilePage && (
-                  <>
-                    <Grid item xs={12}>
-                      <Card>
-                        <CardHeader title="Календарь" />
-                        <Divider />
-                        <CardContent>
-                          <Typography>Здесь будет календарь</Typography>
-                        </CardContent>
-                      </Card>
-                    </Grid>
-                  </>
-                )}
                 {/*auth person layout*/}
                 {isAuthPersonProfilePage && authInfo && (
                   <>
@@ -278,23 +264,40 @@ export const ProfilePage: FunctionComponent<ProfilePageProps> = () => {
                         </CardContent>
                       </Card>
                     </Grid>
+                  </>
+                )}
+                {/* TODO: IS SLACK CHANNELS LIST PUBLIC?*/}
+
+                {/*common persons layout*/}
+                {!personContext.isLoading && profilePerson && (
+                  <>
                     <Grid item xs={12}>
-                      <Card sx={{ height: "100%" }}>
+                      <Card>
                         <CardHeader
                           title={
-                            <Link
-                              component={RouterLink}
-                              to={`${SiteRoute.persons}/${authInfo.personId}/${SiteRoute.calendar}`}
-                              sx={{ cursor: "pointer", color: "inherit" }}
-                              underline="hover"
-                            >
-                              Календарь
-                            </Link>
+                            isAuthPersonProfilePage && authInfo ? (
+                              <Link
+                                component={RouterLink}
+                                to={`${SiteRoute.persons}/${authInfo.personId}/${SiteRoute.calendar}`}
+                                sx={{ cursor: "pointer", color: "inherit" }}
+                                underline="hover"
+                              >
+                                Календарь
+                              </Link>
+                            ) : (
+                              "Календарь"
+                            )
                           }
                         />
                         <Divider />
                         <CardContent>
-                          <Typography>Здесь будет календарь</Typography>
+                          <PersonalCalendar
+                            initialData={CalendarSource.UsersCalendarData.filter(
+                              (v) => v.Person.Id === profilePerson.Id
+                            )}
+                            eventsToShow={["Отпуск", "Командировка", "Учеба"]}
+                            isPreview
+                          />
                         </CardContent>
                       </Card>
                     </Grid>
