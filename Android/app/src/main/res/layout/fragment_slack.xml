@@ -45,16 +45,33 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="start"
-                        android:text="Полученные права"
+                        android:text="Мои каналы"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title"
                         android:textColor="@color/theme_light_primary" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
+                    <com.google.android.material.chip.ChipGroup
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/items_vertical_spacing_dense"
-                        android:text="Пока что вы не обладаете никакими правами"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
+                        android:layout_marginTop="@dimen/items_vertical_spacing_dense">
+
+                        <!-- TODO GENERATE CHIPS LIST DYNAMICALLY BY GETTING DATA FROM SERVER (permissions list and their default value - true or false)-->
+
+                        <com.google.android.material.chip.Chip
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:clickable="false"
+                            android:checked="true"
+                            android:text="#general" />
+
+                        <com.google.android.material.chip.Chip
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:clickable="false"
+                            android:checked="true"
+                            android:text="#random" />
+                    </com.google.android.material.chip.ChipGroup>
 
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
@@ -100,26 +117,23 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:clickable="false"
-                            android:checked="true"
-                            android:text="Gitlab репозиторий" />
+                            android:text="#команда-mobile-разработки" />
 
                         <com.google.android.material.chip.Chip
                             style="@style/Widget.MaterialComponents.Chip.Choice"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:clickable="false"
-                            android:checked="true"
-                            android:text="Dev сервер" />
+                            android:text="#ios-команда" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/tmpWaitChip"
                             android:visibility="gone"
                             android:clickable="false"
-                            android:checked="true"
                             style="@style/Widget.MaterialComponents.Chip.Choice"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Файловый сервер" />
+                            android:text="#команда-android-разработки" />
 
                     </com.google.android.material.chip.ChipGroup>
 
@@ -146,15 +160,13 @@
                     android:paddingTop="@dimen/card_vertical_padding"
                     android:paddingRight="@dimen/card_horizontal_padding"
                     android:paddingBottom="@dimen/card_vertical_padding">
-
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="start"
-                        android:text="Запросить права"
+                        android:text="Запросить доступ"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title"
                         android:textColor="@color/theme_light_primary" />
-
                     <com.google.android.material.chip.ChipGroup
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -167,13 +179,13 @@
                             android:id="@+id/tmpRequestChip"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Файловый сервер" />
+                            android:text="#команда-android-разработки" />
 
                         <com.google.android.material.chip.Chip
                             style="@style/Widget.MaterialComponents.Chip.Choice"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Каналы в Slack" />
+                            android:text="#netcore-разработка" />
 
                         <com.google.android.material.chip.Chip
                             style="@style/Widget.MaterialComponents.Chip.Choice"
@@ -181,7 +193,7 @@
                             android:layout_height="wrap_content"
                             android:checkable="false"
                             android:checked="true"
-                            android:text="Production сервер" />
+                            android:text="#dev-ops" />
 
                     </com.google.android.material.chip.ChipGroup>
 
@@ -192,7 +204,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:layout_marginTop="@dimen/items_vertical_spacing_dense"
-                        android:text="Отправить заявку"
+                        android:textAllCaps="false"
+                        android:text="Запросить"
                         app:elevation="0dp" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.cardview.widget.CardView>

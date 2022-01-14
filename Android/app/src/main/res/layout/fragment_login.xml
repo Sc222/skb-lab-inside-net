@@ -100,6 +100,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/items_vertical_spacing"
                 android:text="@string/sign_in"
+                android:textAllCaps="false"
                 app:elevation="0dp" />
 
             <com.google.android.material.button.MaterialButton
