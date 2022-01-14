@@ -120,13 +120,22 @@ export const CalendarPage: FunctionComponent<CalendarPageProps> = () => {
               <>
                 <TabPanel value={currentTab} name={"0"}>
                   <Box sx={{ py: 2 }}>
-                    <PersonalCalendar
-                      initialData={CalendarSource.UsersCalendarData.filter((v) => v.Person.Id === person.person?.Id)}
-                      eventsToShow={["Отпуск", "Командировка", "Учеба"]}
-                      onDataUpdate={(newData) => {
-                        CalendarSource.UsersCalendarData = newData;
-                      }}
-                    />
+                    {/* fixme fix person in calendarData being null sometimes */}
+                    {person.person && (
+                      <PersonalCalendar
+                        initialData={CalendarSource.UsersCalendarData.filter((v) => v.Person?.Id === person.person?.Id)}
+                        eventsToShow={["Отпуск", "Командировка", "Учеба"]}
+                        onDataUpdate={(newData) => {
+                          newData = newData.map((e) => {
+                            if (e.Person === undefined) {
+                              e.Person = person.person;
+                            }
+                            return e;
+                          });
+                          Object.assign(CalendarSource.UsersCalendarData, newData);
+                        }}
+                      />
+                    )}
                   </Box>
                 </TabPanel>
                 {/*fixme 2 is divider, so it's skipped... damn*/}
@@ -136,12 +145,15 @@ export const CalendarPage: FunctionComponent<CalendarPageProps> = () => {
                       persons={departmentPersons}
                       initialData={CalendarSource.UsersCalendarData.filter(
                         (v) =>
-                          v.Person.Department.Id === authPersonInfo.Department.Id &&
-                          v.Person.Id !== authPersonInfo.Department.Id
+                          v.Person?.Department?.Id === authPersonInfo.Department.Id &&
+                          v.Person?.Id !== authPersonInfo.Id
                       )}
                       eventsToShow={["Отпуск", "Командировка", "Учеба"]}
                       onDataUpdate={(newData) => {
-                        CalendarSource.UsersCalendarData = newData;
+                        Object.assign(CalendarSource.UsersCalendarData, newData);
+                        {
+                          /* fixme assign correct Person field if object is created */
+                        }
                       }}
                     />
                   </TabPanel>

@@ -29,6 +29,7 @@ import { Avatar, Link, ListItemText, Typography } from "@mui/material";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { Link as RouterLink } from "react-router-dom";
 import { SiteRoute } from "../../../Typings/Enums/siteRoute";
+import { TextBoxComponent } from "@syncfusion/ej2-react-inputs";
 
 loadRussianCalendarLocale();
 
@@ -99,7 +100,7 @@ export class DepartmentCalendar extends React.PureComponent<DepartmentCalendarPr
         cssClass: "e-excel-export",
         click: this.onExportClick.bind(this),
       };
-      args.items.push(exportItem);
+      args.items?.push(exportItem);
     }
   }
 
@@ -251,6 +252,22 @@ export class DepartmentCalendar extends React.PureComponent<DepartmentCalendarPr
               <input id="Summary" className="e-field e-input" type="text" name="Subject" style={{ width: "100%" }} />
             </td>
           </tr>*/}
+          <tr>
+            <td className="e-textlabel" style={{ paddingBottom: "24px", paddingRight: "8px" }}>
+              Комментарий
+            </td>
+            <td colSpan={4} style={{ paddingBottom: "24px" }}>
+              <TextBoxComponent
+                id="ManagerComment"
+                placeholder="Комментарий"
+                data-name="ManagerComment"
+                name="ManagerComment"
+                className="e-field"
+                style={{ width: "100%" }}
+                value={props.ManagerComment}
+              />
+            </td>
+          </tr>
           <tr>
             <td className="e-textlabel" style={{ paddingBottom: "24px", paddingRight: "8px" }}>
               Тип

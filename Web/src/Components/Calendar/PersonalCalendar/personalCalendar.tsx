@@ -160,6 +160,16 @@ export class PersonalCalendar extends React.PureComponent<PersonalCalendarProps>
               <input id="Summary" className="e-field e-input" type="text" name="Subject" style={{ width: "100%" }} />
             </td>
           </tr>*/}
+          {!this.props.isPreview && props.ManagerComment && (
+            <tr>
+              <td className="e-textlabel" style={{ paddingBottom: "24px", paddingRight: "8px" }}>
+                Комментарий менеджера
+              </td>
+              <td colSpan={4} style={{ paddingBottom: "24px" }}>
+                {props.ManagerComment}
+              </td>
+            </tr>
+          )}
           <tr>
             <td className="e-textlabel" style={{ paddingBottom: "24px", paddingRight: "8px" }}>
               Тип

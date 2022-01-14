@@ -293,7 +293,7 @@ export const ProfilePage: FunctionComponent<ProfilePageProps> = () => {
                         <CardContent>
                           <PersonalCalendar
                             initialData={CalendarSource.UsersCalendarData.filter(
-                              (v) => v.Person.Id === profilePerson.Id
+                              (v) => v.Person?.Id === profilePerson.Id
                             )}
                             eventsToShow={["Отпуск", "Командировка", "Учеба"]}
                             isPreview

@@ -5,9 +5,10 @@ import { v4 } from "uuid";
 export interface CalendarData {
     Id: string;
     Subject: string;
+    ManagerComment?: string;
     StartTime: string;
     EndTime: string;
-    Person: PersonModel;
+    Person: PersonModel | null;
     PersonId: string;
 }
 
