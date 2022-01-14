@@ -18,7 +18,7 @@
         <entry key="app/src/main/res/layout/fragment_contacts.xml" value="0.22418478260869565" />
         <entry key="app/src/main/res/layout/fragment_launcher.xml" value="0.1875" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.264" />
-        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.22418478260869565" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.4" />
         <entry key="app/src/main/res/layout/fragment_slack.xml" value="0.22418478260869565" />
         <entry key="app/src/main/res/menu/main_sections_menu.xml" value="0.3416666666666667" />
       </map>
