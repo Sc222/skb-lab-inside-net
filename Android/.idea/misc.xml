@@ -12,8 +12,12 @@
         <entry key="app/src/main/res/drawable/ic_team_large_96dp.xml" value="0.31574074074074077" />
         <entry key="app/src/main/res/drawable/ic_team_small_24dp.xml" value="0.31574074074074077" />
         <entry key="app/src/main/res/drawable/ic_upload_image_48dp.xml" value="0.31574074074074077" />
+        <entry key="app/src/main/res/layout/activity_examplelogin.xml" value="0.1875" />
+        <entry key="app/src/main/res/layout/activity_launcher.xml" value="0.1875" />
         <entry key="app/src/main/res/layout/activity_main_sections.xml" value="0.22418478260869565" />
         <entry key="app/src/main/res/layout/fragment_contacts.xml" value="0.22418478260869565" />
+        <entry key="app/src/main/res/layout/fragment_launcher.xml" value="0.1875" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.264" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.22418478260869565" />
         <entry key="app/src/main/res/layout/fragment_slack.xml" value="0.22418478260869565" />
         <entry key="app/src/main/res/menu/main_sections_menu.xml" value="0.3416666666666667" />

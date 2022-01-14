@@ -26,19 +26,38 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/loadingIndicator"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="0.25"
+     >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="@dimen/ic_large_size"
-                android:layout_height="@dimen/ic_large_size"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:tint="?attr/colorPrimary"
-                app:srcCompat="@drawable/ic_team_large_96dp" />
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/ic_large_size"
+                    android:layout_height="@dimen/ic_large_size"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/logo_accent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/app_name"
+                    android:textColor="@color/theme_light_primary"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                    app:srcCompat="@drawable/logo_accent" />
+            </LinearLayout>
+
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/loginLayout"
@@ -63,8 +82,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/items_vertical_spacing"
                 android:hint="@string/password_hint"
-                app:endIconMode="password_toggle"
-              >
+                app:endIconMode="password_toggle">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/passwordEditText"
