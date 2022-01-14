@@ -78,7 +78,7 @@ export const MockPersons: Map<string, PersonModel> = new Map<string, PersonModel
             AuthScope: AuthScope.departmentManager,
             Position: { Name: "Начальник отдела Android разработки" },
             IsNewbie: false,
-            Email: "deparmentManager@mail.com",
+            Email: "department.manager@mail.com",
             PhoneNumber: "+78309903535",
             Telegram: "andrew",
             Slack: "andr",

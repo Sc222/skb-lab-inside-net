@@ -1,4 +1,3 @@
-import "./index.css";
 import React from "react";
 import {
   DragAndDrop,
@@ -15,134 +14,15 @@ import {
 } from "@syncfusion/ej2-react-schedule";
 //FIXME REMOVE THIS LATER
 //import the loadCldr from ej2-base
-import { extend, L10n, loadCldr } from "@syncfusion/ej2-base";
+import { extend } from "@syncfusion/ej2-base";
 import { CalendarData } from "./datasource";
 import { PopupOpenEventArgs } from "@syncfusion/ej2-schedule/src/schedule/base/interface";
 import { DropDownListComponent } from "@syncfusion/ej2-react-dropdowns";
 import { DatePickerComponent } from "@syncfusion/ej2-react-calendars";
 import { Predicate, Query } from "@syncfusion/ej2-data";
+import { loadRussianCalendarLocale } from "../calendarLocalization";
 
-loadCldr(
-  require("cldr-data/supplemental/numberingSystems.json"),
-  require("cldr-data/main/ru/ca-gregorian.json"),
-  require("cldr-data/main/ru/numbers.json"),
-  require("cldr-data/main/ru/timeZoneNames.json")
-);
-
-//loadCldr(numberingSystems, gregorian, numbers, timeZoneNames);
-
-L10n.load({
-  ru: {
-    schedule: {
-      day: "День",
-      week: "Неделя",
-      workWeek: "Рабочая неделя",
-      month: "Месяц",
-      year: "Год",
-      agenda: "Agenda",
-      weekAgenda: "Week Agenda",
-      workWeekAgenda: "Work Week Agenda",
-      monthAgenda: "Month Agenda",
-      today: "Сегодня",
-      noEvents: "Нет событий",
-      emptyContainer: "В данный день нет событий",
-      allDay: "Весь день",
-      start: "Начало",
-      end: "Конец",
-      more: "еще",
-      close: "Закрыть",
-      cancel: "Отмена",
-      noTitle: "(Нет заголовка)",
-      delete: "Удалить",
-      deleteEvent: "Удалить событие",
-      deleteMultipleEvent: "Удалить несколько событий",
-      selectedItems: "Выбрано элементов",
-      deleteSeries: "Delete Series",
-      edit: "Редактировать",
-      editSeries: "Edit Series",
-      editEvent: "Редактировать событие",
-      createEvent: "Создать",
-      subject: "Тема",
-      addTitle: "Добавить заголовок",
-      moreDetails: "Подробнее",
-      save: "Сохранить",
-      editContent: "Do you want to edit only this event or entire series?",
-      deleteRecurrenceContent: "Do you want to delete only this event or entire series?",
-      deleteContent: "Are you sure you want to delete this event?",
-      deleteMultipleContent: "Are you sure you want to delete the selected events?",
-      newEvent: "Новое событие",
-      title: "Заголовок",
-      location: "Location",
-      description: "Description",
-      timezone: "Timezone",
-      startTimezone: "Start Timezone",
-      endTimezone: "End Timezone",
-      repeat: "Repeat",
-      saveButton: "Сохранить",
-      cancelButton: "Отмена",
-      deleteButton: "Удалить",
-      recurrence: "Recurrence",
-      wrongPattern: "The recurrence pattern is not valid.",
-      seriesChangeAlert:
-        "The changes made to specific instances of this series will be cancelled and those events will match the series again.",
-      createError:
-        "The duration of the event must be shorter than how frequently it occurs. Shorten the duration, or change the recurrence pattern in the recurrence event editor.",
-      recurrenceDateValidation:
-        "Some months have fewer than the selected date. For these months, the occurrence will fall on the last date of the month.",
-      sameDayAlert: "Two occurrences of the same event cannot occur on the same day.",
-      editRecurrence: "Edit Recurrence",
-      repeats: "Repeats",
-      alert: "Alert",
-      startEndError: "The selected end date occurs before the start date.",
-      invalidDateError: "The entered date value is invalid.",
-      ok: "Ok",
-      occurrence: "Occurrence",
-      series: "Series",
-      previous: "Previous",
-      next: "Next",
-      timelineDay: "Timeline Day",
-      timelineWeek: "Timeline Week",
-      timelineWorkWeek: "Timeline Work Week",
-      timelineMonth: "Timeline Month",
-      expandAllDaySection: "Expand",
-      collapseAllDaySection: "Collapse",
-    },
-    recurrenceeditor: {
-      none: "None",
-      daily: "Daily",
-      weekly: "Weekly",
-      monthly: "Monthly",
-      month: "Month",
-      yearly: "Yearly",
-      never: "Never",
-      until: "Until",
-      count: "Count",
-      first: "First",
-      second: "Second",
-      third: "Third",
-      fourth: "Fourth",
-      last: "Last",
-      repeat: "Repeat",
-      repeatEvery: "Repeat Every",
-      on: "Repeat On",
-      end: "End",
-      onDay: "Day",
-      days: "Day(s)",
-      weeks: "Week(s)",
-      months: "Month(s)",
-      years: "Year(s)",
-      every: "every",
-      summaryTimes: "time(s)",
-      summaryOn: "on",
-      summaryUntil: "until",
-      summaryRepeat: "Repeats",
-      summaryDay: "day(s)",
-      summaryWeek: "week(s)",
-      summaryMonth: "month(s)",
-      summaryYear: "year(s)",
-    },
-  },
-});
+loadRussianCalendarLocale();
 
 /**
  * Schedule local data sample
@@ -164,6 +44,7 @@ export class PersonalCalendar extends React.PureComponent<PersonalCalendarProps>
   private data: any;
   private scheduleObj: any;
 
+  //fixme move to file
   private resourceData: Record<string, any>[] = [
     { Text: "Отпуск", /*Id: 1,*/ Color: "#00B5B8" },
     { Text: "Командировка", /*Id: 2,*/ Color: "#2196F3" },
@@ -172,7 +53,7 @@ export class PersonalCalendar extends React.PureComponent<PersonalCalendarProps>
 
   constructor(props: PersonalCalendarProps) {
     super(props);
-    this.data = extend([], this.props.initialData, null, true);
+    this.data = extend([], this.props.initialData, undefined, true);
   }
 
   onEventRendered(args: any) {
@@ -235,7 +116,6 @@ export class PersonalCalendar extends React.PureComponent<PersonalCalendarProps>
               width="100%"
               readonly={this.props.isPreview}
               height={this.props.isPreview ? "175px" : "650px"}
-
               ref={(t) => (this.scheduleObj = t)}
               eventSettings={{ dataSource: this.data }}
               eventRendered={this.onEventRendered.bind(this)}
@@ -243,7 +123,6 @@ export class PersonalCalendar extends React.PureComponent<PersonalCalendarProps>
               popupOpen={this.popupOpen.bind(this)}
               editorTemplate={this.editorTemplate.bind(this)}
               showQuickInfo={false}
-
             >
               {this.props.isPreview ? (
                 <ViewsDirective>
@@ -251,7 +130,7 @@ export class PersonalCalendar extends React.PureComponent<PersonalCalendarProps>
                 </ViewsDirective>
               ) : (
                 <ViewsDirective>
-                  <ViewDirective option="Month" showWeekend={false}  />
+                  <ViewDirective option="Month" showWeekend={true} />
                   <ViewDirective option="Year" />
                 </ViewsDirective>
               )}
@@ -260,11 +139,7 @@ export class PersonalCalendar extends React.PureComponent<PersonalCalendarProps>
                 <ResourceDirective field="Subject" dataSource={this.resourceData} idField="Text" colorField="Color" />
               </ResourcesDirective>
 
-              {this.props.isPreview ? (
-                <Inject services={[TimelineMonth, Resize, DragAndDrop]} />
-              ) : (
-                <Inject services={[Month, Year, Resize, DragAndDrop]} />
-              )}
+              <Inject services={[Month, Year, TimelineMonth, Resize, DragAndDrop]} />
             </ScheduleComponent>
           </div>
         </div>

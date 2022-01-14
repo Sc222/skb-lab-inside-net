@@ -8,15 +8,16 @@ export interface CalendarData {
     StartTime: string;
     EndTime: string;
     Person: PersonModel;
+    PersonId: string;
 }
 
 export const CalendarSource: { UsersCalendarData: CalendarData[] } = {
-
     UsersCalendarData: [
         // Крылова Анастасия
         {
             Id: v4(),
             Subject: "Отпуск",
+            PersonId: "33bc751f-a56b-4704-bfb6-03239f04dcfc",
             Person: MockPersons.get("33bc751f-a56b-4704-bfb6-03239f04dcfc")!,
             StartTime: "2022-01-03",
             EndTime: "2022-01-09",
@@ -24,12 +25,14 @@ export const CalendarSource: { UsersCalendarData: CalendarData[] } = {
         {
             Id: v4(),
             Subject: "Командировка",
+            PersonId: "33bc751f-a56b-4704-bfb6-03239f04dcfc",
             Person: MockPersons.get("33bc751f-a56b-4704-bfb6-03239f04dcfc")!,
             StartTime: "2022-01-10",
             EndTime: "2022-01-13",
         },
         {
             Id: v4(),
+            PersonId: "33bc751f-a56b-4704-bfb6-03239f04dcfc",
             Person: MockPersons.get("33bc751f-a56b-4704-bfb6-03239f04dcfc")!,
             Subject: "Учеба",
             StartTime: "2022-01-19",
@@ -39,6 +42,7 @@ export const CalendarSource: { UsersCalendarData: CalendarData[] } = {
         {
             Id: v4(),
             Subject: "Отпуск",
+            PersonId: "3f3b75de-efcd-48aa-a59e-e805496467e1",
             Person: MockPersons.get("3f3b75de-efcd-48aa-a59e-e805496467e1")!,
             StartTime: "2022-01-03",
             EndTime: "2022-01-09",
@@ -46,14 +50,16 @@ export const CalendarSource: { UsersCalendarData: CalendarData[] } = {
         {
             Id: v4(),
             Subject: "Командировка",
+            PersonId: "3f3b75de-efcd-48aa-a59e-e805496467e1",
             Person: MockPersons.get("3f3b75de-efcd-48aa-a59e-e805496467e1")!,
             StartTime: "2022-01-14",
             EndTime: "2022-01-16",
         },
         {
             Id: v4(),
-            Person: MockPersons.get("3f3b75de-efcd-48aa-a59e-e805496467e1")!,
             Subject: "Учеба",
+            PersonId: "3f3b75de-efcd-48aa-a59e-e805496467e1",
+            Person: MockPersons.get("3f3b75de-efcd-48aa-a59e-e805496467e1")!,
             StartTime: "2022-01-19",
             EndTime: "2022-01-20",
         },
@@ -61,6 +67,7 @@ export const CalendarSource: { UsersCalendarData: CalendarData[] } = {
         {
             Id: v4(),
             Subject: "Отпуск",
+            PersonId: "ad59dd3c-bdec-4cc8-bb72-e460479a77e7",
             Person: MockPersons.get("ad59dd3c-bdec-4cc8-bb72-e460479a77e7")!,
             StartTime: "2022-01-03",
             EndTime: "2022-01-09",
@@ -68,12 +75,14 @@ export const CalendarSource: { UsersCalendarData: CalendarData[] } = {
         {
             Id: v4(),
             Subject: "Командировка",
+            PersonId: "ad59dd3c-bdec-4cc8-bb72-e460479a77e7",
             Person: MockPersons.get("ad59dd3c-bdec-4cc8-bb72-e460479a77e7")!,
             StartTime: "2022-01-17",
             EndTime: "2022-01-20",
         },
         {
             Id: v4(),
+            PersonId: "ad59dd3c-bdec-4cc8-bb72-e460479a77e7",
             Person: MockPersons.get("ad59dd3c-bdec-4cc8-bb72-e460479a77e7")!,
             Subject: "Учеба",
             StartTime: "2022-01-13",
