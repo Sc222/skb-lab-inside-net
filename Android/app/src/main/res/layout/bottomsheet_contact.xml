@@ -38,53 +38,72 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_contacts"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="30"
+                android:layout_weight="25"
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardCornerRadius="1000dp"
+                app:cardElevation="0dp">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="25"
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter"
-                app:srcCompat="@drawable/ic_contacts_no_image" />
-
-
+                app:srcCompat="@drawable/avatar_nataly" />
+            </androidx.cardview.widget.CardView>
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="@dimen/items_horizontal_spacing"
-                android:layout_weight="70"
+                android:layout_weight="75"
                 android:gravity="center_vertical|start"
                 android:orientation="vertical">
-
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Иванов Анатолий"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-                    android:textColor="?attr/colorPrimary" />
-
+                    android:text="Шульц Наталья Викторовна"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/items_vertical_spacing"
-                    android:text="Стажер-аналитик"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                    android:layout_marginTop="5dp"
+                    android:text="Senior Android разработчик"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                     android:textColor="?attr/colorControlNormal" />
-
-                <!--todo "command is used by 0 locations, something like this"-->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Отдел мобильной разработки"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                    android:textColor="?attr/colorControlNormal" />
             </androidx.appcompat.widget.LinearLayoutCompat>
-
         </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <View
+            android:layout_below="@id/account_info"
+            android:id="@+id/stroke_1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/stroke_color"
+            android:layout_centerHorizontal="true"
+            android:layout_marginVertical="8dp"
+            android:layout_marginHorizontal="16dp"
+            />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/account_actions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/account_info"
+            android:layout_below="@id/stroke_1"
             android:layout_marginTop="@dimen/items_vertical_spacing"
             android:layout_marginBottom="@dimen/items_vertical_spacing"
             android:gravity="center"
             android:orientation="horizontal">
-
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -102,14 +121,66 @@
                     android:adjustViewBounds="true"
                     android:scaleType="fitCenter"
                     android:tint="?attr/colorPrimary"
-                    app:srcCompat="@drawable/ic_add_24dp" />
+                    app:srcCompat="@drawable/ic_phone_24dp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Добавить"
+                    android:text="Позвонить"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-                    android:textColor="?attr/colorPrimary" />
+                    android:textColor="?attr/colorSecondary" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="33"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="25"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:tint="?attr/colorPrimary"
+                    app:srcCompat="@drawable/ic_email_24dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Письмо"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                    android:textColor="?attr/colorSecondary" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="33"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="25"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:tint="?attr/colorSecondary"
+                    app:srcCompat="@drawable/ic_delete_24dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Удалить"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                    android:textColor="?attr/colorSecondary" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -171,46 +242,73 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
+        <View
+            android:layout_below="@id/account_actions"
+            android:id="@+id/stroke_2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/stroke_color"
+            android:layout_centerHorizontal="true"
+            android:layout_marginVertical="8dp"
+            android:layout_marginHorizontal="16dp"
+            />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/text_mail"
+            android:layout_marginHorizontal="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/account_actions"
+            android:layout_below="@id/stroke_2"
             android:layout_alignParentStart="true"
             android:layout_marginTop="12dp"
             android:drawableStart="@drawable/ic_email_24dp"
             android:drawablePadding="8dp"
             android:gravity="center_vertical"
-            android:text="a.a.ivanov@skb.ru"
+            android:text="shulz@mail.com"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
             android:textColor="?attr/colorControlNormal" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/text_phone"
+            android:layout_marginHorizontal="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/text_mail"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="18dp"
             android:drawableStart="@drawable/ic_phone_24dp"
             android:drawablePadding="8dp"
             android:gravity="center_vertical"
-            android:text="8 (800) 555-35-35"
+            android:text="+78006783535"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
             android:textColor="?attr/colorControlNormal" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/text_telegram"
+            android:layout_marginHorizontal="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/text_phone"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="18dp"
             android:drawableStart="@drawable/ic_telegram_24dp"
             android:drawablePadding="8dp"
             android:gravity="center_vertical"
-            android:text="\@ivanov.tolyan"
+            android:text="shulz-senior"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            android:textColor="?attr/colorControlNormal" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_slack"
+            android:layout_marginHorizontal="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_telegram"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="18dp"
+            android:drawableStart="@drawable/ic_slack_24dp"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:text="natali"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
             android:textColor="?attr/colorControlNormal" />
 
