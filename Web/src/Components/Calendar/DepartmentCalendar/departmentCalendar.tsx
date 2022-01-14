@@ -1,7 +1,11 @@
 import * as React from "react";
 import {
+  ActionEventArgs,
   Day,
   DragAndDrop,
+  ExcelExport,
+  ExportFieldInfo,
+  ExportOptions,
   Inject,
   Month,
   Resize,
@@ -19,9 +23,12 @@ import { extend } from "@syncfusion/ej2-base";
 import { loadRussianCalendarLocale } from "../calendarLocalization";
 import { CalendarData } from "../PersonalCalendar/datasource";
 import { PersonModel } from "../../../Api/Models/personModel";
-import { Predicate, Query } from "@syncfusion/ej2-data";
 import { DropDownListComponent } from "@syncfusion/ej2-react-dropdowns";
 import { DatePickerComponent } from "@syncfusion/ej2-react-calendars";
+import { Avatar, Link, ListItemText, Typography } from "@mui/material";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import { Link as RouterLink } from "react-router-dom";
+import { SiteRoute } from "../../../Typings/Enums/siteRoute";
 
 loadRussianCalendarLocale();
 
@@ -83,6 +90,32 @@ export class DepartmentCalendar extends React.PureComponent<DepartmentCalendarPr
     args.element.style.backgroundColor = eventType.Color;
   }
 
+  private onActionBegin(args: ActionEventArgs): void {
+    if (args.requestType === "toolbarItemRendering") {
+      let exportItem = {
+        align: "Right",
+        showTextOn: "Both",
+        text: "Экспорт в Excel",
+        cssClass: "e-excel-export",
+        click: this.onExportClick.bind(this),
+      };
+      args.items.push(exportItem);
+    }
+  }
+
+  private onExportClick(): void {
+    // TODO BETTER EXCEL EXPORTING
+    const exportFields: ExportFieldInfo[] = [
+      { name: "Id", text: "Id" },
+      { name: "Subject", text: "Summary" },
+      { name: "StartTime", text: "Start Date" },
+      { name: "EndTime", text: "End Date" },
+    ];
+    const exportValues: ExportOptions = { fieldsInfo: exportFields };
+    console.log("export");
+    this.scheduleObj.exportToExcel();
+  }
+
   /*  componentDidMount() {
     if (this.props.eventsToShow.length > 0) {
       let predicate: Predicate | null = null;
@@ -111,20 +144,6 @@ export class DepartmentCalendar extends React.PureComponent<DepartmentCalendarPr
     return (value as ResourceDetails).resourceData.Designation as string;
   }*/
 
-  private resourceHeaderTemplate(props: ResourceDetails): JSX.Element {
-    console.log("person: ", props.resourceData);
-
-    return (
-      <div className="template-wrap">
-        <div className="employee-category">
-          {/*<div className={"employee-image " + this.getEmployeeImage(props)}></div>
-          <div className="employee-name">{this.getEmployeeName(props)}</div>
-          <div className="employee-designation">{this.getEmployeeDesignation(props)}</div>*/}
-        </div>
-      </div>
-    );
-  }
-
   public render(): JSX.Element {
     this.data = extend([], this.props.initialData, undefined, true);
     return (
@@ -139,10 +158,12 @@ export class DepartmentCalendar extends React.PureComponent<DepartmentCalendarPr
                 cssClass="demo"
                 resourceHeaderTemplate={this.resourceHeaderTemplate.bind(this)}
                 eventSettings={{ dataSource: this.data }}
+                ref={(t) => (this.scheduleObj = t)}
                 eventRendered={this.onEventRendered.bind(this)}
                 editorTemplate={this.editorTemplate.bind(this)}
                 showQuickInfo={false}
                 group={{ enableCompactView: false, resources: ["Persons"] }}
+                actionBegin={this.onActionBegin.bind(this)}
               >
                 <ResourcesDirective>
                   <ResourceDirective field="PersonId" name="Persons" dataSource={this.props.persons} idField="Id" />
@@ -158,9 +179,59 @@ export class DepartmentCalendar extends React.PureComponent<DepartmentCalendarPr
                 <ViewsDirective>
                   <ViewDirective option="TimelineMonth" />
                 </ViewsDirective>
-                <Inject services={[Day, TimelineViews, Month, TimelineMonth, Resize, DragAndDrop]} />
+                <Inject services={[Day, TimelineViews, Month, TimelineMonth, Resize, DragAndDrop, ExcelExport]} />
               </ScheduleComponent>
             </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  private resourceHeaderTemplate(props: ResourceDetails): JSX.Element {
+    console.log("person: ", props.resourceData);
+    let person: PersonModel = props.resourceData as PersonModel;
+
+    return (
+      <div className="template-wrap">
+        <div>
+          <Avatar
+            component="div"
+            sx={{
+              mr: 2,
+              height: 60,
+              width: 60,
+              fontSize: "48px",
+            }}
+            src={person.AvatarUrl}
+          >
+            <AccountCircleOutlinedIcon color="primary" fontSize="inherit" />
+          </Avatar>
+          <div>
+            <ListItemText
+              primary={
+                <Link
+                  component={RouterLink}
+                  to={`${SiteRoute.persons}/${person.Id}/${SiteRoute.profile}`}
+                  variant="inherit"
+                  color="inherit"
+                  underline="hover"
+                  sx={{
+                    fontSize: "0.7rem",
+                    cursor: "pointer",
+                  }}
+                >
+                  {<b>{person.FullName}</b>}
+                </Link>
+              }
+              secondary={
+                <Typography variant="inherit" sx={{ fontSize: "0.65rem" }}>
+                  {person.Position.Name}
+                  <br />
+                  {person.Department.Name}
+                </Typography>
+              }
+            />
           </div>
         </div>
       </div>
