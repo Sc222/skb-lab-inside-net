@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.mainSections.fragments.holidays.HolidaysFragment">
+    tools:context=".ui.mainSections.fragments.calendar.CalendarFragment">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"

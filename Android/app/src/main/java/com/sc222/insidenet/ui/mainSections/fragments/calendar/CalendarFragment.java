@@ -1,4 +1,4 @@
-package com.sc222.insidenet.ui.mainSections.fragments.holidays;
+package com.sc222.insidenet.ui.mainSections.fragments.calendar;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,27 +14,27 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.archit.calendardaterangepicker.customviews.CalendarListener;
 import com.archit.calendardaterangepicker.customviews.DateRangeCalendarView;
-import com.sc222.insidenet.databinding.FragmentHolidaysBinding;
+import com.sc222.insidenet.databinding.FragmentCalendarBinding;
 
 import java.util.Calendar;
 
 
-public class HolidaysFragment extends Fragment {
+public class CalendarFragment extends Fragment {
 
 
-    private HolidaysViewModel holidaysViewModel;
-    private FragmentHolidaysBinding binding;
+    private CalendarViewModel holidaysViewModel;
+    private FragmentCalendarBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentHolidaysBinding.inflate(inflater, container, false);
+        binding = FragmentCalendarBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        holidaysViewModel = new ViewModelProvider(this).get(HolidaysViewModel.class);
+        holidaysViewModel = new ViewModelProvider(this).get(CalendarViewModel.class);
 
 
         //TODO MOVE THIS TO VIEWMODEL AND ADD SERVER REQUESTS
