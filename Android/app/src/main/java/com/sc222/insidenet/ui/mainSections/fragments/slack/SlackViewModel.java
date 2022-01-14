@@ -1,14 +1,14 @@
-package com.sc222.insidenet.ui.mainSections.fragments.dataAccess;
+package com.sc222.insidenet.ui.mainSections.fragments.slack;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class DataAccessViewModel extends ViewModel {
+public class SlackViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public DataAccessViewModel() {
+    public SlackViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("Здесь будет список прав доступа");
     }
