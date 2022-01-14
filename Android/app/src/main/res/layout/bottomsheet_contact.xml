@@ -128,7 +128,7 @@
                     android:layout_height="wrap_content"
                     android:text="Позвонить"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-                    android:textColor="?attr/colorSecondary" />
+                    android:textColor="?attr/colorPrimary" />
             </androidx.appcompat.widget.LinearLayoutCompat>
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="0dp"
@@ -154,7 +154,7 @@
                     android:layout_height="wrap_content"
                     android:text="Письмо"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-                    android:textColor="?attr/colorSecondary" />
+                    android:textColor="?attr/colorPrimary" />
             </androidx.appcompat.widget.LinearLayoutCompat>
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="0dp"

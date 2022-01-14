@@ -34,10 +34,6 @@ public class ContactsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         contactsViewModel = new ViewModelProvider(this).get(ContactsViewModel.class);
-        binding.icAdd1.setOnClickListener(view1 -> tmpAddContact(binding.icAdd1,0));
-        binding.icAdd2.setOnClickListener(view12 -> tmpAddContact(binding.icAdd2,1));
-        binding.icAdd3.setOnClickListener(view13 -> tmpAddContact(binding.icAdd3,2));
-
         sheetBehavior = BottomSheetBehavior.from(binding.getRoot().findViewById(R.id.bottomsheet_root));
         sheetBehavior.setHideable(true); // sheet can be manually hidden in artists fragment
         sheetBehavior.setPeekHeight(0,false);

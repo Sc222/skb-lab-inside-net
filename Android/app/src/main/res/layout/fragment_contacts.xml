@@ -49,10 +49,10 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingBottom="120dp">
-
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="@dimen/items_vertical_spacing"
                 android:layout_marginBottom="@dimen/items_vertical_spacing_dense"
                 android:clickable="true"
@@ -63,55 +63,108 @@
                 android:paddingLeft="@dimen/card_horizontal_padding"
                 android:paddingTop="@dimen/card_vertical_padding"
                 android:paddingRight="@dimen/card_horizontal_padding"
-                android:paddingBottom="@dimen/card_vertical_padding">
-
-                <androidx.appcompat.widget.AppCompatImageView
+                >
+                <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_weight="15"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/ic_contacts_no_image" />
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="center"
+                    app:cardCornerRadius="54dp"
+                    app:cardElevation="0dp">
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/avatar_maria" />
+                </androidx.cardview.widget.CardView>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/items_horizontal_spacing"
                     android:layout_weight="75"
-
                     android:gravity="center_vertical|start"
                     android:orientation="vertical">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Чемезов Данил"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                        android:textColor="?attr/colorPrimary" />
+                        android:text="Гусева Мария Владимировна"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:text="Стажер HR-специалист"
+                        android:text="Middle Android разработчик"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
-
-                    <!--todo "command is used by 0 locations, something like this"-->
                 </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ic_add_1"
-                    style="@style/Widget.AppCompat.ActionButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_add_24dp" />
-                
             </androidx.appcompat.widget.LinearLayoutCompat>
-
             <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/items_vertical_spacing"
+                android:layout_marginBottom="@dimen/items_vertical_spacing_dense"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?selectableItemBackground"
                 android:id="@+id/bottomSheetContact"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/card_horizontal_padding"
+                android:paddingTop="@dimen/card_vertical_padding"
+                android:paddingRight="@dimen/card_horizontal_padding"
+                >
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="15"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="center"
+                    app:cardCornerRadius="54dp"
+                    app:cardElevation="0dp">
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/avatar_nataly" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/items_horizontal_spacing"
+                    android:layout_weight="75"
+                    android:gravity="center_vertical|start"
+                    android:orientation="vertical">
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Шульц Наталья Викторовна"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="Senior Android разработчик"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/items_vertical_spacing"
                 android:layout_marginBottom="@dimen/items_vertical_spacing_dense"
                 android:clickable="true"
                 android:focusable="true"
@@ -121,16 +174,25 @@
                 android:paddingLeft="@dimen/card_horizontal_padding"
                 android:paddingTop="@dimen/card_vertical_padding"
                 android:paddingRight="@dimen/card_horizontal_padding"
-                android:paddingBottom="@dimen/card_vertical_padding">
-
-                <androidx.appcompat.widget.AppCompatImageView
+                >
+                <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_weight="15"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/ic_contacts_no_image" />
-
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="center"
+                    app:cardCornerRadius="54dp"
+                    app:cardElevation="0dp">
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/avatar_andrew" />
+                </androidx.cardview.widget.CardView>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="0dp"
@@ -139,24 +201,126 @@
                     android:layout_weight="75"
                     android:gravity="center_vertical|start"
                     android:orientation="vertical">
-
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Иванов Анатолий"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                        android:textColor="?attr/colorPrimary" />
-
+                        android:text="Афанасьев Андрей Дмитриевич"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:text="Стажер-аналитик"
+                        android:text="Начальник отдела Android разработки"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
-
-                    <!--todo "command is used by 0 locations, something like this"-->
                 </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/items_vertical_spacing"
+                android:layout_marginBottom="@dimen/items_vertical_spacing_dense"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?selectableItemBackground"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/card_horizontal_padding"
+                android:paddingTop="@dimen/card_vertical_padding"
+                android:paddingRight="@dimen/card_horizontal_padding"
+                >
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="15"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="center"
+                    app:cardCornerRadius="54dp"
+                    app:cardElevation="0dp">
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/avatar_victor" />
+                </androidx.cardview.widget.CardView>
 
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/items_horizontal_spacing"
+                    android:layout_weight="75"
+                    android:gravity="center_vertical|start"
+                    android:orientation="vertical">
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Лебедев Виктор Антонович"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="Senior бекенд разработчик"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/items_vertical_spacing"
+                android:layout_marginBottom="@dimen/items_vertical_spacing_dense"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?selectableItemBackground"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/card_horizontal_padding"
+                android:paddingTop="@dimen/card_vertical_padding"
+                android:paddingRight="@dimen/card_horizontal_padding"
+                >
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="15"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="center"
+                    app:cardCornerRadius="54dp"
+                    app:cardElevation="0dp">
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/avatar_ruslan" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/items_horizontal_spacing"
+                    android:layout_weight="75"
+                    android:gravity="center_vertical|start"
+                    android:orientation="vertical">
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Купатов Руслан Дмитриевич"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="Начальник отдела бекенд разработки"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
                 <androidx.appcompat.widget.AppCompatImageView
                     style="@style/Widget.AppCompat.ActionButton"
                     android:layout_width="wrap_content"
@@ -167,6 +331,8 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/items_vertical_spacing"
                 android:layout_marginBottom="@dimen/items_vertical_spacing_dense"
                 android:clickable="true"
                 android:focusable="true"
@@ -176,16 +342,25 @@
                 android:paddingLeft="@dimen/card_horizontal_padding"
                 android:paddingTop="@dimen/card_vertical_padding"
                 android:paddingRight="@dimen/card_horizontal_padding"
-                android:paddingBottom="@dimen/card_vertical_padding">
-
-                <androidx.appcompat.widget.AppCompatImageView
+                >
+                <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_weight="15"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/ic_contacts_no_image" />
-
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="center"
+                    app:cardCornerRadius="54dp"
+                    app:cardElevation="0dp">
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/avatar_igor" />
+                </androidx.cardview.widget.CardView>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="0dp"
@@ -194,304 +369,19 @@
                     android:layout_weight="75"
                     android:gravity="center_vertical|start"
                     android:orientation="vertical">
-
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Малышев Владислав"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                        android:textColor="?attr/colorPrimary" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:text="Стажер-разработчик"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
-
-                    <!--todo "command is used by 0 locations, something like this"-->
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ic_add_2"
-                    style="@style/Widget.AppCompat.ActionButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_add_24dp" />
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/items_vertical_spacing_dense"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?selectableItemBackground"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/card_horizontal_padding"
-                android:paddingTop="@dimen/card_vertical_padding"
-                android:paddingRight="@dimen/card_horizontal_padding"
-                android:paddingBottom="@dimen/card_vertical_padding">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="15"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/ic_contacts_no_image" />
-
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/items_horizontal_spacing"
-                    android:layout_weight="75"
-                    android:gravity="center_vertical|start"
-                    android:orientation="vertical">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Быков Андрей"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                        android:textColor="?attr/colorPrimary" />
-
+                        android:text="Чемозин Игорь Петрович"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:text="Стажер Android-разработчик"
+                        android:text="Начальник отдела администрирования"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
-
-                    <!--todo "command is used by 0 locations, something like this"-->
                 </androidx.appcompat.widget.LinearLayoutCompat>
-
                 <androidx.appcompat.widget.AppCompatImageView
-                    style="@style/Widget.AppCompat.ActionButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_add_24dp" />
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/items_vertical_spacing_dense"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?selectableItemBackground"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/card_horizontal_padding"
-                android:paddingTop="@dimen/card_vertical_padding"
-                android:paddingRight="@dimen/card_horizontal_padding"
-                android:paddingBottom="@dimen/card_vertical_padding">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="15"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/ic_contacts_no_image" />
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/items_horizontal_spacing"
-                    android:layout_weight="75"
-                    android:gravity="center_vertical|start"
-                    android:orientation="vertical">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Конев Василий"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                        android:textColor="?attr/colorPrimary" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:text="Стажер-разработчик"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
-
-                    <!--todo "command is used by 0 locations, something like this"-->
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    style="@style/Widget.AppCompat.ActionButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_add_24dp" />
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/items_vertical_spacing_dense"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?selectableItemBackground"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/card_horizontal_padding"
-                android:paddingTop="@dimen/card_vertical_padding"
-                android:paddingRight="@dimen/card_horizontal_padding"
-                android:paddingBottom="@dimen/card_vertical_padding">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="15"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/ic_contacts_no_image" />
-
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/items_horizontal_spacing"
-                    android:layout_weight="75"
-                    android:gravity="center_vertical|start"
-                    android:orientation="vertical">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Сигарев Валентин"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                        android:textColor="?attr/colorPrimary" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:text="Стажер Web-разработчик"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
-
-                    <!--todo "command is used by 0 locations, something like this"-->
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    style="@style/Widget.AppCompat.ActionButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_add_24dp" />
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/items_vertical_spacing_dense"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?selectableItemBackground"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/card_horizontal_padding"
-                android:paddingTop="@dimen/card_vertical_padding"
-                android:paddingRight="@dimen/card_horizontal_padding"
-                android:paddingBottom="@dimen/card_vertical_padding">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="15"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/ic_contacts_no_image" />
-
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/items_horizontal_spacing"
-                    android:layout_weight="75"
-                    android:gravity="center_vertical|start"
-                    android:orientation="vertical">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Петров Андрей"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                        android:textColor="?attr/colorPrimary" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:text="Стажер-аналитик"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
-
-                    <!--todo "command is used by 0 locations, something like this"-->
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    style="@style/Widget.AppCompat.ActionButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_add_24dp" />
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/items_vertical_spacing_dense"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?selectableItemBackground"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/card_horizontal_padding"
-                android:paddingTop="@dimen/card_vertical_padding"
-                android:paddingRight="@dimen/card_horizontal_padding"
-                android:paddingBottom="@dimen/card_vertical_padding">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/icon"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="15"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/ic_contacts_no_image" />
-
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/items_horizontal_spacing"
-                    android:layout_weight="75"
-                    android:gravity="center_vertical|start"
-                    android:orientation="vertical">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/text_category"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Сахно Александр"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                        android:textColor="?attr/colorPrimary" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/text_description"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:text="Стажер-тестировщик"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
-
-                    <!--todo "command is used by 0 locations, something like this"-->
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ic_add_3"
                     style="@style/Widget.AppCompat.ActionButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
