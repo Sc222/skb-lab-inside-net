@@ -24,7 +24,7 @@ export class AuthenticationService {
     }
 
     public async getAuthScope(personId: string, token: string): Promise<Result<AuthScope>> {
-        let response = await PersonsApi.GetPersonById(personId, token, true);
+        let response = await PersonsApi.GetPersonById(personId, token);
         if (!Api.IsRequestSuccess(response) || !response.data) {
             return ResultBuilder.Error(response.error);
         }

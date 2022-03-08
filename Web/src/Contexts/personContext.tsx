@@ -32,7 +32,7 @@ export const PersonContextProvider: FunctionComponent<PersonContextProps> = ({ p
         setIsLoading(false);
         return;
       }
-      let response = await PersonsApi.GetPersonById(personId, auth.authInfo?.token, true);
+      let response = await PersonsApi.GetPersonById(personId, auth.authInfo?.token);
       let person = !Api.IsRequestSuccess(response) || !response.data ? null : response.data;
       setPerson(person);
       setIsLoading(false);

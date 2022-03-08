@@ -63,7 +63,7 @@ export const CalendarPage: FunctionComponent<CalendarPageProps> = () => {
       if (!auth.authInfo?.token || !authPersonInfo) {
         return;
       }
-      let response = await PersonsApi.GetAll(auth.authInfo.token, true);
+      let response = await PersonsApi.GetAll(auth.authInfo.token);
       let persons = !Api.IsRequestSuccess(response) || !response.data ? null : response.data;
 
       // Exclude yourself from the list
