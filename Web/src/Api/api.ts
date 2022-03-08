@@ -12,8 +12,13 @@ export class Api {
                 }
                 return productionApiRoot;
             }
-            default:
-                return "https://localhost:8080";
+            default: {
+                let devApiRoot = process.env.DEV_API_ROOT;
+                if (!devApiRoot) {
+                    throw new Error("Please specify api root for development using 'DEV_API_ROOT' env variable");
+                }
+                return devApiRoot;
+            }
         }
     }
 

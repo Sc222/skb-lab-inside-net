@@ -11,7 +11,7 @@ type AuthenticateResponse = { person: PersonModel; token: string; expires: numbe
 export class PersonsApi {
     public static async Authenticate(
         authData: Pick<PersonModel, "Email" | "Password">,
-        useTestingMocks = true
+        useTestingMocks = false
     ): Promise<ApiResponse<AuthenticateResponse>> {
         if (useTestingMocks) {
             let allPersons = Array.from(MockPersons.values());
@@ -52,11 +52,12 @@ export class PersonsApi {
                 };
                 return result;
             })
+
             .catch((reason: AxiosError) => {
                 let result: ApiResponse<AuthenticateResponse> = {
                     data: null,
                     status: reason.response?.status ?? -1,
-                    error: reason.response?.data,
+                    error: reason.response?.data.message.toString() ?? "Произошла ошибка",
                 };
                 return result;
             });
@@ -65,7 +66,7 @@ export class PersonsApi {
     public static async GetPersonById(
         personId: string,
         token: string,
-        useTestingMocks = true
+        useTestingMocks = false
     ): Promise<ApiResponse<PersonModel>> {
         if (useTestingMocks) {
             let person = MockPersons.get(personId);
@@ -103,13 +104,13 @@ export class PersonsApi {
                 let result: ApiResponse<PersonModel> = {
                     data: null,
                     status: reason.response?.status ?? -1,
-                    error: reason.response?.data,
+                    error: reason.response?.data.message.toString() ?? "Произошла ошибка",
                 };
                 return result;
             });
     }
 
-    public static async GetAll(token: string, useTestingMocks = true): Promise<ApiResponse<PersonModel[]>> {
+    public static async GetAll(token: string, useTestingMocks = false): Promise<ApiResponse<PersonModel[]>> {
         if (useTestingMocks) {
             let result = {
                 data: Array.from(MockPersons.values()),
@@ -139,7 +140,7 @@ export class PersonsApi {
                 let result: ApiResponse<PersonModel[]> = {
                     data: null,
                     status: reason.response?.status ?? -1,
-                    error: reason.response?.data,
+                    error: reason.response?.data.message.toString() ?? "Произошла ошибка",
                 };
                 return result;
             });
@@ -154,7 +155,7 @@ export class PersonsApi {
     public static async Find(
         searchParams: URLSearchParams,
         token: string,
-        useTestingMocks = true
+        useTestingMocks = false
     ): Promise<ApiResponse<PersonModel[]>> {
         if (useTestingMocks) {
             let allPersons = Array.from(MockPersons.values());
@@ -193,7 +194,7 @@ export class PersonsApi {
                 let result: ApiResponse<PersonModel[]> = {
                     data: null,
                     status: reason.response?.status ?? -1,
-                    error: reason.response?.data,
+                    error: reason.response?.data.message.toString() ?? "Произошла ошибка",
                 };
                 return result;
             });
