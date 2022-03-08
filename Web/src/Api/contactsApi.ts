@@ -41,7 +41,9 @@ export class ContactsApi {
 
         let axiosInstance = axios.create({ baseURL: Api.BaseUrl });
         return axiosInstance
-            .delete<string | undefined>(`/contacts/${personId}/remove/${contactId}`, Api.AuthorizationHeaders(token))
+            .delete<string | undefined>(`/contacts/${personId}/remove/${contactId}`, {
+                headers: Api.AuthorizationHeaders(token),
+            })
             .then((response) => {
                 let result: ApiResponse<string | undefined> = {
                     data: response.data,
@@ -92,7 +94,9 @@ export class ContactsApi {
 
         let axiosInstance = axios.create({ baseURL: Api.BaseUrl });
         return axiosInstance
-            .put<string | undefined>(`/contacts/${personId}/add/${contactId}`, Api.AuthorizationHeaders(token))
+            .put<string | undefined>(`/contacts/${personId}/add/${contactId}`, {
+                headers: Api.AuthorizationHeaders(token),
+            })
             .then((response) => {
                 let result: ApiResponse<string | undefined> = {
                     data: response.data,
@@ -158,7 +162,7 @@ export class ContactsApi {
         const axiosInstance = axios.create({ baseURL: Api.BaseUrl });
         const requestUrl = searchParams ? `/contacts/${personId}?${searchParams.toString()}` : `/contacts/${personId}`;
         return axiosInstance
-            .get<PersonModel[]>(requestUrl, Api.AuthorizationHeaders(token))
+            .get<PersonModel[]>(requestUrl, { headers: Api.AuthorizationHeaders(token) })
             .then((response) => {
                 let result: ApiResponse<PersonModel[]> = {
                     data: response.data,

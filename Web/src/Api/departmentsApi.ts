@@ -34,7 +34,7 @@ export class DepartmentsApi {
 
         let axiosInstance = axios.create({ baseURL: Api.BaseUrl });
         return axiosInstance
-            .get<DepartmentModel>(`/departments/${departmentId}`, Api.AuthorizationHeaders(token))
+            .get<DepartmentModel>(`/departments/${departmentId}`, { headers: Api.AuthorizationHeaders(token) })
             .then((response) => {
                 let result: ApiResponse<DepartmentModel> = {
                     data: response.data,
@@ -70,7 +70,7 @@ export class DepartmentsApi {
 
         let axiosInstance = axios.create({ baseURL: Api.BaseUrl });
         return axiosInstance
-            .get<DepartmentModel[]>(`/departments/all`, Api.AuthorizationHeaders(token))
+            .get<DepartmentModel[]>(`/departments/all`, { headers: Api.AuthorizationHeaders(token) })
             .then((response) => {
                 let result: ApiResponse<DepartmentModel[]> = {
                     data: response.data,

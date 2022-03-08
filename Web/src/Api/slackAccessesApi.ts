@@ -38,7 +38,9 @@ export class SlackAccessesApi {
 
         let axiosInstance = axios.create({ baseURL: Api.BaseUrl });
         return axiosInstance
-            .get<SlackChannelModel[]>(`/slackAccesses/channels/${personId}`, Api.AuthorizationHeaders(token))
+            .get<SlackChannelModel[]>(`/slackAccesses/channels/${personId}`, {
+                headers: Api.AuthorizationHeaders(token),
+            })
             .then((response) => {
                 let result: ApiResponse<SlackChannelModel[]> = {
                     data: response.data,
@@ -82,11 +84,9 @@ export class SlackAccessesApi {
 
         let axiosInstance = axios.create({ baseURL: Api.BaseUrl });
         return axiosInstance
-            .post<string>(
-                `/slackAccesses/accessRequests/${accessRequest.PersonId}`,
-                accessRequest,
-                Api.PostRequestHeaders(token)
-            )
+            .post<string>(`/slackAccesses/accessRequests/${accessRequest.PersonId}`, accessRequest, {
+                headers: Api.PostRequestHeaders(token),
+            })
             .then((response) => {
                 let result: ApiResponse<string> = {
                     data: response.data,
@@ -143,7 +143,9 @@ export class SlackAccessesApi {
 
         let axiosInstance = axios.create({ baseURL: Api.BaseUrl });
         return axiosInstance
-            .get<SlackAccessRequestModelExtended[]>(`/slackAccesses/accessRequests`, Api.AuthorizationHeaders(token))
+            .get<SlackAccessRequestModelExtended[]>(`/slackAccesses/accessRequests`, {
+                headers: Api.AuthorizationHeaders(token),
+            })
             .then((response) => {
                 let result: ApiResponse<SlackAccessRequestModelExtended[]> = {
                     data: response.data,
@@ -200,10 +202,9 @@ export class SlackAccessesApi {
 
         let axiosInstance = axios.create({ baseURL: Api.BaseUrl });
         return axiosInstance
-            .get<SlackAccessRequestModelExtended[]>(
-                `/slackAccesses/accessRequests/${personId}`,
-                Api.AuthorizationHeaders(token)
-            )
+            .get<SlackAccessRequestModelExtended[]>(`/slackAccesses/accessRequests/${personId}`, {
+                headers: Api.AuthorizationHeaders(token),
+            })
             .then((response) => {
                 let result: ApiResponse<SlackAccessRequestModelExtended[]> = {
                     data: response.data,
@@ -251,11 +252,9 @@ export class SlackAccessesApi {
 
         let axiosInstance = axios.create({ baseURL: Api.BaseUrl });
         return axiosInstance
-            .post<string | undefined>(
-                `/slackAccesses/accessRequests/approve`,
-                accessRequest,
-                Api.PostRequestHeaders(token)
-            )
+            .post<string | undefined>(`/slackAccesses/accessRequests/approve`, accessRequest, {
+                headers: Api.PostRequestHeaders(token),
+            })
             .then((response) => {
                 let result: ApiResponse<string | undefined> = {
                     data: response.data,
@@ -302,11 +301,9 @@ export class SlackAccessesApi {
 
         let axiosInstance = axios.create({ baseURL: Api.BaseUrl });
         return axiosInstance
-            .post<string | undefined>(
-                `/slackAccesses/accessRequests/disapprove`,
-                accessRequest,
-                Api.PostRequestHeaders(token)
-            )
+            .post<string | undefined>(`/slackAccesses/accessRequests/disapprove`, accessRequest, {
+                headers: Api.PostRequestHeaders(token),
+            })
             .then((response) => {
                 let result: ApiResponse<string | undefined> = {
                     data: response.data,

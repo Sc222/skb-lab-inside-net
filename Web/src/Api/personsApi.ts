@@ -43,7 +43,7 @@ export class PersonsApi {
 
         let axiosInstance = axios.create({ baseURL: Api.BaseUrl });
         return axiosInstance
-            .post<AuthenticateResponse>("/person/authenticate", authData, Api.PostRequestHeaders(null))
+            .post<AuthenticateResponse>("/person/authenticate", authData, { headers: Api.PostRequestHeaders(null) })
             .then((response) => {
                 let result: ApiResponse<AuthenticateResponse> = {
                     data: response.data,
@@ -90,8 +90,9 @@ export class PersonsApi {
         }
 
         let axiosInstance = axios.create({ baseURL: Api.BaseUrl });
+        console.log("DEMO: ", Api.AuthorizationHeaders(token));
         return axiosInstance
-            .get<PersonModel>(`/person/${personId}`, Api.AuthorizationHeaders(token))
+            .get<PersonModel>(`/person/${personId}`, { headers: Api.AuthorizationHeaders(token) })
             .then((response) => {
                 let result: ApiResponse<PersonModel> = {
                     data: response.data,
@@ -127,7 +128,7 @@ export class PersonsApi {
 
         let axiosInstance = axios.create({ baseURL: Api.BaseUrl });
         return axiosInstance
-            .get<PersonModel[]>(`/person/all`, Api.AuthorizationHeaders(token))
+            .get<PersonModel[]>(`/person/all`, { headers: Api.AuthorizationHeaders(token) })
             .then((response) => {
                 let result: ApiResponse<PersonModel[]> = {
                     data: response.data,
@@ -181,7 +182,7 @@ export class PersonsApi {
 
         let axiosInstance = axios.create({ baseURL: Api.BaseUrl });
         return axiosInstance
-            .get<PersonModel[]>(`/person/find?${searchParams.toString()}`, Api.AuthorizationHeaders(token))
+            .get<PersonModel[]>(`/person/find?${searchParams.toString()}`, { headers: Api.AuthorizationHeaders(token) })
             .then((response) => {
                 let result: ApiResponse<PersonModel[]> = {
                     data: response.data,
