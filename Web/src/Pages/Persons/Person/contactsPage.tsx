@@ -100,7 +100,7 @@ export const ContactsPage: FunctionComponent<ContactPageProps> = ({ searchOnEver
     });
 
     //fixme optimize using dict or hashset
-    const newAuthPersonContacts = authPersonContacts ? authPersonContacts.filter((c) => c.Id !== contactId) : [];
+    const newAuthPersonContacts = authPersonContacts ? authPersonContacts.filter((c) => c.id !== contactId) : [];
     setAuthPersonContacts(newAuthPersonContacts); //FIXME: positive rendering, is it ok?
   };
 
@@ -129,7 +129,7 @@ export const ContactsPage: FunctionComponent<ContactPageProps> = ({ searchOnEver
               {authPersonContacts ? (
                 <List>
                   {authPersonContacts.map((contact, index) => (
-                    <div key={contact.Id}>
+                    <div key={contact.id}>
                       <MyContactCard contact={contact} onDelete={onContactDelete} />
                       {index !== authPersonContacts.length - 1 && <Divider variant="middle" />}
                     </div>

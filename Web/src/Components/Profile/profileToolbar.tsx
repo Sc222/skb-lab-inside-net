@@ -83,18 +83,18 @@ export const ProfileToolbar: FunctionComponent<ProfileToolbarProps> = ({
                     width: 128,
                     fontSize: "96px",
                   }}
-                  src={person?.AvatarUrl}
+                  src={person?.avatarUrl}
                 >
                   <AccountCircleOutlinedIcon color="primary" fontSize="inherit" />
                 </Avatar>
               </ListItemAvatar>
               <ListItemText
-                primary={<Typography variant="h4">{person.FullName}</Typography>}
+                primary={<Typography variant="h4">{person.fullName}</Typography>}
                 secondary={
                   <>
-                    <Typography variant="h6">{person.Position.Name}</Typography>
+                    <Typography variant="h6">{person.position.name}</Typography>
                     <Typography variant="body1">
-                      {person.Department.Name}
+                      {person.department.name}
                       <br />
                     </Typography>
                   </>

@@ -204,7 +204,7 @@ export class DepartmentCalendar extends React.PureComponent<DepartmentCalendarPr
               width: 60,
               fontSize: "48px",
             }}
-            src={person.AvatarUrl}
+            src={person.avatarUrl}
           >
             <AccountCircleOutlinedIcon color="primary" fontSize="inherit" />
           </Avatar>
@@ -213,7 +213,7 @@ export class DepartmentCalendar extends React.PureComponent<DepartmentCalendarPr
               primary={
                 <Link
                   component={RouterLink}
-                  to={`${SiteRoute.persons}/${person.Id}/${SiteRoute.profile}`}
+                  to={`${SiteRoute.persons}/${person.id}/${SiteRoute.profile}`}
                   variant="inherit"
                   color="inherit"
                   underline="hover"
@@ -222,14 +222,14 @@ export class DepartmentCalendar extends React.PureComponent<DepartmentCalendarPr
                     cursor: "pointer",
                   }}
                 >
-                  {<b>{person.FullName}</b>}
+                  {<b>{person.fullName}</b>}
                 </Link>
               }
               secondary={
                 <Typography variant="inherit" sx={{ fontSize: "0.65rem" }}>
-                  {person.Position.Name}
+                  {person.position.name}
                   <br />
-                  {person.Department.Name}
+                  {person.department.name}
                 </Typography>
               }
             />

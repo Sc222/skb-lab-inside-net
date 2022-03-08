@@ -1,7 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="542cc902-a17d-4f84-90cb-90dd5dc0cecc" name="Default Changelist" comment="" />
+    <list default="true" id="542cc902-a17d-4f84-90cb-90dd5dc0cecc" name="Default Changelist" comment="Rename personModel to lowerCase and fix authPageRestriction">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/src/Api/Models/departmentModel.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Web/src/Api/Models/departmentModel.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/src/Api/Models/personModel.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Web/src/Api/Models/personModel.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/src/Api/Models/positionModel.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Web/src/Api/Models/positionModel.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/src/Api/TestingMocks/mockDepartments.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Web/src/Api/TestingMocks/mockDepartments.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/src/Api/TestingMocks/mockPersons.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Web/src/Api/TestingMocks/mockPersons.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/src/Api/contactsApi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Web/src/Api/contactsApi.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/src/Api/departmentsApi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Web/src/Api/departmentsApi.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/src/Api/personsApi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Web/src/Api/personsApi.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/src/Api/slackAccessesApi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Web/src/Api/slackAccessesApi.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/src/Components/Calendar/DepartmentCalendar/departmentCalendar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Web/src/Components/Calendar/DepartmentCalendar/departmentCalendar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/src/Components/Contacts/myContactCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Web/src/Components/Contacts/myContactCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/src/Components/Contacts/myContactsToolbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Web/src/Components/Contacts/myContactsToolbar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/src/Components/PageRestrictions/authPageRestriction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Web/src/Components/PageRestrictions/authPageRestriction.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/src/Components/PageRestrictions/personalPageRestriction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Web/src/Components/PageRestrictions/personalPageRestriction.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/src/Components/Profile/profileToolbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Web/src/Components/Profile/profileToolbar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/src/Components/Root/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Web/src/Components/Root/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/src/Components/Search/searchContactCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Web/src/Components/Search/searchContactCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/src/Components/Search/searchContactsToolbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Web/src/Components/Search/searchContactsToolbar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/src/Components/SlackChannels/requestChannelAccessTab.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Web/src/Components/SlackChannels/requestChannelAccessTab.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/src/Contexts/authContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Web/src/Contexts/authContext.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/src/Pages/Persons/Person/calendarPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Web/src/Pages/Persons/Person/calendarPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/src/Pages/Persons/Person/contactsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Web/src/Pages/Persons/Person/contactsPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/src/Pages/Persons/Person/profilePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Web/src/Pages/Persons/Person/profilePage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/src/Pages/Persons/searchPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Web/src/Pages/Persons/searchPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/src/Pages/loginPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Web/src/Pages/loginPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/src/Services/authenticationService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Web/src/Services/authenticationService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/src/Services/localStorageService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Web/src/Services/localStorageService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/src/Typings/Types/myContact.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Web/src/Typings/Types/myContact.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/src/Typings/Types/searchContact.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Web/src/Typings/Types/searchContact.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/src/app.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Web/src/app.tsx" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -26,6 +58,13 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="android.sdk.path" value="$USER_HOME$/Android/Sdk" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/Web" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.standard" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.standard" value="" />
+    <property name="prettierjs.PrettierConfiguration.Package" value="$PROJECT_DIR$/Web/node_modules/prettier" />
+    <property name="settings.editor.selected.configurable" value="settings.javascript.linters.eslint" />
+    <property name="ts.external.directory.path" value="$PROJECT_DIR$/Web/node_modules/typescript/lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -41,9 +80,37 @@
       <updated>1621094197452</updated>
       <workItem from="1641547137807" duration="315000" />
     </task>
+    <task id="LOCAL-00001" summary="Fix personsApi and create dev api root config">
+      <created>1646772836194</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1646772836194</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Fix personsApi and create dev api root config" />
+    <MESSAGE value="Rename personModel to lowerCase and fix authPageRestriction" />
+    <option name="LAST_COMMIT_MESSAGE" value="Rename personModel to lowerCase and fix authPageRestriction" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

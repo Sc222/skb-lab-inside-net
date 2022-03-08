@@ -56,12 +56,12 @@ export const RequestChannelAccessTab: FunctionComponent<RequestChannelAccessTabP
   const onRequestChannelAccess = async (channelId: string) => {
     //FIXME make SlackId REQUIRED FIELD IN PERSON MODEL
     console.log(personInfo);
-    if (auth.authInfo && personInfo && personInfo.SlackId) {
+    if (auth.authInfo && personInfo && personInfo.slackId) {
       let request: Omit<SlackAccessRequestModel, "Id"> = {
         ChannelId: channelId,
         AdminMessage: "",
         Status: "pending",
-        PersonId: personInfo.Id!,
+        PersonId: personInfo.id!,
       };
       await SlackAccessesApi.CreateAccessRequest(request, auth.authInfo.token);
 

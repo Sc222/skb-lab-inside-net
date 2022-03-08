@@ -15,7 +15,7 @@ export const MyContactCard: FunctionComponent<MyContactCardProps> = ({ contact, 
     sx={{ py: 2 }}
     disablePadding
     secondaryAction={
-      <Button onClick={() => onDelete(contact.Id!)} variant="text" component="span" size="small">
+      <Button onClick={() => onDelete(contact.id!)} variant="text" component="span" size="small">
         Удалить
       </Button>
     }
@@ -28,7 +28,7 @@ export const MyContactCard: FunctionComponent<MyContactCardProps> = ({ contact, 
           width: 60,
           fontSize: "48px",
         }}
-        src={contact.AvatarUrl}
+        src={contact.avatarUrl}
       >
         <AccountCircleOutlinedIcon color="primary" fontSize="inherit" />
       </Avatar>
@@ -37,7 +37,7 @@ export const MyContactCard: FunctionComponent<MyContactCardProps> = ({ contact, 
       primary={
         <Link
           component={RouterLink}
-          to={`${SiteRoute.persons}/${contact.Id}/${SiteRoute.profile}`}
+          to={`${SiteRoute.persons}/${contact.id}/${SiteRoute.profile}`}
           variant="inherit"
           color="inherit"
           underline="hover"
@@ -45,17 +45,17 @@ export const MyContactCard: FunctionComponent<MyContactCardProps> = ({ contact, 
             cursor: "pointer",
           }}
         >
-          {contact.FullName}
+          {contact.fullName}
         </Link>
       }
       secondary={
         <>
-          {contact.Position.Name}
+          {contact.position.name}
           <br />
           <Link
             target="_blank"
             rel="noopener"
-            href={`mailto:${contact.Email}`}
+            href={`mailto:${contact.email}`}
             color="secondary"
             variant="subtitle2"
             underline="hover"
@@ -69,7 +69,7 @@ export const MyContactCard: FunctionComponent<MyContactCardProps> = ({ contact, 
           <Link
             target="_blank"
             rel="noopener"
-            href={`tel:${contact.PhoneNumber}`}
+            href={`tel:${contact.phoneNumber}`}
             color="secondary"
             variant="subtitle2"
             underline="hover"

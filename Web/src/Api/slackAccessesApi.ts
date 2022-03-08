@@ -125,10 +125,10 @@ export class SlackAccessesApi {
                 //todo process if person or channel is null
                 return {
                     ...r,
-                    PersonName: person.FullName,
-                    PersonPosition: person.Position.Name,
-                    SlackUserId: person.SlackId,
-                    PersonAvatar: person.AvatarUrl,
+                    PersonName: person.fullName,
+                    PersonPosition: person.position.name,
+                    SlackUserId: person.slackId,
+                    PersonAvatar: person.avatarUrl,
                     ChannelName: channel.ChannelName,
                 };
             });
@@ -182,10 +182,10 @@ export class SlackAccessesApi {
                 //todo process if person or channel is null
                 return {
                     ...r,
-                    PersonName: person.FullName,
-                    PersonPosition: person.Position.Name,
-                    SlackUserId: person.SlackId,
-                    PersonAvatar: person.AvatarUrl,
+                    PersonName: person.fullName,
+                    PersonPosition: person.position.name,
+                    SlackUserId: person.slackId,
+                    PersonAvatar: person.avatarUrl,
                     ChannelName: channel.ChannelName,
                 };
             });

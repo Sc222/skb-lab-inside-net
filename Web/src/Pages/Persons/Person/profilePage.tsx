@@ -51,7 +51,7 @@ export const ProfilePage: FunctionComponent<ProfilePageProps> = () => {
     if (!authInfo || !profilePerson) {
       return null;
     }
-    return authInfo.personId === profilePerson.Id;
+    return authInfo.personId === profilePerson.id;
   })();
 
   console.log("is auth page + isPersonLoading: " + isAuthPersonProfilePage + personContext.isLoading);
@@ -70,7 +70,7 @@ export const ProfilePage: FunctionComponent<ProfilePageProps> = () => {
         }
       });
     };
-    if (auth.authInfo?.personId === profilePerson?.Id) {
+    if (auth.authInfo?.personId === profilePerson?.id) {
       getAuthPersonSlackChannels();
     }
   }, [auth, profilePerson]);
@@ -85,7 +85,7 @@ export const ProfilePage: FunctionComponent<ProfilePageProps> = () => {
           //FIXME seems like a place for possible bugs
           if (profilePerson) {
             setAuthPersonContacts(result.success);
-            setIsPersonInContacts(result.success.findIndex((p) => p.Id === profilePerson.Id) > -1);
+            setIsPersonInContacts(result.success.findIndex((p) => p.id === profilePerson.id) > -1);
           }
         } else {
           // todo process errors somehow
@@ -100,11 +100,11 @@ export const ProfilePage: FunctionComponent<ProfilePageProps> = () => {
   const toggleIsPersonInContacts = (isInContacts: boolean) => {
     if (profilePerson) {
       if (isInContacts) {
-        auth.addToPersonContacts(profilePerson.Id!, () => {
+        auth.addToPersonContacts(profilePerson.id!, () => {
           /*todo process errors here*/
         });
       } else {
-        auth.removeFromPersonContacts(profilePerson.Id!, () => {
+        auth.removeFromPersonContacts(profilePerson.id!, () => {
           /*todo process errors here*/
         });
       }
@@ -147,27 +147,27 @@ export const ProfilePage: FunctionComponent<ProfilePageProps> = () => {
                       <List dense>
                         <ProfileContactItem
                           icon={<MailOutlined />}
-                          link={`mailto:${profilePerson.Email}`}
-                          text={profilePerson.Email}
+                          link={`mailto:${profilePerson.email}`}
+                          text={profilePerson.email}
                         />
                         <ProfileContactItem
                           icon={<PhoneOutlined />}
-                          link={`tel:${profilePerson.PhoneNumber}`}
-                          text={profilePerson.PhoneNumber ?? "Не указан"}
+                          link={`tel:${profilePerson.phoneNumber}`}
+                          text={profilePerson.phoneNumber ?? "Не указан"}
                         />
                         <ProfileContactItem
                           icon={<TelegramOutlined />}
-                          link={profilePerson.Telegram ? `https://t.me/${profilePerson.Telegram}` : undefined}
-                          text={profilePerson.Telegram ?? "Не указан"}
+                          link={profilePerson.telegram ? `https://t.me/${profilePerson.telegram}` : undefined}
+                          text={profilePerson.telegram ?? "Не указан"}
                         />
                         <ProfileContactItem
                           icon={<SlackOutlined />}
                           link={
-                            profilePerson.Slack
-                              ? `https://companydomain.slack.com/team/${profilePerson.Slack}`
+                            profilePerson.slack
+                              ? `https://companydomain.slack.com/team/${profilePerson.slack}`
                               : undefined
                           }
-                          text={profilePerson.Slack ?? "Не указан"}
+                          text={profilePerson.slack ?? "Не указан"}
                         />
                       </List>
                     </CardContent>
@@ -211,7 +211,7 @@ export const ProfilePage: FunctionComponent<ProfilePageProps> = () => {
                                     sx={{ display: "flex", flexDirection: "column" }}
                                   >
                                     <Avatar
-                                      src={c.AvatarUrl}
+                                      src={c.avatarUrl}
                                       sx={{
                                         height: 54,
                                         width: 54,
@@ -223,7 +223,7 @@ export const ProfilePage: FunctionComponent<ProfilePageProps> = () => {
                                     </Avatar>
                                     {/*FIXME SEPARATE VARIABLE FOR NAME*/}
                                     <Typography variant="body1" textAlign="center">
-                                      {c.FullName.split(" ")[1] ?? c.FullName}
+                                      {c.fullName.split(" ")[1] ?? c.fullName}
                                     </Typography>
                                   </Grid>
                                 ))}
@@ -293,7 +293,7 @@ export const ProfilePage: FunctionComponent<ProfilePageProps> = () => {
                         <CardContent>
                           <PersonalCalendar
                             initialData={CalendarSource.UsersCalendarData.filter(
-                              (v) => v.Person?.Id === profilePerson.Id
+                              (v) => v.Person?.id === profilePerson.Id
                             )}
                             eventsToShow={["Отпуск", "Командировка", "Учеба"]}
                             isPreview

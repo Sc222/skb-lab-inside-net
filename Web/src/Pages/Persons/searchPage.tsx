@@ -30,7 +30,7 @@ export const SearchPage: FunctionComponent<SearchPageProps> = ({ searchOnEveryIn
     const getAuthPersonContacts = async () => {
       await auth.getPersonContacts(null, (result) => {
         if (result.success) {
-          setAuthPersonContactIds(new Set(result.success.map((r) => r.Id!)));
+          setAuthPersonContactIds(new Set(result.success.map((r) => r.id!)));
         } else {
           // todo process errors somehow
           setAuthPersonContactIds(null);
@@ -73,7 +73,7 @@ export const SearchPage: FunctionComponent<SearchPageProps> = ({ searchOnEveryIn
       let persons = !Api.IsRequestSuccess(response) || !response.data ? null : response.data;
 
       // Exclude yourself from the list
-      setContacts(persons ? persons.filter((p) => p.Id !== auth.authInfo?.personId) : null);
+      setContacts(persons ? persons.filter((p) => p.id !== auth.authInfo?.personId) : null);
     };
     getContacts(searchParams);
   }, [searchParams, auth.authInfo]);
@@ -154,10 +154,10 @@ export const SearchPage: FunctionComponent<SearchPageProps> = ({ searchOnEveryIn
                   {contacts ? (
                     <List>
                       {contacts.map((contact, index) => (
-                        <div key={contact.Id}>
+                        <div key={contact.id}>
                           <SearchContactCard
                             contact={contact}
-                            isInContacts={authPersonContactIds.has(contact.Id!)}
+                            isInContacts={authPersonContactIds.has(contact.id!)}
                             onIsInContactsChange={onIsInContactsChange}
                           />
                           {index !== contacts.length - 1 && <Divider variant="middle" />}

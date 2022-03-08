@@ -10,7 +10,7 @@ type AuthenticateResponse = { person: PersonModel; token: string; expires: numbe
 
 export class PersonsApi {
     public static async Authenticate(
-        authData: Pick<PersonModel, "Email" | "Password">,
+        authData: Pick<PersonModel, "email" | "password">,
         useTestingMocks = false
     ): Promise<ApiResponse<AuthenticateResponse>> {
         if (useTestingMocks) {
@@ -21,7 +21,7 @@ export class PersonsApi {
                 error: "Неверная почта или пароль",
             };
             let person = allPersons.find(
-                (value) => value.Email === authData.Email && value.Password === authData.Password
+                (value) => value.email === authData.email && value.password === authData.password
             );
             if (person) {
                 result = {
@@ -161,9 +161,9 @@ export class PersonsApi {
             let allPersons = Array.from(MockPersons.values());
             let departments: Set<string> = new Set(searchParams.getAll(ContactsSearchParam.department));
             let filteredPersons = allPersons.filter((p) => {
-                let text: string = searchParams.get(ContactsSearchParam.name) ?? p.FullName;
-                let hasDepartment = departments.size > 0 ? departments.has(p.Department.Name) : true;
-                return hasDepartment && p.FullName.toLowerCase().includes(text.toLowerCase());
+                let text: string = searchParams.get(ContactsSearchParam.name) ?? p.fullName;
+                let hasDepartment = departments.size > 0 ? departments.has(p.department.name) : true;
+                return hasDepartment && p.fullName.toLowerCase().includes(text.toLowerCase());
             });
 
             let result = {

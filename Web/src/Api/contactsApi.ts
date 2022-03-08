@@ -136,13 +136,13 @@ export class ContactsApi {
             if (contactsIds) {
                 let ids = contactsIds.ContactsIds;
                 let allPersons = Array.from(MockPersons.values());
-                let contacts = allPersons.filter((p) => ids.has(p.Id!));
+                let contacts = allPersons.filter((p) => ids.has(p.id!));
                 if (searchParams) {
                     let departments: Set<string> = new Set(searchParams.getAll(ContactsSearchParam.department));
                     contacts = contacts.filter((p) => {
-                        let text: string = searchParams.get(ContactsSearchParam.name) ?? p.FullName;
-                        let hasDepartment = departments.size > 0 ? departments.has(p.Department.Name) : true;
-                        return hasDepartment && p.FullName.toLowerCase().includes(text.toLowerCase());
+                        let text: string = searchParams.get(ContactsSearchParam.name) ?? p.fullName;
+                        let hasDepartment = departments.size > 0 ? departments.has(p.department.name) : true;
+                        return hasDepartment && p.fullName.toLowerCase().includes(text.toLowerCase());
                     });
                 }
                 result.data = contacts;

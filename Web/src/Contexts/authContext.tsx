@@ -10,14 +10,13 @@ import { Api } from "../Api/api";
 import { ContactsApi } from "../Api/contactsApi";
 import { SlackChannelModel } from "../Api/Models/slackChannelModel";
 import { SlackAccessesApi } from "../Api/slackAccessesApi";
-import {SlackAccessRequestModel} from "../Api/Models/slackAccessRequestModel";
-import {SlackAccessRequestModelExtended} from "../Api/Models/slackAccessRequestModelExtended";
+import { SlackAccessRequestModelExtended } from "../Api/Models/slackAccessRequestModelExtended";
 
 //FIXME should person-related methods be here?
 interface AuthContextType {
   authInfo: AuthContextPerson | null;
   signIn: (
-    authData: Pick<PersonModel, "Email" | "Password">,
+    authData: Pick<PersonModel, "email" | "password">,
     callback: (result: Result<AuthContextPerson>) => void
   ) => Promise<void>;
   signOut: (callback: () => void) => Promise<void>;
@@ -33,7 +32,9 @@ interface AuthContextType {
   addToPersonContacts: (contactId: string, callback: (result: Result<undefined | string>) => void) => Promise<void>;
   getPersonInfo: (callback: (result: Result<PersonModel>) => void) => Promise<void>;
   getPersonSlackChannelsInfo: (callback: (result: Result<SlackChannelModel[]>) => void) => Promise<void>;
-  getPersonSlackAccessRequestsChannels: (callback: (result: Result<SlackAccessRequestModelExtended[]>) => void) => Promise<void>;
+  getPersonSlackAccessRequestsChannels: (
+    callback: (result: Result<SlackAccessRequestModelExtended[]>) => void
+  ) => Promise<void>;
 }
 
 const AuthContext = React.createContext<AuthContextType>({
@@ -76,7 +77,7 @@ export const AuthContextProvider: FunctionComponent = ({ children }) => {
   //FIXME SECURITY!!! for safety purposes try gettingUserId from token!!! (because userId in local storage may be WRONG)
 
   const signIn = async (
-    authData: Pick<PersonModel, "Email" | "Password">,
+    authData: Pick<PersonModel, "email" | "password">,
     callback: (result: Result<AuthContextPerson>) => void
   ): Promise<void> => {
     let result = await authenticationService.signIn(authData);

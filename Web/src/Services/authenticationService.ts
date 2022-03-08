@@ -6,7 +6,7 @@ import { Result, ResultBuilder } from "../Utils/result";
 import { AuthScope } from "../Typings/Enums/authScope";
 
 export class AuthenticationService {
-    public async signIn(authData: Pick<PersonModel, "Email" | "Password">): Promise<Result<AuthContextPerson>> {
+    public async signIn(authData: Pick<PersonModel, "email" | "password">): Promise<Result<AuthContextPerson>> {
         let response = await PersonsApi.Authenticate(authData);
         if (!Api.IsRequestSuccess(response) || !response.data) {
             return ResultBuilder.Error(response.error); //TODO: keep in mind that this message is shown to user
@@ -14,7 +14,7 @@ export class AuthenticationService {
         let authContextPerson = {
             token: response.data.token,
             expires: response.data.expires,
-            personId: response.data.person.Id!,
+            personId: response.data.person.id!,
         };
         return ResultBuilder.Success(authContextPerson);
     }
@@ -29,8 +29,8 @@ export class AuthenticationService {
             return ResultBuilder.Error(response.error);
         }
 
-        let isKnownScope = Object.values(AuthScope).includes(response.data.AuthScope as AuthScope);
-        let finalAuthScope = isKnownScope ? (response.data.AuthScope as AuthScope) : AuthScope.unknown;
+        let isKnownScope = Object.values(AuthScope).includes(response.data.authScope as AuthScope);
+        let finalAuthScope = isKnownScope ? (response.data.authScope as AuthScope) : AuthScope.unknown;
         return ResultBuilder.Success(finalAuthScope);
     }
 }

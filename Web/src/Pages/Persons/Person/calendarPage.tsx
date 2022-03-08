@@ -69,7 +69,7 @@ export const CalendarPage: FunctionComponent<CalendarPageProps> = () => {
       // Exclude yourself from the list
       setDepartmentPersons(
         persons
-          ? persons.filter((p) => p.Id !== authPersonInfo.Id && p.Department.Id === authPersonInfo.Department.Id)
+          ? persons.filter((p) => p.id !== authPersonInfo.id && p.department.id === authPersonInfo.department.id)
           : []
       );
     };
@@ -123,7 +123,7 @@ export const CalendarPage: FunctionComponent<CalendarPageProps> = () => {
                     {/* fixme fix person in calendarData being null sometimes */}
                     {person.person && (
                       <PersonalCalendar
-                        initialData={CalendarSource.UsersCalendarData.filter((v) => v.Person?.Id === person.person?.Id)}
+                        initialData={CalendarSource.UsersCalendarData.filter((v) => v.Person?.id === person.person?.id)}
                         eventsToShow={["Отпуск", "Командировка", "Учеба"]}
                         onDataUpdate={(newData) => {
                           newData = newData.map((e) => {
@@ -145,8 +145,8 @@ export const CalendarPage: FunctionComponent<CalendarPageProps> = () => {
                       persons={departmentPersons}
                       initialData={CalendarSource.UsersCalendarData.filter(
                         (v) =>
-                          v.Person?.Department?.Id === authPersonInfo.Department.Id &&
-                          v.Person?.Id !== authPersonInfo.Id
+                          v.Person?.department?.id === authPersonInfo.Department.Id &&
+                          v.Person?.id !== authPersonInfo.Id
                       )}
                       eventsToShow={["Отпуск", "Командировка", "Учеба"]}
                       onDataUpdate={(newData) => {

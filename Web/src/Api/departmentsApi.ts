@@ -12,7 +12,7 @@ export class DepartmentsApi {
         useTestingMocks = true
     ): Promise<ApiResponse<DepartmentModel>> {
         if (useTestingMocks) {
-            let department = MockDepartments.find((d) => d.Id === departmentId);
+            let department = MockDepartments.find((d) => d.id === departmentId);
             let result: ApiResponse<DepartmentModel> = {
                 data: null,
                 status: 404,

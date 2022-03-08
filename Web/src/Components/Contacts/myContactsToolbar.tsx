@@ -61,9 +61,9 @@ const DepartmentsSelect: FunctionComponent<DepartmentsSelectProps> = ({
       >
         {departments ? (
           departments.map((department) => (
-            <MenuItem key={department.Name} value={department.Name}>
-              <Checkbox checked={selectedDepartments.findIndex((d) => d === department.Name) > -1} />
-              <ListItemText primary={department.Name} />
+            <MenuItem key={department.name} value={department.name}>
+              <Checkbox checked={selectedDepartments.findIndex((d) => d === department.name) > -1} />
+              <ListItemText primary={department.name} />
             </MenuItem>
           ))
         ) : (

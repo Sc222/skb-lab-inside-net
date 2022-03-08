@@ -22,7 +22,7 @@ export const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
   const auth = useAuthContext();
 
   const [isSidebarOpen, setSidebarOpen] = useState(true);
-  const [personInfoForLayout, setPersonInfoForLayout] = useState<Pick<PersonModel, "AvatarUrl" | "FullName"> | null>(
+  const [personInfoForLayout, setPersonInfoForLayout] = useState<Pick<PersonModel, "avatarUrl" | "fullName"> | null>(
     null
   );
 
@@ -59,8 +59,8 @@ export const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
       </LayoutRoot>
       <CustomToolbar
         onSidebarOpen={() => setSidebarOpen(true)}
-        avatarUrl={personInfoForLayout?.AvatarUrl}
-        fullName={personInfoForLayout?.FullName}
+        avatarUrl={personInfoForLayout?.avatarUrl}
+        fullName={personInfoForLayout?.fullName}
       />
 
       {/* fixme refactor dynamic items loading */}

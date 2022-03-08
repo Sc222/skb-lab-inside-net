@@ -65,7 +65,7 @@ export class App extends Component<AppProps, AppState> {
             <Route
               path={SiteRoute.persons}
               element={
-                <AuthPageRestriction acceptedScopes={AuthScopesSets.All}>
+                <AuthPageRestriction acceptedScopes={AuthScopesSets.AllWithUnknown}>
                   <PersonsPage /> {/*THERE SHOULD BE TOOLBAR + SIDE MENU*/}
                 </AuthPageRestriction>
               }

@@ -21,7 +21,7 @@ export const SearchContactCard: FunctionComponent<SearchContactCardProps> = ({
     disablePadding
     secondaryAction={
       <Button
-        onClick={() => onIsInContactsChange(contact.Id!, !isInContacts)}
+        onClick={() => onIsInContactsChange(contact.id!, !isInContacts)}
         variant={isInContacts ? "outlined" : "contained"}
         component="span"
         size="small"
@@ -38,7 +38,7 @@ export const SearchContactCard: FunctionComponent<SearchContactCardProps> = ({
           width: 60,
           fontSize: "48px",
         }}
-        src={contact.AvatarUrl}
+        src={contact.avatarUrl}
       >
         <AccountCircleOutlinedIcon color="primary" fontSize="inherit" />
       </Avatar>
@@ -47,7 +47,7 @@ export const SearchContactCard: FunctionComponent<SearchContactCardProps> = ({
       primary={
         <Link
           component={RouterLink}
-          to={`${SiteRoute.persons}/${contact.Id}/${SiteRoute.profile}`}
+          to={`${SiteRoute.persons}/${contact.id}/${SiteRoute.profile}`}
           variant="inherit"
           color="inherit"
           underline="hover"
@@ -55,14 +55,14 @@ export const SearchContactCard: FunctionComponent<SearchContactCardProps> = ({
             cursor: "pointer",
           }}
         >
-          {contact.FullName}
+          {contact.fullName}
         </Link>
       }
       secondary={
         <>
-          {contact.Position.Name}
+          {contact.position.name}
           <br />
-          {contact.Department.Name}
+          {contact.department.name}
         </>
       }
     />

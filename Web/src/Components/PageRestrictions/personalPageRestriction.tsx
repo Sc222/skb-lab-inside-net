@@ -19,7 +19,7 @@ export const PersonalPageRestriction: FunctionComponent<PersonalPageRestrictionP
     return <></>;
   }
 
-  let personId = personContext.person?.Id;
+  let personId = personContext.person?.id;
 
   if (!personId) {
     return <NotFoundDefaultRedirection />;
