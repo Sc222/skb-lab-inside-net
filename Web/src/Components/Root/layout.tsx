@@ -40,7 +40,7 @@ export const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
       });
     };
     getPersonInfoForLayout();
-  });
+  }, [auth]);
 
   // if no person - do not render anything, how to fix this?
   return (
