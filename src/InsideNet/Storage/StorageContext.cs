@@ -18,8 +18,6 @@ public class StorageContext : DbContext
 
         modelBuilder.Entity<AccessRequest>().HasKey(r => new { r.PersonId, r.SlackUserId });
 
-        modelBuilder.Entity<Person>().HasOne(p => p.Position).WithMany().OnDelete(DeleteBehavior.NoAction).IsRequired();
-
         modelBuilder.Entity<Person>().HasIndex(p => p.Login).IsUnique();
         modelBuilder.Entity<Person>().HasIndex(p => p.Telegram).IsUnique();
         modelBuilder.Entity<Person>().HasIndex(p => p.Slack).IsUnique();
