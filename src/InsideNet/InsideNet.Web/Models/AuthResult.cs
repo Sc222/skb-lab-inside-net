@@ -1,13 +1,12 @@
 ﻿using System;
 
-namespace InsideNet.Web.Models
+namespace InsideNet.Web.Models;
+
+public class AuthResult
 {
-    public class AuthResult
-    {
-        public PersonModel Person { get; set; }
+    public PersonModel Person { get; set; }
 
-        public string Token { get; set; }
+    public string Token { get; set; }
 
-        public DateTime Expires { get; set; }
-    }
+    public DateTime Expires { get; set; }
 }

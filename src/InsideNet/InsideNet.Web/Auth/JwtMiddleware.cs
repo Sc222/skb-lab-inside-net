@@ -8,57 +8,56 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 
-namespace InsideNet.Web.Auth
+namespace InsideNet.Web.Auth;
+
+public class JwtMiddleware
 {
-    public class JwtMiddleware
+    private const string SecretKey = "absolutelysecretkey)))";
+    private readonly RequestDelegate next;
+
+    public JwtMiddleware(RequestDelegate next)
     {
-        private readonly RequestDelegate next;
-        private const string SecretKey = "absolutelysecretkey)))";
+        this.next = next;
+    }
 
-        public JwtMiddleware(RequestDelegate next)
+    public async Task Invoke(HttpContext context)
+    {
+        var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+        if (token != null)
+            AttachUserToContext(context, token);
+
+        await next(context).ConfigureAwait(false);
+    }
+
+    private void AttachUserToContext(HttpContext context, string token)
+    {
+        try
         {
-            this.next = next;
-        }
+            var rolesService = context.RequestServices.GetService<PersonRolesService>();
 
-        public async Task Invoke(HttpContext context)
-        {
-            var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-            if (token != null)
-                AttachUserToContext(context, token);
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(SecretKey);
 
-            await next(context).ConfigureAwait(false);
-        }
-
-        private void AttachUserToContext(HttpContext context, string token)
-        {
-            try
+            tokenHandler.ValidateToken(token, new TokenValidationParameters
             {
-                var rolesService = context.RequestServices.GetService<PersonRolesService>();
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ClockSkew = TimeSpan.Zero
+            }, out var validatedToken);
 
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes(SecretKey);
+            var jwtToken = (JwtSecurityToken)validatedToken;
 
-                tokenHandler.ValidateToken(token, new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    ClockSkew = TimeSpan.Zero
-                }, out SecurityToken validatedToken);
+            var personId = Guid.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
+            var role = rolesService.GetPersonRole(personId);
 
-                var jwtToken = (JwtSecurityToken)validatedToken;
-
-                var personId = Guid.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
-                var role = rolesService.GetPersonRole(personId);
-
-                context.Items["PersonId"] = personId;
-                context.Items["PersonRole"] = role;
-            }
-            catch
-            {
-                // ignored
-            }
+            context.Items["PersonId"] = personId;
+            context.Items["PersonRole"] = role;
+        }
+        catch
+        {
+            // ignored
         }
     }
 }

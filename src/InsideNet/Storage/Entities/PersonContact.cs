@@ -1,11 +1,10 @@
 ﻿using System;
 
-namespace Storage.Entities
-{
-    public class PersonContact
-    {
-        public Guid PersonId { get; set; }
+namespace Storage.Entities;
 
-        public Guid ContactId { get; set; }
-    }
+public class PersonContact
+{
+    public Guid PersonId { get; set; }
+
+    public Guid ContactId { get; set; }
 }

@@ -2,30 +2,29 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace Storage
+namespace Storage;
+
+public interface IRepository<TEntity> where TEntity : class
 {
-    public interface IRepository<TEntity> where TEntity : class
-    {
-        TEntity Get(params object[] keyValues);
+    TEntity Get(params object[] keyValues);
 
-        TEntity[] GetAll(bool eager = false);
+    TEntity[] GetAll(bool eager = false);
 
-        TEntity[] Find(Expression<Func<TEntity, bool>> predicate, bool eager = false);
+    TEntity[] Find(Expression<Func<TEntity, bool>> predicate, bool eager = false);
 
-        TEntity SingleOrDefault(Expression<Func<TEntity, bool>> predicate = null);
+    TEntity SingleOrDefault(Expression<Func<TEntity, bool>> predicate = null);
 
-        void Create(TEntity entity);
+    void Create(TEntity entity);
 
-        void CreateRange(IEnumerable<TEntity> entities);
+    void CreateRange(IEnumerable<TEntity> entities);
 
-        void Update(TEntity entity);
+    void Update(TEntity entity);
 
-        void UpdateRange(IEnumerable<TEntity> entities);
+    void UpdateRange(IEnumerable<TEntity> entities);
 
-        void Delete(Guid id);
+    void Delete(Guid id);
 
-        void Delete(TEntity entity);
+    void Delete(TEntity entity);
 
-        void DeleteRange(IEnumerable<TEntity> entities);
-    }
+    void DeleteRange(IEnumerable<TEntity> entities);
 }

@@ -16,10 +16,10 @@ namespace InsideNet.Web.Controllers;
 [Route("api/[controller]")]
 public class SlackAccessesController : ControllerBase
 {
-    private readonly SlackService slackService;
-    private readonly PeopleService peopleService;
     private readonly AccessRequestService accessRequestService;
     private readonly IMapper mapper;
+    private readonly PeopleService peopleService;
+    private readonly SlackService slackService;
 
     public SlackAccessesController(SlackService slackService, PeopleService peopleService, IMapper mapper, AccessRequestService accessRequestService)
     {

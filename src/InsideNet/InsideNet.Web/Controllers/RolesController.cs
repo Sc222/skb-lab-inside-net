@@ -6,57 +6,56 @@ using InsideNet.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Storage.Entities;
 
-namespace InsideNet.Web.Controllers
+namespace InsideNet.Web.Controllers;
+
+[ApiController]
+[Authentication]
+[Route("api/[controller]")]
+public class RolesController : ControllerBase
 {
-    [ApiController]
-    [Authentication]
-    [Route("api/[controller]")]
-    public class RolesController : ControllerBase
+    private readonly IMapper mapper;
+    private readonly RolesService rolesService;
+
+    public RolesController(IMapper mapper, RolesService rolesService)
     {
-        private readonly RolesService rolesService;
-        private readonly IMapper mapper;
+        this.mapper = mapper;
+        this.rolesService = rolesService;
+    }
 
-        public RolesController(IMapper mapper, RolesService rolesService)
-        {
-            this.mapper = mapper;
-            this.rolesService = rolesService;
-        }
+    [AccessFor("canViewRoles")]
+    [HttpGet("{id}")]
+    public RoleModel Get(Guid id)
+    {
+        return mapper.Map<RoleModel>(rolesService.Get(id));
+    }
 
-        [AccessFor("canViewRoles")]
-        [HttpGet("{id}")]
-        public RoleModel Get(Guid id)
-        {
-            return mapper.Map<RoleModel>(rolesService.Get(id));
-        }
+    [AccessFor("canViewRoles")]
+    [HttpGet("all")]
+    public RoleModel[] GetAll()
+    {
+        return mapper.Map<RoleModel[]>(rolesService.GetAll());
+    }
 
-        [AccessFor("canViewRoles")]
-        [HttpGet("all")]
-        public RoleModel[] GetAll()
-        {
-            return mapper.Map<RoleModel[]>(rolesService.GetAll());
-        }
+    [AccessFor("canEditRoles")]
+    [HttpPost("create")]
+    public RoleModel Create([FromBody] RoleModel role)
+    {
+        var entity = mapper.Map<Role>(role);
+        return mapper.Map<RoleModel>(rolesService.Create(entity));
+    }
 
-        [AccessFor("canEditRoles")]
-        [HttpPost("create")]
-        public RoleModel Create([FromBody] RoleModel role)
-        {
-            var entity = mapper.Map<Role>(role);
-            return mapper.Map<RoleModel>(rolesService.Create(entity));
-        }
+    [AccessFor("canEditRoles")]
+    [HttpPost("update")]
+    public RoleModel Update([FromBody] RoleModel role)
+    {
+        var entity = mapper.Map<Role>(role);
+        return mapper.Map<RoleModel>(rolesService.Update(entity));
+    }
 
-        [AccessFor("canEditRoles")]
-        [HttpPost("update")]
-        public RoleModel Update([FromBody] RoleModel role)
-        {
-            var entity = mapper.Map<Role>(role);
-            return mapper.Map<RoleModel>(rolesService.Update(entity));
-        }
-
-        [AccessFor("canEditRoles")]
-        [HttpPost("delete/{id}")]
-        public void Delete(Guid id)
-        {
-            rolesService.Delete(id);
-        }
+    [AccessFor("canEditRoles")]
+    [HttpPost("delete/{id}")]
+    public void Delete(Guid id)
+    {
+        rolesService.Delete(id);
     }
 }

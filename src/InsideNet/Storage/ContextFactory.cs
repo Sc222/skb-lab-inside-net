@@ -1,10 +1,9 @@
-﻿namespace Storage
+﻿namespace Storage;
+
+public class ContextFactory
 {
-    public class ContextFactory
+    public StorageContext Create()
     {
-        public StorageContext Create()
-        {
-            return new StorageContext();
-        }
+        return new StorageContext();
     }
 }

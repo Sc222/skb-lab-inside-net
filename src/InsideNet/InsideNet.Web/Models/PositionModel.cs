@@ -1,9 +1,8 @@
 ﻿using Storage.Entities;
 
-namespace InsideNet.Web.Models
+namespace InsideNet.Web.Models;
+
+public class PositionModel : GuidIdentifiable
 {
-    public class PositionModel : GuidIdentifiable
-    {
-        public string Name { get; set; }
-    }
+    public string Name { get; set; }
 }

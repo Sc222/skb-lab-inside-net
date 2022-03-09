@@ -3,42 +3,41 @@ using System.Linq;
 using Storage;
 using Storage.Entities;
 
-namespace InsideNet.Services
+namespace InsideNet.Services;
+
+public class ContactsService
 {
-    public class ContactsService
+    private readonly IRepository<PersonContact> contacts;
+    private readonly IRepository<Person> people;
+
+
+    public ContactsService(IRepository<Person> people, IRepository<PersonContact> contacts)
     {
-        private readonly IRepository<Person> people;
-        private readonly IRepository<PersonContact> contacts;
+        this.people = people;
+        this.contacts = contacts;
+    }
 
+    public Person[] GetPersonContacts(Guid id)
+    {
+        var contactsIds = contacts.Find(p => p.PersonId == id).Select(p => p.ContactId);
+        return people.Find(p => contactsIds.Contains(p.Id));
+    }
 
-        public ContactsService(IRepository<Person> people, IRepository<PersonContact> contacts)
+    public void AddToContacts(Guid initiatorId, Guid contactId)
+    {
+        contacts.Create(new PersonContact
         {
-            this.people = people;
-            this.contacts = contacts;
-        }
+            PersonId = initiatorId,
+            ContactId = contactId
+        });
+    }
 
-        public Person[] GetPersonContacts(Guid id)
+    public void RemoveFromContacts(Guid initiatorId, Guid contactId)
+    {
+        contacts.Delete(new PersonContact
         {
-            var contactsIds = contacts.Find(p => p.PersonId == id).Select(p => p.ContactId);
-            return people.Find(p => contactsIds.Contains(p.Id));
-        }
-
-        public void AddToContacts(Guid initiatorId, Guid contactId)
-        {
-            contacts.Create(new PersonContact
-            {
-                PersonId = initiatorId,
-                ContactId = contactId
-            });
-        }
-
-        public void RemoveFromContacts(Guid initiatorId, Guid contactId)
-        {
-            contacts.Delete(new PersonContact
-            {
-                PersonId = initiatorId,
-                ContactId = contactId
-            });
-        }
+            PersonId = initiatorId,
+            ContactId = contactId
+        });
     }
 }

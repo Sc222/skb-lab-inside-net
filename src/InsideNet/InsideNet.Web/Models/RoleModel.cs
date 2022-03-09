@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using Storage.Entities;
 
-namespace InsideNet.Web.Models
-{
-    public class RoleModel : GuidIdentifiable
-    {
-        public string Name { get; set; }
+namespace InsideNet.Web.Models;
 
-        public List<string> AllowedActions { get; set; }
-    }
+public class RoleModel : GuidIdentifiable
+{
+    public string Name { get; set; }
+
+    public List<string> AllowedActions { get; set; }
 }

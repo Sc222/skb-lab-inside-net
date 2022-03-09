@@ -1,9 +1,8 @@
 ﻿using System;
 
-namespace Storage.Entities
+namespace Storage.Entities;
+
+public abstract class GuidIdentifiable
 {
-    public abstract class GuidIdentifiable
-    {
-        public Guid Id { get; set; }
-    }
+    public Guid Id { get; set; }
 }

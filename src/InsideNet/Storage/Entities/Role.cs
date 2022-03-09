@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 
-namespace Storage.Entities
-{
-    public class Role : GuidIdentifiable
-    {
-        public string Name { get; set; }
+namespace Storage.Entities;
 
-        public List<string> AllowedActions { get; set; }
-    }
+public class Role : GuidIdentifiable
+{
+    public string Name { get; set; }
+
+    public List<string> AllowedActions { get; set; }
 }

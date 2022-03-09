@@ -19,7 +19,6 @@ namespace SlackNotificationsWorker
         }
 
         public void Configure(IApplicationBuilder app)
-        {
-        }
+        {}
     }
 }

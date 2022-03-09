@@ -9,8 +9,8 @@ namespace InsideNet.Services;
 
 public class TokenGenerator
 {
-    private static readonly TimeSpan ExpirationTime = TimeSpan.FromHours(4);
     private const string SecretKey = "absolutelysecretkey)))";
+    private static readonly TimeSpan ExpirationTime = TimeSpan.FromHours(4);
 
     public (string Token, DateTime Expires) GenerateJwtToken(Person person)
     {

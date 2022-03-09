@@ -1,22 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>Library</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <LangVersion>latest</LangVersion>
-    <AssemblyName>InsideNet.Services</AssemblyName>
-    <RootNamespace>InsideNet.Services</RootNamespace>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>Library</OutputType>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<LangVersion>latest</LangVersion>
+		<AssemblyName>InsideNet.Services</AssemblyName>
+		<RootNamespace>InsideNet.Services</RootNamespace>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Slack.Webhooks" Version="1.1.5" />
-    <PackageReference Include="SlackAPI" Version="1.1.13" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.11.1" />
-    <PackageReference Include="Telegram.Bot" Version="15.7.1" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Slack.Webhooks" Version="1.1.5" />
+		<PackageReference Include="SlackAPI" Version="1.1.13" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.11.1" />
+		<PackageReference Include="Telegram.Bot" Version="15.7.1" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Storage\Storage.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Storage\Storage.csproj" />
+	</ItemGroup>
 
 </Project>

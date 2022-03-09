@@ -1,12 +1,12 @@
 ﻿{
-	"actionsList": [
-		"canEditUsers",
-		"canEditRoles",
-		"canSetRoles",
-		"canViewRoles",
-		"canResolveAccessRequests",
-		"canEditVacations",
-		"canEditPositions",
-		"canEditNotificationsChannels"
+  "actionsList": [
+    "canEditUsers",
+    "canEditRoles",
+    "canSetRoles",
+    "canViewRoles",
+    "canResolveAccessRequests",
+    "canEditVacations",
+    "canEditPositions",
+    "canEditNotificationsChannels"
   ]
 }

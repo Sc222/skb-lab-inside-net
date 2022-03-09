@@ -8,12 +8,20 @@ namespace SlackNotificationsWorker
     public class SlackNotificationsService
     {
         private readonly IRepository<NotificationsChannel> notificationChannel;
-        private string MessageForHrs(Person person) => $"Special message only for Hrs about {person.FullName} with email: {person.Email}";
-        private string MessageForNormalPeople(Person person) => $"New cowboy out there, have a good time here {person.FullName} with email: {person.Email}";
 
         public SlackNotificationsService(IRepository<NotificationsChannel> notificationChannel)
         {
             this.notificationChannel = notificationChannel;
+        }
+
+        private string MessageForHrs(Person person)
+        {
+            return $"Special message only for Hrs about {person.FullName} with email: {person.Email}";
+        }
+
+        private string MessageForNormalPeople(Person person)
+        {
+            return $"New cowboy out there, have a good time here {person.FullName} with email: {person.Email}";
         }
 
         public async Task SendNotificationAboutNewUserToSlack(Person person)

@@ -10,8 +10,10 @@ namespace SlackNotificationsWorker
             CreateHostBuilder(args).Build().Run();
         }
 
-        private static IWebHostBuilder CreateHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
+        private static IWebHostBuilder CreateHostBuilder(string[] args)
+        {
+            return WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>();
+        }
     }
 }
