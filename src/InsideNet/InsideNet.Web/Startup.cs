@@ -81,7 +81,7 @@ public class Startup
         services.AddScoped<PeopleService>();
         services.AddScoped<PositionsService>();
         services.AddScoped<RolesService>();
-        services.AddScoped<VacationsService>();
+        services.AddScoped<CalendarsService>();
         services.AddScoped<NotificationChannelsService>();
         services.AddScoped<TokenGenerator>();
         services.AddScoped(_ => new SlackTaskClient("xoxb-123"));

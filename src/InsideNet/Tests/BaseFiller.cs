@@ -25,7 +25,7 @@ public class Tests
         var contextFactory = new ContextFactory();
         var rolesRepo = new Repository<Role>(contextFactory);
         var positionsRepo = new Repository<Position>(contextFactory);
-        var vacationsRepo = new Repository<Vacation>(contextFactory);
+        var vacationsRepo = new Repository<CalendarData>(contextFactory);
         var contactsRepo = new Repository<PersonContact>(contextFactory);
         var peopleRepo = new Repository<Person>(contextFactory);
         var departmentsRepo = new Repository<Department>(contextFactory);
@@ -40,11 +40,11 @@ public class Tests
         departmentsRepo.CreateRange(departments.Select(d => d.Value));
         peopleRepo.CreateRange(people.Select(p => p.Value));
 
-        var vacation = new Vacation
+        var vacation = new CalendarData
         {
-            From = DateTime.Now,
-            To = DateTime.Now + TimeSpan.FromDays(14),
-            PersonId = people[UserType.Programmer].Id
+            StartTime = DateTime.Now,
+            EndTime = DateTime.Now + TimeSpan.FromDays(14),
+            Person = people[UserType.Programmer]
         };
 
         vacationsRepo.Create(vacation);
@@ -66,7 +66,7 @@ public class Tests
             AllowedActions = new List<string>
             {
                 "canEditUsers",
-                "canEditVacations",
+                "canEditCalendars",
                 "canEditPositions"
             },
             Name = "departmentManager"
@@ -85,7 +85,7 @@ public class Tests
                 "canSetRoles",
                 "canViewRoles",
                 "canResolveAccessRequests",
-                "canEditVacations",
+                "canEditCalendars",
                 "canEditPositions",
                 "canEditNotificationsChannels"
             },

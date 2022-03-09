@@ -9,7 +9,7 @@ public class StorageContext : DbContext
     public DbSet<PersonContact> PersonContacts { get; set; }
     public DbSet<Position> Positions { get; set; }
     public DbSet<Role> Roles { get; set; }
-    public DbSet<Vacation> Vacations { get; set; }
+    public DbSet<CalendarData> Vacations { get; set; }
     public DbSet<NotificationsChannel> NotificationsChannel { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

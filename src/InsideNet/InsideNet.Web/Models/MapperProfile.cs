@@ -7,7 +7,7 @@ public class MapperProfile : Profile
 {
     public MapperProfile()
     {
-        CreateMap<Vacation, VacationModel>();
+        CreateMap<CalendarData, CalendarDataModel>().ReverseMap();
         CreateMap<Role, RoleModel>().ReverseMap();
         CreateMap<Position, PositionModel>().ReverseMap();
         CreateMap<Person, PersonModel>()
