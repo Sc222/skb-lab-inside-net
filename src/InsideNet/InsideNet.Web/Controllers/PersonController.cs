@@ -41,9 +41,9 @@ public class PersonController : ControllerBase
 
     [Authentication]
     [HttpGet("find")]
-    public PersonModel[] Find([FromQuery] string name)
+    public PersonModel[] Find([FromQuery] string name, [FromQuery] string department)
     {
-        return mapper.Map<PersonModel[]>(peopleService.SearchByName(name));
+        return mapper.Map<PersonModel[]>(peopleService.Search(name, department));
     }
 
     [HttpPost("create")]

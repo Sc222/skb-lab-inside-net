@@ -32,10 +32,17 @@ public class PeopleService
         return person;
     }
 
-    public Person[] SearchByName(string searchedName)
+    public Person[] Search(string searchedName, string department)
     {
+        if (string.IsNullOrEmpty(searchedName))
+            return string.IsNullOrEmpty(department) ?
+                people.GetAll() : 
+                people.Find(p => p.Department.Name == department);
+
         var searchedNameLower = searchedName.ToLower();
-        return people.Find(p => p.FullName.ToLower().Contains(searchedNameLower));
+        return string.IsNullOrEmpty(department) ?
+            people.Find(p => p.FullName.ToLower().Contains(searchedNameLower)) :
+            people.Find(p => p.FullName.ToLower().Contains(searchedNameLower) && p.Department.Name == department);
     }
 
     public Person[] GetAll()
