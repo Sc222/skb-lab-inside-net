@@ -22,6 +22,8 @@
 
         public string PhoneNumber { get; set; }
 
+        public virtual Department Department { get; set; }
+
         public string AvatarUrl { get; set; }
     }
 }

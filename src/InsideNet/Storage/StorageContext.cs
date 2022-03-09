@@ -31,6 +31,8 @@ namespace Storage
             modelBuilder.Entity<Person>().HasIndex(p => p.PhoneNumber).IsUnique();
 
             modelBuilder.Entity<Role>().HasIndex(r => r.Name).IsUnique();
+
+            modelBuilder.Entity<Department>().HasIndex(d => d.Name).IsUnique();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
