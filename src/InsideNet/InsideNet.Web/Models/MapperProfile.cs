@@ -13,6 +13,7 @@ namespace InsideNet.Web.Models
             CreateMap<Person, PersonModel>().ForMember(d => d.Password, opt => opt.Ignore()).ReverseMap();
             CreateMap<AccessRequest, AccessRequestModel>().ReverseMap();
             CreateMap<Notification, NotificationModel>().ReverseMap();
+            CreateMap<Department, DepartmentModel>().ReverseMap();
         }
     }
 }

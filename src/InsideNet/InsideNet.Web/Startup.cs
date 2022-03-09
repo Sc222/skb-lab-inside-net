@@ -91,6 +91,7 @@ namespace InsideNet.Web
             services.AddScoped(_ => new SlackTaskClient("xoxb-123"));
             services.AddScoped<SlackService>();
             services.AddScoped<AccessRequestService>();
+            services.AddScoped<DepartmentsService>();
         }
     }
 }
