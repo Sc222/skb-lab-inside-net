@@ -50,6 +50,7 @@ public class PersonController : ControllerBase
         var personEntity = mapper.Map<Person>(person);
         var defaultRole = rolesService.GetOrCreateDefaultRole();
         personEntity.Role = defaultRole;
+        personEntity.IsNewbie = true;
         personEntity = peopleService.Create(personEntity);
         return mapper.Map<PersonModel>(personEntity);
     }
