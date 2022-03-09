@@ -14,15 +14,13 @@ public class PersonController : ControllerBase
 {
     private readonly IMapper mapper;
     private readonly PeopleService peopleService;
-    private readonly PersonRolesService personRolesService;
     private readonly RolesService rolesService;
 
-    public PersonController(PeopleService peopleService, IMapper mapper, RolesService rolesService, PersonRolesService personRolesService)
+    public PersonController(PeopleService peopleService, IMapper mapper, RolesService rolesService)
     {
         this.peopleService = peopleService;
         this.mapper = mapper;
         this.rolesService = rolesService;
-        this.personRolesService = personRolesService;
     }
 
     [Authentication]
@@ -50,12 +48,10 @@ public class PersonController : ControllerBase
     public PersonModel Create([FromBody] PersonModel person)
     {
         var personEntity = mapper.Map<Person>(person);
-        personEntity = peopleService.Create(personEntity);
-
         var defaultRole = rolesService.GetOrCreateDefaultRole();
-        personRolesService.SetPersonRole(personEntity.Id, defaultRole.Id);
-
-        return mapper.Map<PersonModel>(person);
+        personEntity.Role = defaultRole;
+        personEntity = peopleService.Create(personEntity);
+        return mapper.Map<PersonModel>(personEntity);
     }
 
     [Authentication]

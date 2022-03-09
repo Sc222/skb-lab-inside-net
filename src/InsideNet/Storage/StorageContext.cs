@@ -11,13 +11,10 @@ public class StorageContext : DbContext
     public DbSet<Role> Roles { get; set; }
     public DbSet<Vacation> Vacations { get; set; }
     public DbSet<NotificationsChannel> NotificationsChannel { get; set; }
-    public DbSet<PersonRole> PersonRoles { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<PersonContact>().HasKey(p => new { p.PersonId, p.ContactId });
-
-        modelBuilder.Entity<PersonRole>().HasKey(r => new { r.PersonId, r.RoleId });
 
         modelBuilder.Entity<AccessRequest>().HasKey(r => new { r.PersonId, r.SlackUserId });
 

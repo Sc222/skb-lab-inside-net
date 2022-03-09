@@ -28,13 +28,12 @@ public class Tests
         var vacationsRepo = new Repository<Vacation>(contextFactory);
         var contactsRepo = new Repository<PersonContact>(contextFactory);
         var peopleRepo = new Repository<Person>(contextFactory);
-        var peopleRolesRepo = new Repository<PersonRole>(contextFactory);
         var departmentsRepo = new Repository<Department>(contextFactory);
 
         var roles = GenerateRoles();
         var positions = GenerateUserPositions();
         var departments = GenerateDepartments();
-        var people = GeneratePeople(positions, departments);
+        var people = GeneratePeople(positions, departments, roles);
 
         rolesRepo.CreateRange(roles.Select(r => r.Value));
         positionsRepo.CreateRange(positions.Select(p => p.Value));
@@ -57,10 +56,6 @@ public class Tests
         };
 
         contactsRepo.Create(contact);
-
-
-        var peopleRoles = GeneratePersonRoles(people, roles);
-        peopleRolesRepo.CreateRange(peopleRoles);
     }
 
 
@@ -74,12 +69,12 @@ public class Tests
                 "canEditVacations",
                 "canEditPositions"
             },
-            Name = "DepartmentManager"
+            Name = "departmentManager"
         };
         var programmer = new Role
         {
             AllowedActions = new List<string>(),
-            Name = "Regular"
+            Name = "regularUser"
         };
         var admin = new Role
         {
@@ -94,7 +89,7 @@ public class Tests
                 "canEditPositions",
                 "canEditNotificationsChannels"
             },
-            Name = "Admin"
+            Name = "admin"
         };
         return new Dictionary<UserType, Role>
         {
@@ -124,7 +119,7 @@ public class Tests
         };
     }
 
-    private Dictionary<UserType, Person> GeneratePeople(Dictionary<UserType, Position> positions, Dictionary<UserType, Department> departments)
+    private Dictionary<UserType, Person> GeneratePeople(Dictionary<UserType, Position> positions, Dictionary<UserType, Department> departments, Dictionary<UserType, Role> roles)
     {
         var manager = new Person
         {
@@ -133,7 +128,8 @@ public class Tests
             Password = "manager",
             FullName = "Екатерина Андреевна Зас",
             Position = positions[UserType.DepartmentManager],
-            Department = departments[UserType.DepartmentManager]
+            Department = departments[UserType.DepartmentManager],
+            Role = roles[UserType.DepartmentManager]
         };
         var programmer = new Person
         {
@@ -143,6 +139,7 @@ public class Tests
             FullName = "Анатолий Генадьевич Зас",
             Position = positions[UserType.Programmer],
             Department = departments[UserType.Programmer],
+            Role = roles[UserType.Programmer],
             Telegram = "@abc"
         };
         var admin = new Person
@@ -153,6 +150,7 @@ public class Tests
             FullName = "Евгений Кожемяко",
             Position = positions[UserType.Admin],
             Department = departments[UserType.Admin],
+            Role = roles[UserType.Admin],
             PhoneNumber = "88005553535"
         };
         return new Dictionary<UserType, Person>
@@ -161,17 +159,6 @@ public class Tests
             { UserType.Programmer, programmer },
             { UserType.Admin, admin }
         };
-    }
-
-    private List<PersonRole> GeneratePersonRoles(Dictionary<UserType, Person> people, Dictionary<UserType, Role> roles)
-    {
-        return people
-            .Select(kvp => new PersonRole
-            {
-                PersonId = kvp.Value.Id,
-                RoleId = roles[kvp.Key].Id
-            })
-            .ToList();
     }
 
     private enum UserType

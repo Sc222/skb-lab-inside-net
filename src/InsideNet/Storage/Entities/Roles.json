@@ -1,0 +1,8 @@
+﻿{
+  "roles": [
+    "regularUser",
+    "departmentManager",
+    "slackAdmin",
+    "admin"
+  ]
+}

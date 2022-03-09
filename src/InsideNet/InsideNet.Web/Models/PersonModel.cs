@@ -27,4 +27,6 @@ public class PersonModel : GuidIdentifiable
     public string AvatarUrl { get; set; }
 
     public DepartmentModel Department { get; set; }
+
+    public string Role { get; set; }
 }

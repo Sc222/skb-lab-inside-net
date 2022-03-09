@@ -33,7 +33,7 @@ public class JwtMiddleware
     {
         try
         {
-            var rolesService = context.RequestServices.GetService<PersonRolesService>();
+            var peopleService = context.RequestServices.GetService<PeopleService>();
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(SecretKey);
@@ -50,7 +50,7 @@ public class JwtMiddleware
             var jwtToken = (JwtSecurityToken)validatedToken;
 
             var personId = Guid.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
-            var role = rolesService.GetPersonRole(personId);
+            var role = peopleService.Get(personId).Role;
 
             context.Items["PersonId"] = personId;
             context.Items["PersonRole"] = role;

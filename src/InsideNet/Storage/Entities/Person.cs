@@ -24,5 +24,7 @@ public class Person : GuidIdentifiable
 
     public virtual Department Department { get; set; }
 
+    public virtual Role Role { get; set; }
+
     public string AvatarUrl { get; set; }
 }

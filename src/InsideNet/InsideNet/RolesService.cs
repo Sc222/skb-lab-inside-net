@@ -16,15 +16,15 @@ public class RolesService
 
     public Role GetOrCreateDefaultRole()
     {
-        var defaultRole = roles.SingleOrDefault(r => r.Name == "Default");
+        var defaultRole = roles.SingleOrDefault(r => r.Name == "regularUser");
 
         if (defaultRole != null)
             return defaultRole;
 
         defaultRole = new Role
         {
-            AllowedActions = new List<string> { "canRead" },
-            Name = "Default"
+            AllowedActions = new List<string>(),
+            Name = "regularUser"
         };
         roles.Create(defaultRole);
 

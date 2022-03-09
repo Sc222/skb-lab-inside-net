@@ -79,7 +79,6 @@ public class Startup
 
         services.AddScoped<ContactsService>();
         services.AddScoped<PeopleService>();
-        services.AddScoped<PersonRolesService>();
         services.AddScoped<PositionsService>();
         services.AddScoped<RolesService>();
         services.AddScoped<VacationsService>();
