@@ -28,5 +28,5 @@ public class PersonModel : GuidIdentifiable
 
     public DepartmentModel Department { get; set; }
 
-    public string Role { get; set; }
+    public string AuthScope { get; set; }
 }

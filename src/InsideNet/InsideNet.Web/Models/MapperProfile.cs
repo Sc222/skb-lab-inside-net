@@ -12,7 +12,7 @@ public class MapperProfile : Profile
         CreateMap<Position, PositionModel>().ReverseMap();
         CreateMap<Person, PersonModel>()
             .ForMember(d => d.Password, opt => opt.Ignore())
-            .ForMember(d => d.Role, opt => opt.MapFrom(p => p.Role.Name))
+            .ForMember(d => d.AuthScope, opt => opt.MapFrom(p => p.Role.Name))
             .ReverseMap();
         CreateMap<AccessRequest, AccessRequestModel>().ReverseMap();
         CreateMap<Notification, NotificationModel>().ReverseMap();
