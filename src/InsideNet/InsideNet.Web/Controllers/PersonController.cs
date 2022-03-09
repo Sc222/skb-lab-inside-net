@@ -71,7 +71,7 @@ namespace InsideNet.Web.Controllers
         [HttpPost("authenticate")]
         public ActionResult<AuthResult> Authenticate([FromBody] PersonModel person)
         {
-            var response = peopleService.Authenticate(person.Login, person.Password);
+            var response = peopleService.Authenticate(person.Email, person.Password);
 
             if (response == null)
                 return BadRequest(new

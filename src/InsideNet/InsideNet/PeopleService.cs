@@ -43,9 +43,9 @@ namespace InsideNet.Services
             return people.GetAll(true);
         }
 
-        public (Person Person, string Token, DateTime Expires)? Authenticate(string login, string password)
+        public (Person Person, string Token, DateTime Expires)? Authenticate(string email, string password)
         {
-            var user = people.SingleOrDefault(x => x.Login == login && x.Password == password);
+            var user = people.SingleOrDefault(x => x.Email == email && x.Password == password);
 
             if (user == null)
                 return null;
