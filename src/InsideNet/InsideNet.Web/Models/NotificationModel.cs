@@ -1,11 +1,10 @@
 ﻿using System;
+using Storage.Entities;
 
 namespace InsideNet.Web.Models;
 
-public class NotificationModel
+public class NotificationModel : GuidIdentifiable
 {
-    public Guid Id { get; set; }
-
     public string Text { get; set; }
 
     public bool IsChecked { get; set; }
