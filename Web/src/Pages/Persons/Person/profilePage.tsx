@@ -196,11 +196,10 @@ export const ProfilePage: FunctionComponent<ProfilePageProps> = () => {
                         <Divider />
                         <CardContent>
                           <Grid container spacing={1}>
-                            {/*URL TO CONTACTS PROFILE*/}
                             {authPersonContacts &&
                               authPersonContacts
-                                .filter((c, index) => index < 6)
-                                .map((c) => (
+                                .filter((p, index) => index < 6)
+                                .map((p) => (
                                   <Grid
                                     item
                                     xs={4}
@@ -210,7 +209,7 @@ export const ProfilePage: FunctionComponent<ProfilePageProps> = () => {
                                     sx={{ display: "flex", flexDirection: "column" }}
                                   >
                                     <Avatar
-                                      src={c.avatarUrl}
+                                      src={p.avatarUrl}
                                       sx={(theme) => ({
                                         height: 54,
                                         width: 54,
@@ -223,9 +222,16 @@ export const ProfilePage: FunctionComponent<ProfilePageProps> = () => {
                                       <Person color="primary" fontSize="inherit" />
                                     </Avatar>
                                     {/*FIXME SEPARATE VARIABLE FOR NAME*/}
-                                    <Typography variant="body1" textAlign="center">
-                                      {c.fullName.split(" ")[1] ?? c.fullName}
-                                    </Typography>
+                                    <Link
+                                      component={RouterLink}
+                                      to={`${SiteRoute.persons}/${p.id}/${SiteRoute.profile}`}
+                                      sx={{ cursor: "pointer", color: "inherit" }}
+                                      underline="hover"
+                                    >
+                                      <Typography variant="body1" textAlign="center">
+                                        {p.fullName.split(" ")[1] ?? p.fullName}
+                                      </Typography>
+                                    </Link>
                                   </Grid>
                                 ))}
                           </Grid>
