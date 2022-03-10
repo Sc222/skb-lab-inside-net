@@ -29,10 +29,12 @@ export const AuthPageRestriction: FunctionComponent<AuthPageRestriction> = ({ ac
       });
     };
     getAuthScope();
-  },[]);
+  }, [auth]);
+
+  // FIXME: cached localStorage session check in context does not work here
+  // console.log("hm: ", localStorageService.getAuthInfo());
 
   if (!auth.authInfo) {
-    console.log("redirect to LOGIN")
     // Redirect them to the /login page, but save the current location they were
     // trying to go to when they were redirected. This allows us to send them
     // along to that page after they login, which is a nicer user experience
@@ -41,13 +43,11 @@ export const AuthPageRestriction: FunctionComponent<AuthPageRestriction> = ({ ac
   }
 
   if (!authProfileScope) {
-    console.log("redirect to LOADER HERE")
     // TODO: LOADER HERE
     return <></>;
   }
 
   if (!acceptedScopes.has(authProfileScope)) {
-    console.log("redirect to `${SiteRoute.persons}/${auth.authInfo.personId}`")
     return <Navigate to={`${SiteRoute.persons}/${auth.authInfo.personId}`} state={{ from: location }} replace />;
   }
 
