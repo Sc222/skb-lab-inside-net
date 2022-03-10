@@ -103,9 +103,9 @@ public class Tests
     {
         return new()
         {
-            { UserType.DepartmentManager, new Department { Name = "HR-отдел" } },
-            { UserType.Programmer, new Department { Name = "Отдел программистов" } },
-            { UserType.Admin, new Department { Name = "Главное отделение" } }
+            { UserType.DepartmentManager, new Department { Name = "HR-РѕС‚РґРµР»" } },
+            { UserType.Programmer, new Department { Name = "РћС‚РґРµР» РїСЂРѕРіСЂР°РјРјРёСЃС‚РѕРІ" } },
+            { UserType.Admin, new Department { Name = "Р“Р»Р°РІРЅРѕРµ РѕС‚РґРµР»РµРЅРёРµ" } }
         };
     }
 
@@ -113,9 +113,9 @@ public class Tests
     {
         return new()
         {
-            { UserType.DepartmentManager, new Position { Name = "Менеджер" } },
-            { UserType.Programmer, new Position { Name = "Программист" } },
-            { UserType.Admin, new Position { Name = "Админ" } }
+            { UserType.DepartmentManager, new Position { Name = "РњРµРЅРµРґР¶РµСЂ" } },
+            { UserType.Programmer, new Position { Name = "РџСЂРѕРіСЂР°РјРјРёСЃС‚" } },
+            { UserType.Admin, new Position { Name = "РђРґРјРёРЅ" } }
         };
     }
 
@@ -126,7 +126,7 @@ public class Tests
             Email = "m@m.com",
             Login = "manager",
             Password = "manager",
-            FullName = "Екатерина Андреевна Зас",
+            FullName = "Р•РєР°С‚РµСЂРёРЅР° РђРЅРґСЂРµРµРІРЅР° Р—Р°СЃ",
             Position = positions[UserType.DepartmentManager],
             Department = departments[UserType.DepartmentManager],
             Role = roles[UserType.DepartmentManager]
@@ -136,7 +136,7 @@ public class Tests
             Email = "k@k.com",
             Login = "user",
             Password = "user",
-            FullName = "Анатолий Генадьевич Зас",
+            FullName = "РђРЅР°С‚РѕР»РёР№ Р“РµРЅР°РґСЊРµРІРёС‡ Р—Р°СЃ",
             Position = positions[UserType.Programmer],
             Department = departments[UserType.Programmer],
             Role = roles[UserType.Programmer],
@@ -147,7 +147,7 @@ public class Tests
             Email = "a@a.com",
             Login = "admin",
             Password = "admin",
-            FullName = "Евгений Кожемяко",
+            FullName = "Р•РІРіРµРЅРёР№ РљРѕР¶РµРјСЏРєРѕ",
             Position = positions[UserType.Admin],
             Department = departments[UserType.Admin],
             Role = roles[UserType.Admin],
