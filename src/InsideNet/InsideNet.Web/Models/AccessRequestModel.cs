@@ -1,12 +1,10 @@
-﻿using System;
+﻿using Storage.Entities;
 
 namespace InsideNet.Web.Models;
 
-public class AccessRequestModel
+public class AccessRequestModel : GuidIdentifiable
 {
-    public Guid PersonId { get; set; }
-
-    public string SlackUserId { get; set; }
+    public PersonModel Person { get; set; }
 
     public string ChannelName { get; set; }
 

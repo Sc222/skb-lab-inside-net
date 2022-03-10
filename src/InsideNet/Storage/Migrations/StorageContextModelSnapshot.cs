@@ -22,11 +22,9 @@ namespace Storage.Migrations
 
             modelBuilder.Entity("Storage.Entities.AccessRequest", b =>
                 {
-                    b.Property<Guid>("PersonId")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
-
-                    b.Property<string>("SlackUserId")
-                        .HasColumnType("text");
 
                     b.Property<string>("ChannelId")
                         .HasColumnType("text");
@@ -40,9 +38,14 @@ namespace Storage.Migrations
                     b.Property<bool>("IsDisapproved")
                         .HasColumnType("boolean");
 
-                    b.HasKey("PersonId", "SlackUserId");
+                    b.Property<Guid?>("PersonId")
+                        .HasColumnType("uuid");
 
-                    b.ToTable("AccessRequest");
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonId");
+
+                    b.ToTable("AccessRequests");
                 });
 
             modelBuilder.Entity("Storage.Entities.CalendarData", b =>
@@ -70,7 +73,7 @@ namespace Storage.Migrations
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("Vacations");
+                    b.ToTable("Calendars");
                 });
 
             modelBuilder.Entity("Storage.Entities.Department", b =>
@@ -87,7 +90,7 @@ namespace Storage.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Department");
+                    b.ToTable("Departments");
                 });
 
             modelBuilder.Entity("Storage.Entities.NotificationsChannel", b =>
@@ -235,6 +238,13 @@ namespace Storage.Migrations
                         .IsUnique();
 
                     b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("Storage.Entities.AccessRequest", b =>
+                {
+                    b.HasOne("Storage.Entities.Person", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonId");
                 });
 
             modelBuilder.Entity("Storage.Entities.CalendarData", b =>

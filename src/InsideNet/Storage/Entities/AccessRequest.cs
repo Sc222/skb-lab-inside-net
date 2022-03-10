@@ -1,12 +1,8 @@
-﻿using System;
+﻿namespace Storage.Entities;
 
-namespace Storage.Entities;
-
-public class AccessRequest
+public class AccessRequest : GuidIdentifiable
 {
-    public Guid PersonId { get; set; }
-
-    public string SlackUserId { get; set; }
+    public virtual Person Person { get; set; }
 
     public string ChannelId { get; set; }
 

@@ -54,12 +54,9 @@ public class SlackAccessesController : ControllerBase
 
     [HttpPost("accessRequests/{personId}")]
     [AccessFor(null, true)]
-    public void CreateAccessRequest(Guid personId, [FromBody] AccessRequestModel accessRequestModel)
+    public void CreateAccessRequest([FromBody] AccessRequestModel accessRequestModel)
     {
         var accessRequest = mapper.Map<AccessRequest>(accessRequestModel);
-        var person = peopleService.Get(personId);
-
-        accessRequest.SlackUserId = person.SlackId;
 
         accessRequestService.Create(accessRequest);
     }
@@ -96,7 +93,7 @@ public class SlackAccessesController : ControllerBase
     {
         var accessRequest = mapper.Map<AccessRequest>(accessRequestModel);
 
-        await slackService.InviteToChannel(accessRequest.ChannelId, accessRequest.SlackUserId);
+        await slackService.InviteToChannel(accessRequest.ChannelId, accessRequest.Person.SlackId);
 
         accessRequestService.Delete(accessRequest);
     }

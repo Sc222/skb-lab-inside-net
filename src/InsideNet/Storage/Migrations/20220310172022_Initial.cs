@@ -4,24 +4,20 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Storage.Migrations
 {
-    public partial class CleanMigration : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "AccessRequest",
+                name: "Departments",
                 columns: table => new
                 {
-                    PersonId = table.Column<Guid>(nullable: false),
-                    SlackUserId = table.Column<string>(nullable: false),
-                    ChannelId = table.Column<string>(nullable: true),
-                    ChannelName = table.Column<string>(nullable: true),
-                    IsDisapproved = table.Column<bool>(nullable: false),
-                    DisapproveReason = table.Column<string>(nullable: true)
+                    Id = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AccessRequest", x => new { x.PersonId, x.SlackUserId });
+                    table.PrimaryKey("PK_Departments", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -53,18 +49,6 @@ namespace Storage.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PersonRoles",
-                columns: table => new
-                {
-                    PersonId = table.Column<Guid>(nullable: false),
-                    RoleId = table.Column<Guid>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PersonRoles", x => new { x.PersonId, x.RoleId });
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Positions",
                 columns: table => new
                 {
@@ -90,20 +74,6 @@ namespace Storage.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Vacations",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    PersonId = table.Column<Guid>(nullable: false),
-                    From = table.Column<DateTime>(nullable: false),
-                    To = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Vacations", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Persons",
                 columns: table => new
                 {
@@ -111,23 +81,104 @@ namespace Storage.Migrations
                     Login = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true),
                     FullName = table.Column<string>(nullable: true),
-                    PositionId = table.Column<Guid>(nullable: false),
+                    PositionId = table.Column<Guid>(nullable: true),
                     IsNewbie = table.Column<bool>(nullable: false),
                     Telegram = table.Column<string>(nullable: true),
                     Slack = table.Column<string>(nullable: true),
                     SlackId = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true)
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    DepartmentId = table.Column<Guid>(nullable: true),
+                    RoleId = table.Column<Guid>(nullable: true),
+                    AvatarUrl = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Persons", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Persons_Departments_DepartmentId",
+                        column: x => x.DepartmentId,
+                        principalTable: "Departments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_Persons_Positions_PositionId",
                         column: x => x.PositionId,
                         principalTable: "Positions",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Persons_Roles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Roles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "AccessRequests",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    PersonId = table.Column<Guid>(nullable: true),
+                    ChannelId = table.Column<string>(nullable: true),
+                    ChannelName = table.Column<string>(nullable: true),
+                    IsDisapproved = table.Column<bool>(nullable: false),
+                    DisapproveReason = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AccessRequests", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AccessRequests_Persons_PersonId",
+                        column: x => x.PersonId,
+                        principalTable: "Persons",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Calendars",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    PersonId = table.Column<Guid>(nullable: true),
+                    Subject = table.Column<string>(nullable: true),
+                    ManagerComment = table.Column<string>(nullable: true),
+                    StartTime = table.Column<DateTime>(nullable: false),
+                    EndTime = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Calendars", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Calendars_Persons_PersonId",
+                        column: x => x.PersonId,
+                        principalTable: "Persons",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AccessRequests_PersonId",
+                table: "AccessRequests",
+                column: "PersonId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Calendars_PersonId",
+                table: "Calendars",
+                column: "PersonId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Departments_Name",
+                table: "Departments",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Persons_DepartmentId",
+                table: "Persons",
+                column: "DepartmentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Persons_Email",
@@ -151,6 +202,11 @@ namespace Storage.Migrations
                 name: "IX_Persons_PositionId",
                 table: "Persons",
                 column: "PositionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Persons_RoleId",
+                table: "Persons",
+                column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Persons_Slack",
@@ -180,7 +236,10 @@ namespace Storage.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AccessRequest");
+                name: "AccessRequests");
+
+            migrationBuilder.DropTable(
+                name: "Calendars");
 
             migrationBuilder.DropTable(
                 name: "NotificationsChannel");
@@ -189,19 +248,16 @@ namespace Storage.Migrations
                 name: "PersonContacts");
 
             migrationBuilder.DropTable(
-                name: "PersonRoles");
-
-            migrationBuilder.DropTable(
                 name: "Persons");
 
             migrationBuilder.DropTable(
-                name: "Roles");
-
-            migrationBuilder.DropTable(
-                name: "Vacations");
+                name: "Departments");
 
             migrationBuilder.DropTable(
                 name: "Positions");
+
+            migrationBuilder.DropTable(
+                name: "Roles");
         }
     }
 }

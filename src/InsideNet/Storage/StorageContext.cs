@@ -9,14 +9,14 @@ public class StorageContext : DbContext
     public DbSet<PersonContact> PersonContacts { get; set; }
     public DbSet<Position> Positions { get; set; }
     public DbSet<Role> Roles { get; set; }
-    public DbSet<CalendarData> Vacations { get; set; }
+    public DbSet<CalendarData> Calendars { get; set; }
     public DbSet<NotificationsChannel> NotificationsChannel { get; set; }
+    public DbSet<AccessRequest> AccessRequests { get; set; }
+    public DbSet<Department> Departments { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<PersonContact>().HasKey(p => new { p.PersonId, p.ContactId });
-
-        modelBuilder.Entity<AccessRequest>().HasKey(r => new { r.PersonId, r.SlackUserId });
 
         modelBuilder.Entity<Person>().HasIndex(p => p.Login).IsUnique();
         modelBuilder.Entity<Person>().HasIndex(p => p.Telegram).IsUnique();

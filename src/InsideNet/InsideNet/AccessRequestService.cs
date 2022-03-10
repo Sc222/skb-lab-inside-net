@@ -15,7 +15,7 @@ public class AccessRequestService
 
     public AccessRequest[] GetByPersonId(Guid personId)
     {
-        return accessRequests.Find(r => r.PersonId == personId);
+        return accessRequests.Find(r => r.Person.Id == personId);
     }
 
     public AccessRequest[] GetAll()

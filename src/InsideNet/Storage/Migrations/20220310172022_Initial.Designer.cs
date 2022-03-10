@@ -11,8 +11,8 @@ using Storage;
 namespace Storage.Migrations
 {
     [DbContext(typeof(StorageContext))]
-    [Migration("20220107155439_Notification")]
-    partial class Notification
+    [Migration("20220310172022_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,11 +24,9 @@ namespace Storage.Migrations
 
             modelBuilder.Entity("Storage.Entities.AccessRequest", b =>
                 {
-                    b.Property<Guid>("PersonId")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
-
-                    b.Property<string>("SlackUserId")
-                        .HasColumnType("text");
 
                     b.Property<string>("ChannelId")
                         .HasColumnType("text");
@@ -42,9 +40,59 @@ namespace Storage.Migrations
                     b.Property<bool>("IsDisapproved")
                         .HasColumnType("boolean");
 
-                    b.HasKey("PersonId", "SlackUserId");
+                    b.Property<Guid?>("PersonId")
+                        .HasColumnType("uuid");
 
-                    b.ToTable("AccessRequest");
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonId");
+
+                    b.ToTable("AccessRequests");
+                });
+
+            modelBuilder.Entity("Storage.Entities.CalendarData", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("ManagerComment")
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("PersonId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Subject")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonId");
+
+                    b.ToTable("Calendars");
+                });
+
+            modelBuilder.Entity("Storage.Entities.Department", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Departments");
                 });
 
             modelBuilder.Entity("Storage.Entities.NotificationsChannel", b =>
@@ -79,6 +127,12 @@ namespace Storage.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<string>("AvatarUrl")
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("DepartmentId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Email")
                         .HasColumnType("text");
 
@@ -97,7 +151,10 @@ namespace Storage.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("text");
 
-                    b.Property<Guid>("PositionId")
+                    b.Property<Guid?>("PositionId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("RoleId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Slack")
@@ -111,6 +168,8 @@ namespace Storage.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DepartmentId");
+
                     b.HasIndex("Email")
                         .IsUnique();
 
@@ -121,6 +180,8 @@ namespace Storage.Migrations
                         .IsUnique();
 
                     b.HasIndex("PositionId");
+
+                    b.HasIndex("RoleId");
 
                     b.HasIndex("Slack")
                         .IsUnique();
@@ -145,19 +206,6 @@ namespace Storage.Migrations
                     b.HasKey("PersonId", "ContactId");
 
                     b.ToTable("PersonContacts");
-                });
-
-            modelBuilder.Entity("Storage.Entities.PersonRole", b =>
-                {
-                    b.Property<Guid>("PersonId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("PersonId", "RoleId");
-
-                    b.ToTable("PersonRoles");
                 });
 
             modelBuilder.Entity("Storage.Entities.Position", b =>
@@ -194,33 +242,33 @@ namespace Storage.Migrations
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("Storage.Entities.Vacation", b =>
+            modelBuilder.Entity("Storage.Entities.AccessRequest", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                    b.HasOne("Storage.Entities.Person", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonId");
+                });
 
-                    b.Property<DateTime>("From")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<Guid>("PersonId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("To")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Vacations");
+            modelBuilder.Entity("Storage.Entities.CalendarData", b =>
+                {
+                    b.HasOne("Storage.Entities.Person", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonId");
                 });
 
             modelBuilder.Entity("Storage.Entities.Person", b =>
                 {
+                    b.HasOne("Storage.Entities.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId");
+
                     b.HasOne("Storage.Entities.Position", "Position")
                         .WithMany()
-                        .HasForeignKey("PositionId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .HasForeignKey("PositionId");
+
+                    b.HasOne("Storage.Entities.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId");
                 });
 #pragma warning restore 612, 618
         }
