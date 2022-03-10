@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Storage;
 using Storage.Entities;
 
@@ -32,17 +35,31 @@ public class PeopleService
         return person;
     }
 
-    public Person[] Search(string searchedName, string department)
+    public Person[] Search(string searchedName, HashSet<string> departments)
     {
-        if (string.IsNullOrEmpty(searchedName))
-            return string.IsNullOrEmpty(department) ?
-                people.GetAll() : 
-                people.Find(p => p.Department.Name == department);
+        var hasDepartments = departments.Count > 0;
+        var hasName = !string.IsNullOrEmpty(searchedName);
+        var searchedNameLower = hasName ? searchedName.Trim().ToLower() : null;
 
-        var searchedNameLower = searchedName.ToLower();
-        return string.IsNullOrEmpty(department) ?
-            people.Find(p => p.FullName.ToLower().Contains(searchedNameLower)) :
-            people.Find(p => p.FullName.ToLower().Contains(searchedNameLower) && p.Department.Name == department);
+        //TODO: simplify using predicate
+
+        if (hasName && hasDepartments)
+        {
+            return people.Find(p =>
+                p.FullName.ToLower().Contains(searchedNameLower) && departments.Contains(p.Department.Name)).ToArray();
+        }
+
+        if (!hasName && hasDepartments)
+        {
+            return people.Find(p => departments.Contains(p.Department.Name));
+        }
+
+        if (hasName && !hasDepartments)
+        {
+            return people.Find(p => p.FullName.ToLower().Contains(searchedNameLower));
+        }
+
+        return people.GetAll();
     }
 
     public Person[] GetAll()

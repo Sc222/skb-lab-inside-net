@@ -4,6 +4,7 @@ using InsideNet.Services;
 using InsideNet.Web.Auth;
 using InsideNet.Web.Models;
 using Microsoft.AspNetCore.Mvc;
+using MoreLinq;
 using Storage.Entities;
 
 namespace InsideNet.Web.Controllers;
@@ -39,9 +40,9 @@ public class PersonController : ControllerBase
 
     [Authentication]
     [HttpGet("find")]
-    public PersonModel[] Find([FromQuery] string name, [FromQuery] string department)
+    public PersonModel[] Find([FromQuery] string name, [FromQuery] string[] departments)
     {
-        return mapper.Map<PersonModel[]>(peopleService.Search(name, department));
+        return mapper.Map<PersonModel[]>(peopleService.Search(name, departments.ToHashSet()));
     }
 
     [HttpPost("create")]
