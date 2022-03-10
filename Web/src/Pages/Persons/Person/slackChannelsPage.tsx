@@ -41,6 +41,10 @@ export const SlackChannelsPage: FunctionComponent<SlackChannelsPageProps> = () =
     getAuthScope();
   }, [auth]);
 
+  const isAdminOrSlackAdmin = (scope: AuthScope | null): boolean => {
+    return scope === AuthScope.admin || scope === AuthScope.slackAdmin;
+  };
+
   const onTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setSearchParams({ [SlackChannelsSearchParam.tab]: String(newValue) });
   };
@@ -51,6 +55,8 @@ export const SlackChannelsPage: FunctionComponent<SlackChannelsPageProps> = () =
       "aria-controls": `simple-tabpanel-${value}`,
     };
   };
+
+  const shouldShowAdminMenu = isAdminOrSlackAdmin(authProfileScope);
 
   return (
     <Box
@@ -72,15 +78,9 @@ export const SlackChannelsPage: FunctionComponent<SlackChannelsPageProps> = () =
                     <Tab label="Мои каналы" {...generateTabProps("0")} />
                     <Tab label="Запросить доступ" {...generateTabProps("1")} />
                     {/*fixme refactor navigation*/}
-                    {authProfileScope === AuthScope.slackAdmin && (
-                      <Divider orientation="vertical" flexItem variant="middle" />
-                    )}
-                    {authProfileScope === AuthScope.slackAdmin && (
-                      <Tab label="Активные запросы" {...generateTabProps("3")} />
-                    )}
-                    {authProfileScope === AuthScope.slackAdmin && (
-                      <Tab label="Обработанные запросы" {...generateTabProps("4")} />
-                    )}
+                    {shouldShowAdminMenu && <Divider orientation="vertical" flexItem variant="middle" />}
+                    {shouldShowAdminMenu && <Tab label="Активные запросы" {...generateTabProps("3")} />}
+                    {shouldShowAdminMenu && <Tab label="Обработанные запросы" {...generateTabProps("4")} />}
                   </Tabs>
                 )}
               </Box>
@@ -94,7 +94,7 @@ export const SlackChannelsPage: FunctionComponent<SlackChannelsPageProps> = () =
                   <RequestChannelAccessTab />
                 </TabPanel>
                 {/*fixme 2 is divider, so it's skipped... damn*/}
-                {authProfileScope === AuthScope.slackAdmin && (
+                {shouldShowAdminMenu && (
                   <>
                     <TabPanel value={currentTab} name={"3"}>
                       <GrantChannelsAccessTab />
