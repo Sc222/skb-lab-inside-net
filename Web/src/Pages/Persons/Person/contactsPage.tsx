@@ -161,7 +161,7 @@ export const ContactsPage: FunctionComponent<ContactPageProps> = ({ searchOnEver
                   )}
                 </List>
               ) : (
-                <Typography>{/*TODO LOADING INDICATOR*/}</Typography>
+                <>{/*TODO LOADING INDICATOR*/}</>
               )}
             </CardContent>
           </Card>

@@ -121,7 +121,7 @@ export const MyContactsToolbar: FunctionComponent<MyContactsToolbarProps> = ({
           </Link>
         </Box>
       </Box>
-      <Box sx={{ mt: 3 }}>
+      {/*      <Box sx={{ mt: 3 }}>
         <Card>
           <CardContent>
             <Grid container spacing={2}>
@@ -154,7 +154,7 @@ export const MyContactsToolbar: FunctionComponent<MyContactsToolbarProps> = ({
             </Grid>
           </CardContent>
         </Card>
-      </Box>
+      </Box>*/}
     </>
   );
 };
