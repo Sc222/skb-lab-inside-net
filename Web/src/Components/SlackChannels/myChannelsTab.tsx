@@ -53,7 +53,7 @@ export const MyChannelsTab: FunctionComponent<MyChannelsTabProps> = () => {
           )}
         </List>
       ) : (
-        <Box sx={{ m: 1, display: "flex", justifyContent: "center" }}>
+        <Box sx={{ m: 4, display: "flex", height: "100%", justifyContent: "center" }}>
           {/*TODO MOVE TO LOADING COMPONENT*/}
           <CircularProgress />
         </Box>

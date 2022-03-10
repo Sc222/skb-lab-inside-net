@@ -18,6 +18,7 @@ export function TabPanel(props: TabPanelProps): JSX.Element {
       hidden={value !== name}
       id={`simple-tabpanel-${name}`}
       aria-labelledby={`simple-tab-${name}`}
+      style={{ height: "100%" }}
       {...other}
     >
       {value === name && children}
