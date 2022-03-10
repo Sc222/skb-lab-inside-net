@@ -21,7 +21,7 @@ interface LayoutProps {}
 export const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
   const auth = useAuthContext();
 
-  const [isSidebarOpen, setSidebarOpen] = useState(true);
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [personInfoForLayout, setPersonInfoForLayout] = useState<Pick<PersonModel, "avatarUrl" | "fullName"> | null>(
     null
   );
