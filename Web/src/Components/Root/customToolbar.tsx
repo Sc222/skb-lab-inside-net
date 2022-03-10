@@ -2,12 +2,12 @@ import React, { FunctionComponent } from "react";
 import { styled } from "@mui/material/styles";
 import { AppBar, Avatar, Badge, Box, IconButton, Toolbar, Tooltip } from "@mui/material";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import { SearchInput } from "./searchInput";
 import { ToolbarProfileMenu } from "./toolbarProfileMenu";
 import { SiteRoute } from "../../Typings/Enums/siteRoute";
 import { useMatch } from "react-router-dom";
+import { Person } from "@mui/icons-material";
 
 const CustomToolbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -85,16 +85,18 @@ export const CustomToolbar: FunctionComponent<CustomToolbarProps> = ({
           </Tooltip>
 
           <Avatar
-            sx={{
+            sx={(theme) => ({
               height: 40,
               width: 40,
               ml: 1,
               fontSize: "24px",
-            }}
+              border: `solid 1px ${theme.palette.primary.main}`,
+              background: theme.palette.background.paper,
+            })}
             src={avatarUrl}
             onClick={setProfileMenuAnchor}
           >
-            <AccountCircleOutlinedIcon color="primary" fontSize="inherit" />
+            <Person color="primary" fontSize="inherit" />
           </Avatar>
           <ToolbarProfileMenu
             onClose={resetProfileMenuAnchor}

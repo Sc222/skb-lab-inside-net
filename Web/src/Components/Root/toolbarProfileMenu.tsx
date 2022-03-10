@@ -2,8 +2,7 @@ import React, { FunctionComponent } from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { Avatar, Divider, ListItemIcon, Menu, MenuList } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
-import { LogoutOutlined } from "@mui/icons-material";
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import { LogoutOutlined, Person } from "@mui/icons-material";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import { useAuthContext } from "../../Contexts/authContext";
 import { SiteRoute } from "../../Typings/Enums/siteRoute";
@@ -72,15 +71,17 @@ export const ToolbarProfileMenu: FunctionComponent<ToolbarProfileMenuProps> = ({
         <MenuList>
           <MenuItem component={RouterLink} to={`${auth.authInfo.personId}/${SiteRoute.profile}`}>
             <Avatar
-              sx={{
+              sx={(theme) => ({
                 height: 32,
                 width: 32,
                 ml: 1,
                 fontSize: "20px",
-              }}
+                border: `solid 1px ${theme.palette.primary.main}`,
+                background: theme.palette.background.paper,
+              })}
               src={avatarUrl}
             >
-              <AccountCircleOutlinedIcon color="primary" fontSize="inherit" />
+              <Person color="primary" fontSize="inherit" />
             </Avatar>
             {fullName ?? "Меню профиля"}
           </MenuItem>

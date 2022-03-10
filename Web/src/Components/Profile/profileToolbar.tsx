@@ -12,12 +12,11 @@ import {
   useTheme,
 } from "@mui/material";
 import React, { FunctionComponent } from "react";
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { Link as RouterLink } from "react-router-dom";
 import { SiteRoute } from "../../Typings/Enums/siteRoute";
 import { PersonModel } from "../../Api/Models/personModel";
 import { useDesktop, useMobile, useTablet } from "../../Hooks/responsiveHooks";
-import { AddOutlined, DeleteOutlined, EditOutlined } from "@mui/icons-material";
+import { AddOutlined, DeleteOutlined, EditOutlined, Person } from "@mui/icons-material";
 
 interface ProfileToolbarProps {
   person: PersonModel | null;
@@ -104,15 +103,17 @@ export const ProfileToolbar: FunctionComponent<ProfileToolbarProps> = ({
             >
               <ListItemAvatar>
                 <Avatar
-                  sx={{
+                  sx={(theme) => ({
                     mr: 4,
                     height: 128,
                     width: 128,
                     fontSize: "96px",
-                  }}
+                    border: `solid 2px ${theme.palette.primary.main}`,
+                    background: theme.palette.background.paper,
+                  })}
                   src={person?.avatarUrl}
                 >
-                  <AccountCircleOutlinedIcon color="primary" fontSize="inherit" />
+                  <Person color="primary" fontSize="inherit" />
                 </Avatar>
               </ListItemAvatar>
               <ListItemText

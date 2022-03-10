@@ -1,10 +1,10 @@
 import React, { FunctionComponent } from "react";
 import { Avatar, Button, Chip, Grid, Link, ListItem, ListItemAvatar, ListItemText, TextField } from "@mui/material";
 import { SlackAccessRequestModelExtended } from "../../Api/Models/slackAccessRequestModelExtended";
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { Link as RouterLink } from "react-router-dom";
 import { SiteRoute } from "../../Typings/Enums/siteRoute";
 import { SlackAccessRequestModel } from "../../Api/Models/slackAccessRequestModel";
+import { Person } from "@mui/icons-material";
 
 interface GrantChannelAccessListItemProps {
   accessRequest: SlackAccessRequestModelExtended;
@@ -63,14 +63,16 @@ export const GrantChannelAccessListItem: FunctionComponent<GrantChannelAccessLis
         <ListItemAvatar>
           <Avatar
             src={accessRequest.PersonAvatar}
-            sx={{
+            sx={(theme) => ({
               height: 48,
               width: 48,
               fontSize: "32px",
               mr: 2,
-            }}
+              border: `solid 1px ${theme.palette.primary.main}`,
+              background: theme.palette.background.paper,
+            })}
           >
-            <AccountCircleOutlinedIcon color="primary" fontSize="inherit" />
+            <Person color="primary" fontSize="inherit" />
           </Avatar>
         </ListItemAvatar>
 

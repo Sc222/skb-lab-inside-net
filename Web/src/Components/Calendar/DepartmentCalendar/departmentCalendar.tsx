@@ -26,7 +26,6 @@ import { PersonModel } from "../../../Api/Models/personModel";
 import { DropDownListComponent } from "@syncfusion/ej2-react-dropdowns";
 import { DatePickerComponent } from "@syncfusion/ej2-react-calendars";
 import { Avatar, Link, ListItemText, Typography } from "@mui/material";
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { Link as RouterLink } from "react-router-dom";
 import { SiteRoute } from "../../../Typings/Enums/siteRoute";
 import { TextBoxComponent } from "@syncfusion/ej2-react-inputs";
@@ -198,15 +197,17 @@ export class DepartmentCalendar extends React.PureComponent<DepartmentCalendarPr
         <div>
           <Avatar
             component="div"
-            sx={{
+            sx={(theme) => ({
               mr: 2,
               height: 60,
               width: 60,
               fontSize: "48px",
-            }}
+              border: `solid 1px ${theme.palette.primary.main}`,
+              background: theme.palette.background.paper,
+            })}
             src={person.avatarUrl}
           >
-            <AccountCircleOutlinedIcon color="primary" fontSize="inherit" />
+            <Person color="primary" fontSize="inherit" />
           </Avatar>
           <div>
             <ListItemText
@@ -318,7 +319,7 @@ export class DepartmentCalendar extends React.PureComponent<DepartmentCalendarPr
         </tbody>
       </table>
     ) : (
-      <div></div>
+      <div />
     );
   }
 }

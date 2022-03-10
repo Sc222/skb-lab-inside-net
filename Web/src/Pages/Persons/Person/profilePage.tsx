@@ -18,12 +18,11 @@ import {
 import { usePersonContext } from "../../../Contexts/personContext";
 import { ProfileToolbar } from "../../../Components/Profile/profileToolbar";
 import { ProfileContactItem } from "../../../Components/Profile/profileContactItem";
-import { MailOutlined, PhoneOutlined } from "@mui/icons-material";
+import { MailOutlined, Person, PhoneOutlined } from "@mui/icons-material";
 import { SlackOutlined } from "../../../Components/Icons/slackOutlined";
 import { TelegramOutlined } from "../../../Components/Icons/telegramOutlined";
 import { SiteRoute } from "../../../Typings/Enums/siteRoute";
 import { PersonModel } from "../../../Api/Models/personModel";
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { SlackChannelModel } from "../../../Api/Models/slackChannelModel";
 import { MyChannelListItem } from "../../../Components/SlackChannels/myChannelListItem";
 import { PersonalCalendar } from "../../../Components/Calendar/PersonalCalendar/personalCalendar";
@@ -64,7 +63,7 @@ export const ProfilePage: FunctionComponent<ProfilePageProps> = () => {
     const getAuthPersonSlackChannels = async () => {
       await auth.getPersonSlackChannelsInfo((result) => {
         if (result.success) {
-          setAuthPersonSlackChannels(result.success.filter((c) => c.IsInChannel));
+          setAuthPersonSlackChannels(result.success.filter((c) => c.isInChannel));
         } else {
           setAuthPersonSlackChannels(null);
         }
@@ -212,14 +211,16 @@ export const ProfilePage: FunctionComponent<ProfilePageProps> = () => {
                                   >
                                     <Avatar
                                       src={c.avatarUrl}
-                                      sx={{
+                                      sx={(theme) => ({
                                         height: 54,
                                         width: 54,
-                                        fontSize: "48px",
+                                        fontSize: "40px",
                                         mb: 1,
-                                      }}
+                                        border: `solid 1px ${theme.palette.primary.main}`,
+                                        background: theme.palette.background.paper,
+                                      })}
                                     >
-                                      <AccountCircleOutlinedIcon color="primary" fontSize="inherit" />
+                                      <Person color="primary" fontSize="inherit" />
                                     </Avatar>
                                     {/*FIXME SEPARATE VARIABLE FOR NAME*/}
                                     <Typography variant="body1" textAlign="center">
@@ -256,7 +257,7 @@ export const ProfilePage: FunctionComponent<ProfilePageProps> = () => {
                               authPersonSlackChannels
                                 .filter((c, i) => i < 3)
                                 .map((channel) => (
-                                  <div key={channel.ChannelId}>
+                                  <div key={channel.channelId}>
                                     <MyChannelListItem channel={channel} dense />
                                   </div>
                                 ))}
@@ -293,7 +294,7 @@ export const ProfilePage: FunctionComponent<ProfilePageProps> = () => {
                         <CardContent>
                           <PersonalCalendar
                             initialData={CalendarSource.UsersCalendarData.filter(
-                              (v) => v.Person?.id === profilePerson.Id
+                              (v) => v.Person?.id === profilePerson?.id
                             )}
                             eventsToShow={["Отпуск", "Командировка", "Учеба"]}
                             isPreview

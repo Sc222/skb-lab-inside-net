@@ -3,20 +3,20 @@ import { Link as RouterLink } from "react-router-dom";
 import { Box, Divider, Drawer, Typography, useMediaQuery } from "@mui/material";
 import LogoAccent from "./../../assets/logo-accent.png";
 import { NavItem } from "./navItem";
-import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import TodayOutlinedIcon from "@mui/icons-material/TodayOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import { SiteRoute } from "../../Typings/Enums/siteRoute";
 import { AppTheme } from "../../appTheme";
 import { SlackOutlined } from "../Icons/slackOutlined";
+import { PersonOutlined } from "@mui/icons-material";
 
 //todo ref should be based on user id
 // TODO make sidebarItems dynamic
 export const getDefaultItems = (personId: string): { to: string; icon: ReactNode; title: string }[] => [
   {
     to: `${personId}/${SiteRoute.profile}`,
-    icon: <PersonOutlinedIcon fontSize="small" />,
+    icon: <PersonOutlined fontSize="small" />,
     title: "Профиль",
   },
   {

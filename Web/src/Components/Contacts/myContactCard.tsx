@@ -1,11 +1,10 @@
 import React, { FunctionComponent } from "react";
 import { Avatar, Button, IconButton, Link, ListItem, ListItemAvatar, ListItemText, useTheme } from "@mui/material";
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { Link as RouterLink } from "react-router-dom";
 import { SiteRoute } from "../../Typings/Enums/siteRoute";
 import { MyContact } from "../../Typings/Types/myContact";
 import { useDesktop, useMobile, useTablet } from "../../Hooks/responsiveHooks";
-import { DeleteOutlined } from "@mui/icons-material";
+import { DeleteOutlined, Person } from "@mui/icons-material";
 
 interface MyContactCardProps {
   contact: MyContact; // todo api request should return partial PersonModel for PERFORMANCE
@@ -39,15 +38,17 @@ export const MyContactCard: FunctionComponent<MyContactCardProps> = ({ contact, 
     >
       <ListItemAvatar>
         <Avatar
-          sx={{
+          sx={(theme) => ({
             mr: 2,
             height: 60,
             width: 60,
             fontSize: "48px",
-          }}
+            border: `solid 1px ${theme.palette.primary.main}`,
+            background: theme.palette.background.paper,
+          })}
           src={contact.avatarUrl}
         >
-          <AccountCircleOutlinedIcon color="primary" fontSize="inherit" />
+          <Person color="primary" fontSize="inherit" />
         </Avatar>
       </ListItemAvatar>
       <ListItemText
