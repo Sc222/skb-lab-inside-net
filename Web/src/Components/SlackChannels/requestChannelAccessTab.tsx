@@ -53,15 +53,17 @@ export const RequestChannelAccessTab: FunctionComponent<RequestChannelAccessTabP
     getPersonInfo();
   }, [auth]);
 
-  const onRequestChannelAccess = async (channelId: string) => {
+  const onRequestChannelAccess = async (channel: SlackChannelModel) => {
     //FIXME make SlackId REQUIRED FIELD IN PERSON MODEL
     console.log(personInfo);
     if (auth.authInfo && personInfo && personInfo.slackId) {
-      let request: Omit<SlackAccessRequestModel, "Id"> = {
-        ChannelId: channelId,
-        AdminMessage: "",
-        Status: "pending",
-        PersonId: personInfo.id!,
+      let request: Omit<SlackAccessRequestModel, "id"> = {
+        channelId: channel.channelId,
+        channelName: channel.channelName,
+        disapproveReason: "",
+        //Status: "pending",
+        isDisapproved: false,
+        person: personInfo,
       };
       await SlackAccessesApi.CreateAccessRequest(request, auth.authInfo.token);
 
@@ -79,7 +81,7 @@ export const RequestChannelAccessTab: FunctionComponent<RequestChannelAccessTabP
               {/*fixme optimize findIndex*/}
               <RequestChannelListItem
                 channel={channel}
-                isRequestSent={personRequests?.findIndex((r) => r.ChannelId === channel.channelId) !== -1}
+                isRequestSent={personRequests?.findIndex((r) => r.channelId === channel.channelId) !== -1}
                 onRequestAccess={onRequestChannelAccess}
               />
               {index !== personChannels.length - 1 && <Divider variant="middle" />}

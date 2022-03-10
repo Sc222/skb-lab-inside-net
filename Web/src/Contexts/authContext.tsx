@@ -10,7 +10,7 @@ import { Api } from "../Api/api";
 import { ContactsApi } from "../Api/contactsApi";
 import { SlackChannelModel } from "../Api/Models/slackChannelModel";
 import { SlackAccessesApi } from "../Api/slackAccessesApi";
-import { SlackAccessRequestModelExtended } from "../Api/Models/slackAccessRequestModelExtended";
+import { SlackAccessRequestModel } from "../Api/Models/slackAccessRequestModel";
 
 //FIXME should person-related methods be here?
 interface AuthContextType {
@@ -33,7 +33,7 @@ interface AuthContextType {
   getPersonInfo: (callback: (result: Result<PersonModel>) => void) => Promise<void>;
   getPersonSlackChannelsInfo: (callback: (result: Result<SlackChannelModel[]>) => void) => Promise<void>;
   getPersonSlackAccessRequestsChannels: (
-    callback: (result: Result<SlackAccessRequestModelExtended[]>) => void
+    callback: (result: Result<SlackAccessRequestModel[]>) => void
   ) => Promise<void>;
 }
 
@@ -191,9 +191,9 @@ export const AuthContextProvider: FunctionComponent = ({ children }) => {
   };
 
   const getPersonSlackAccessRequestsChannels = async (
-    callback: (result: Result<SlackAccessRequestModelExtended[]>) => void
+    callback: (result: Result<SlackAccessRequestModel[]>) => void
   ): Promise<void> => {
-    let result = ResultBuilder.Error<SlackAccessRequestModelExtended[]>(
+    let result = ResultBuilder.Error<SlackAccessRequestModel[]>(
       "Не удалось получить информацию о запросах на доступ к Slack каналам"
     );
     if (authInfo && !checkIfAuthInfoExpired()) {

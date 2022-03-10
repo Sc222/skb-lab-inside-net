@@ -29,6 +29,7 @@ import { Avatar, Link, ListItemText, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { SiteRoute } from "../../../Typings/Enums/siteRoute";
 import { TextBoxComponent } from "@syncfusion/ej2-react-inputs";
+import { Person } from "@mui/icons-material";
 
 loadRussianCalendarLocale();
 

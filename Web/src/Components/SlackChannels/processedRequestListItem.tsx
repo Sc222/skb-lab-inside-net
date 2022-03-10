@@ -1,18 +1,17 @@
 import React, { FunctionComponent } from "react";
 import { Avatar, Button, Chip, Grid, Link, ListItem, ListItemAvatar, ListItemText, Typography } from "@mui/material";
-import { SlackAccessRequestModelExtended } from "../../Api/Models/slackAccessRequestModelExtended";
 import { Link as RouterLink } from "react-router-dom";
 import { SiteRoute } from "../../Typings/Enums/siteRoute";
 import { Person } from "@mui/icons-material";
+import { SlackAccessRequestModel } from "../../Api/Models/slackAccessRequestModel";
 
 interface ProcessedRequestListItemProps {
-  accessRequest: SlackAccessRequestModelExtended;
+  accessRequest: SlackAccessRequestModel;
 }
 
 export const ProcessedRequestListItem: FunctionComponent<ProcessedRequestListItemProps> = ({ accessRequest }) => {
   return (
     <>
-      {" "}
       {/*TODO CORRECT LINKS*/}
       <ListItem
         sx={{ pt: 2, pb: 1 }}
@@ -23,18 +22,18 @@ export const ProcessedRequestListItem: FunctionComponent<ProcessedRequestListIte
             rel="noopener"
             clickable
             component="a"
-            color={accessRequest.Status === "approved" ? "primary" : "error"}
+            color={accessRequest.isDisapproved ? "error" : "primary"}
             variant="outlined"
             size="medium"
-            label={accessRequest.ChannelName}
-            href={`https://companydomain.slack.com/messages/${accessRequest.ChannelId}`}
+            label={accessRequest.channelName}
+            href={`https://companydomain.slack.com/messages/${accessRequest.channelId}`}
           />
         }
       >
         <ListItemAvatar>
           {/*TODO: AVATARS FIX DRY*/}
           <Avatar
-            src={accessRequest.PersonAvatar}
+            src={accessRequest.person.avatarUrl}
             sx={(theme) => ({
               height: 48,
               width: 48,
@@ -51,7 +50,7 @@ export const ProcessedRequestListItem: FunctionComponent<ProcessedRequestListIte
           primary={
             <Link
               component={RouterLink}
-              to={`${SiteRoute.persons}/${accessRequest.PersonId}/${SiteRoute.profile}`}
+              to={`${SiteRoute.persons}/${accessRequest.person.id!}/${SiteRoute.profile}`}
               variant="inherit"
               color="inherit"
               underline="hover"
@@ -59,10 +58,10 @@ export const ProcessedRequestListItem: FunctionComponent<ProcessedRequestListIte
                 cursor: "pointer",
               }}
             >
-              {accessRequest.PersonName}
+              {accessRequest.person.fullName}
             </Link>
           }
-          secondary={accessRequest.PersonPosition}
+          secondary={accessRequest.person.position}
         />
       </ListItem>
       <Grid
@@ -75,17 +74,17 @@ export const ProcessedRequestListItem: FunctionComponent<ProcessedRequestListIte
       >
         <Grid item xs={12}>
           <Chip
-            color={accessRequest.Status === "approved" ? "primary" : "error"}
+            color={accessRequest.isDisapproved ? "error" : "primary"}
             variant="outlined"
             size="medium"
-            label={accessRequest.Status === "approved" ? "Одобрено" : "Отклонено"}
+            label={accessRequest.isDisapproved ? "Отклонено" : "Одобрено"}
           />
-          {accessRequest.AdminMessage.length > 0 && (
+          {accessRequest.disapproveReason.length > 0 && (
             <>
               <Typography sx={{ mt: 1 }} variant="h6">
                 Сообщение
               </Typography>
-              <Typography variant="body2">{accessRequest.AdminMessage}</Typography>{" "}
+              <Typography variant="body2">{accessRequest.disapproveReason}</Typography>
             </>
           )}
         </Grid>

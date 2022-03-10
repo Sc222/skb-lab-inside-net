@@ -1,13 +1,12 @@
 import React, { FunctionComponent } from "react";
 import { Avatar, Button, Chip, Grid, Link, ListItem, ListItemAvatar, ListItemText, TextField } from "@mui/material";
-import { SlackAccessRequestModelExtended } from "../../Api/Models/slackAccessRequestModelExtended";
 import { Link as RouterLink } from "react-router-dom";
 import { SiteRoute } from "../../Typings/Enums/siteRoute";
 import { SlackAccessRequestModel } from "../../Api/Models/slackAccessRequestModel";
 import { Person } from "@mui/icons-material";
 
 interface GrantChannelAccessListItemProps {
-  accessRequest: SlackAccessRequestModelExtended;
+  accessRequest: SlackAccessRequestModel;
   onChangeRequestStatus: (accessRequest: SlackAccessRequestModel) => void;
 }
 
@@ -23,21 +22,25 @@ export const GrantChannelAccessListItem: FunctionComponent<GrantChannelAccessLis
 
   const onReject = (_: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
     onChangeRequestStatus({
-      Id: accessRequest.Id,
-      PersonId: accessRequest.PersonId,
-      ChannelId: accessRequest.ChannelId,
-      Status: "disapproved",
-      AdminMessage: message,
+      id: accessRequest.id,
+      channelId: accessRequest.channelId,
+      channelName: accessRequest.channelName,
+      // Status: "disapproved",
+      isDisapproved: true,
+      person: accessRequest.person,
+      disapproveReason: message,
     });
   };
 
   const onApprove = (_: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
     onChangeRequestStatus({
-      Id: accessRequest.Id,
-      PersonId: accessRequest.PersonId,
-      ChannelId: accessRequest.ChannelId,
-      Status: "approved",
-      AdminMessage: message,
+      id: accessRequest.id,
+      channelId: accessRequest.channelId,
+      channelName: accessRequest.channelName,
+      // Status: "approved",
+      isDisapproved: true,
+      person: accessRequest.person,
+      disapproveReason: message,
     });
   };
 
@@ -55,14 +58,14 @@ export const GrantChannelAccessListItem: FunctionComponent<GrantChannelAccessLis
             color="primary"
             variant="outlined"
             size="medium"
-            label={accessRequest.ChannelName}
-            href={`https://companydomain.slack.com/messages/${accessRequest.ChannelId}`}
+            label={accessRequest.channelId}
+            href={`https://companydomain.slack.com/messages/${accessRequest.channelId}`}
           />
         }
       >
         <ListItemAvatar>
           <Avatar
-            src={accessRequest.PersonAvatar}
+            src={accessRequest.person.avatarUrl}
             sx={(theme) => ({
               height: 48,
               width: 48,
@@ -81,7 +84,7 @@ export const GrantChannelAccessListItem: FunctionComponent<GrantChannelAccessLis
           primary={
             <Link
               component={RouterLink}
-              to={`${SiteRoute.persons}/${accessRequest.PersonId}/${SiteRoute.profile}`}
+              to={`${SiteRoute.persons}/${accessRequest.person.id!}/${SiteRoute.profile}`}
               variant="inherit"
               color="inherit"
               underline="hover"
@@ -89,10 +92,10 @@ export const GrantChannelAccessListItem: FunctionComponent<GrantChannelAccessLis
                 cursor: "pointer",
               }}
             >
-              {accessRequest.PersonName}
+              {accessRequest.person.fullName}
             </Link>
           }
-          secondary={accessRequest.PersonPosition}
+          secondary={accessRequest.person.position}
         />
       </ListItem>
 
@@ -109,7 +112,7 @@ export const GrantChannelAccessListItem: FunctionComponent<GrantChannelAccessLis
             onInput={onMessageChange}
             value={message}
             fullWidth
-            id={`message-field-${accessRequest.Id}`}
+            id={`message-field-${accessRequest.id}`}
             label="Сообщение"
             variant="outlined"
             size="small"

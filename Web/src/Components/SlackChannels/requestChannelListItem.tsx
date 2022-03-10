@@ -6,7 +6,7 @@ import { TextAvatar } from "../Common/textAvatar";
 interface RequestChannelListItemProps {
   channel: SlackChannelModel;
   isRequestSent: boolean;
-  onRequestAccess: (channelId: string) => void;
+  onRequestAccess: (channel: SlackChannelModel) => void;
 }
 
 export const RequestChannelListItem: FunctionComponent<RequestChannelListItemProps> = ({
@@ -17,7 +17,7 @@ export const RequestChannelListItem: FunctionComponent<RequestChannelListItemPro
   const onClick = (_: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
     if (!isRequestSent) {
       // fixme debounce to prevent multiple requests
-      onRequestAccess(channel.channelId);
+      onRequestAccess(channel);
     }
   };
 

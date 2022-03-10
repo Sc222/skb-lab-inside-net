@@ -7,7 +7,6 @@ import { SlackChannelModel } from "./Models/slackChannelModel";
 import { v4 } from "uuid";
 import { SlackAccessRequestModel } from "./Models/slackAccessRequestModel";
 import { MockSlackAccessRequests } from "./TestingMocks/mockSlackAccessRequests";
-import { SlackAccessRequestModelExtended } from "./Models/slackAccessRequestModelExtended";
 import { MockPersons } from "./TestingMocks/mockPersons";
 import { MockChannelsMap } from "./TestingMocks/mockChannelsMap";
 
@@ -60,21 +59,21 @@ export class SlackAccessesApi {
     }
 
     public static async CreateAccessRequest(
-        accessRequest: Omit<SlackAccessRequestModel, "Id">,
+        accessRequest: Omit<SlackAccessRequestModel, "id">,
         token: string,
         useTestingMocks = false
     ): Promise<ApiResponse<string>> {
         if (useTestingMocks) {
             const dbId = v4();
 
-            let reqData: SlackAccessRequestModel = { ...accessRequest, Id: dbId };
+            let reqData: SlackAccessRequestModel = { ...accessRequest, id: dbId };
 
             let result: ApiResponse<string> = {
                 data: dbId,
                 status: 200,
                 error: null,
             };
-            MockSlackAccessRequests.set(reqData.Id, reqData);
+            MockSlackAccessRequests.set(reqData.id, reqData);
             return new Promise((resolve) => {
                 setTimeout(() => {
                     resolve(result);
@@ -84,7 +83,7 @@ export class SlackAccessesApi {
 
         let axiosInstance = axios.create({ baseURL: Api.BaseUrl });
         return axiosInstance
-            .post<string>(`/slackAccesses/accessRequests/${accessRequest.PersonId}`, accessRequest, {
+            .post<string>(`/slackAccesses/accessRequests/${accessRequest.person.id!}`, accessRequest, {
                 headers: Api.PostRequestHeaders(token),
             })
             .then((response) => {
@@ -109,9 +108,9 @@ export class SlackAccessesApi {
     public static async GetAllAccessRequests(
         token: string,
         useTestingMocks = false
-    ): Promise<ApiResponse<SlackAccessRequestModelExtended[]>> {
+    ): Promise<ApiResponse<SlackAccessRequestModel[]>> {
         if (useTestingMocks) {
-            let result: ApiResponse<SlackAccessRequestModelExtended[]> = {
+            let result: ApiResponse<SlackAccessRequestModel[]> = {
                 data: null,
                 status: 200,
                 error: null,
@@ -119,9 +118,9 @@ export class SlackAccessesApi {
             //let reqData: SlackAccessRequestModel = { ...accessRequest, Id: v4() };
             //MockSlackAccessRequests.set(reqData.Id, reqData);
             let allRequests = Array.from(MockSlackAccessRequests.values());
-            let allRequestsExtended: SlackAccessRequestModelExtended[] = allRequests.map((r) => {
-                let person = MockPersons.get(r.PersonId)!;
-                let channel = MockChannelsMap.get(r.ChannelId)!;
+            let allRequestsExtended: SlackAccessRequestModel[] = allRequests.map((r) => {
+                let person = MockPersons.get(r.person.id!)!;
+                let channel = MockChannelsMap.get(r.channelId)!;
                 //todo process if person or channel is null
                 return {
                     ...r,
@@ -143,11 +142,11 @@ export class SlackAccessesApi {
 
         let axiosInstance = axios.create({ baseURL: Api.BaseUrl });
         return axiosInstance
-            .get<SlackAccessRequestModelExtended[]>(`/slackAccesses/accessRequests`, {
+            .get<SlackAccessRequestModel[]>(`/slackAccesses/accessRequests`, {
                 headers: Api.AuthorizationHeaders(token),
             })
             .then((response) => {
-                let result: ApiResponse<SlackAccessRequestModelExtended[]> = {
+                let result: ApiResponse<SlackAccessRequestModel[]> = {
                     data: response.data,
                     status: response.status,
                     error: null,
@@ -155,7 +154,7 @@ export class SlackAccessesApi {
                 return result;
             })
             .catch((reason: AxiosError) => {
-                let result: ApiResponse<SlackAccessRequestModelExtended[]> = {
+                let result: ApiResponse<SlackAccessRequestModel[]> = {
                     data: null,
                     status: reason.response?.status ?? -1,
                     error: reason.response?.data,
@@ -168,9 +167,9 @@ export class SlackAccessesApi {
         personId: string,
         token: string,
         useTestingMocks = false
-    ): Promise<ApiResponse<SlackAccessRequestModelExtended[]>> {
+    ): Promise<ApiResponse<SlackAccessRequestModel[]>> {
         if (useTestingMocks) {
-            let result: ApiResponse<SlackAccessRequestModelExtended[]> = {
+            let result: ApiResponse<SlackAccessRequestModel[]> = {
                 data: null,
                 status: 200,
                 error: null,
@@ -178,9 +177,9 @@ export class SlackAccessesApi {
             //let reqData: SlackAccessRequestModel = { ...accessRequest, Id: v4() };
             //MockSlackAccessRequests.set(reqData.Id, reqData);
             let allRequests = Array.from(MockSlackAccessRequests.values());
-            let allRequestsExtended: SlackAccessRequestModelExtended[] = allRequests.map((r) => {
-                let person = MockPersons.get(r.PersonId)!;
-                let channel = MockChannelsMap.get(r.ChannelId)!;
+            let allRequestsExtended: SlackAccessRequestModel[] = allRequests.map((r) => {
+                let person = MockPersons.get(r.person.id!)!;
+                let channel = MockChannelsMap.get(r.channelId)!;
                 //todo process if person or channel is null
                 return {
                     ...r,
@@ -191,7 +190,7 @@ export class SlackAccessesApi {
                     ChannelName: channel.ChannelName,
                 };
             });
-            result.data = allRequestsExtended.filter((r) => r.PersonId === personId);
+            result.data = allRequestsExtended.filter((r) => r.person.id === personId);
 
             return new Promise((resolve) => {
                 setTimeout(() => {
@@ -202,11 +201,11 @@ export class SlackAccessesApi {
 
         let axiosInstance = axios.create({ baseURL: Api.BaseUrl });
         return axiosInstance
-            .get<SlackAccessRequestModelExtended[]>(`/slackAccesses/accessRequests/${personId}`, {
+            .get<SlackAccessRequestModel[]>(`/slackAccesses/accessRequests/${personId}`, {
                 headers: Api.AuthorizationHeaders(token),
             })
             .then((response) => {
-                let result: ApiResponse<SlackAccessRequestModelExtended[]> = {
+                let result: ApiResponse<SlackAccessRequestModel[]> = {
                     data: response.data,
                     status: response.status,
                     error: null,
@@ -214,7 +213,7 @@ export class SlackAccessesApi {
                 return result;
             })
             .catch((reason: AxiosError) => {
-                let result: ApiResponse<SlackAccessRequestModelExtended[]> = {
+                let result: ApiResponse<SlackAccessRequestModel[]> = {
                     data: null,
                     status: reason.response?.status ?? -1,
                     error: reason.response?.data,
@@ -230,13 +229,13 @@ export class SlackAccessesApi {
         useTestingMocks = false
     ): Promise<ApiResponse<string | undefined>> {
         if (useTestingMocks) {
-            let currentAccessRequest = MockSlackAccessRequests.get(accessRequest.Id);
+            let currentAccessRequest = MockSlackAccessRequests.get(accessRequest.id);
 
             if (!currentAccessRequest) {
                 //todo process 404 error
             }
 
-            MockSlackAccessRequests.set(accessRequest.Id, accessRequest);
+            MockSlackAccessRequests.set(accessRequest.id, accessRequest);
 
             let result: ApiResponse<string | undefined> = {
                 data: undefined,
@@ -279,13 +278,13 @@ export class SlackAccessesApi {
         useTestingMocks = false
     ): Promise<ApiResponse<string | undefined>> {
         if (useTestingMocks) {
-            let currentAccessRequest = MockSlackAccessRequests.get(accessRequest.Id);
+            let currentAccessRequest = MockSlackAccessRequests.get(accessRequest.id);
 
             if (!currentAccessRequest) {
                 //todo process 404 error
             }
 
-            MockSlackAccessRequests.set(accessRequest.Id, accessRequest);
+            MockSlackAccessRequests.set(accessRequest.id, accessRequest);
 
             let result: ApiResponse<string | undefined> = {
                 data: undefined,

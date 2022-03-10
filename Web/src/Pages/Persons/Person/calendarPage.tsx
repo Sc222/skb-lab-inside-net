@@ -145,8 +145,8 @@ export const CalendarPage: FunctionComponent<CalendarPageProps> = () => {
                       persons={departmentPersons}
                       initialData={CalendarSource.UsersCalendarData.filter(
                         (v) =>
-                          v.Person?.department?.id === authPersonInfo.Department.Id &&
-                          v.Person?.id !== authPersonInfo.Id
+                          v.Person?.department?.id === authPersonInfo.department.id &&
+                          v.Person?.id !== authPersonInfo.id
                       )}
                       eventsToShow={["Отпуск", "Командировка", "Учеба"]}
                       onDataUpdate={(newData) => {

@@ -2,9 +2,9 @@ import React, { FunctionComponent, useEffect } from "react";
 import { Box, Divider, List, Typography } from "@mui/material";
 import { useAuthContext } from "src/Contexts/authContext";
 import { SlackAccessesApi } from "../../Api/slackAccessesApi";
-import { SlackAccessRequestModelExtended } from "../../Api/Models/slackAccessRequestModelExtended";
 import { Api } from "../../Api/api";
 import { ProcessedRequestListItem } from "./processedRequestListItem";
+import { SlackAccessRequestModel } from "../../Api/Models/slackAccessRequestModel";
 
 interface ProcessedRequestsTabProps {}
 
@@ -13,16 +13,15 @@ interface ProcessedRequestsTabProps {}
 //FIXME: split accessRequests by different types (admin_1 can resolve some types of requests but others can be resolved only by admin_2)
 export const ProcessedRequestsTab: FunctionComponent<ProcessedRequestsTabProps> = () => {
   const auth = useAuthContext();
-  const [processedAccessRequests, setProcessedAccessRequests] = React.useState<
-    SlackAccessRequestModelExtended[] | null
-  >(null);
+  const [processedAccessRequests, setProcessedAccessRequests] = React.useState<SlackAccessRequestModel[] | null>(null);
 
   const getAccessRequests = async () => {
     // todo think about access right, should they be checked here or not?
     if (auth.authInfo) {
       const response = await SlackAccessesApi.GetAllAccessRequests(auth.authInfo.token);
       if (Api.IsRequestSuccess(response) && response.data) {
-        setProcessedAccessRequests(response.data.filter((r) => r.Status !== "pending").reverse());
+        //TODO: filter using "pending status"
+        setProcessedAccessRequests(response.data.filter(r=>r).reverse());
       } else {
         //todo process error
         setProcessedAccessRequests(null);
@@ -39,7 +38,7 @@ export const ProcessedRequestsTab: FunctionComponent<ProcessedRequestsTabProps> 
       {processedAccessRequests ? (
         <List>
           {processedAccessRequests.map((request, index) => (
-            <div key={request.Id}>
+            <div key={request.id}>
               <ProcessedRequestListItem accessRequest={request} />
               {index !== processedAccessRequests.length - 1 && <Divider variant="fullWidth" />}
             </div>
