@@ -9,10 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
-import com.sc222.insidenet.R;
 import com.sc222.insidenet.databinding.FragmentProfileBinding;
 
 public class ProfileFragment extends Fragment {
@@ -40,8 +37,8 @@ public class ProfileFragment extends Fragment {
         binding.cardDataAccess.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_main_sections);
-                navController.navigate(R.id.dataAccessFragment);
+                /*NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_main_sections);
+                navController.navigate(R.id.dataAccessFragment);*/
             }
         });
     }
