@@ -9,7 +9,7 @@ export class DepartmentsApi {
     public static async GetById(
         departmentId: string,
         token: string,
-        useTestingMocks = true
+        useTestingMocks = false
     ): Promise<ApiResponse<DepartmentModel>> {
         if (useTestingMocks) {
             let department = MockDepartments.find((d) => d.id === departmentId);
@@ -53,7 +53,7 @@ export class DepartmentsApi {
             });
     }
 
-    public static async GetAll(token: string, useTestingMocks = true): Promise<ApiResponse<DepartmentModel[]>> {
+    public static async GetAll(token: string, useTestingMocks = false): Promise<ApiResponse<DepartmentModel[]>> {
         if (useTestingMocks) {
             let result = {
                 data: MockDepartments,

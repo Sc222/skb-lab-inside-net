@@ -19,6 +19,8 @@ export class LocalStorageService {
         let expires = Number(localStorage.getItem("expires"));
         let personId = localStorage.getItem("personId");
 
+        //todo redirect to login if token expired
+
         // Person info is incorrect, return null (should trigger login in react)
         if (!token || !expiresStr || !Number.isFinite(expires) || !personId) {
             return null;

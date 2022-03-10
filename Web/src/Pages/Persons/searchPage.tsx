@@ -54,7 +54,7 @@ export const SearchPage: FunctionComponent<SearchPageProps> = ({ searchOnEveryIn
         setDepartments(null);
         return;
       }
-      let response = await DepartmentsApi.GetAll(auth.authInfo.token, true);
+      let response = await DepartmentsApi.GetAll(auth.authInfo.token);
       let departments = !Api.IsRequestSuccess(response) || !response.data ? null : response.data;
       setDepartments(departments);
     };
@@ -69,7 +69,7 @@ export const SearchPage: FunctionComponent<SearchPageProps> = ({ searchOnEveryIn
         setContacts(null);
         return;
       }
-      let response = await PersonsApi.Find(searchParams, auth.authInfo.token, true);
+      let response = await PersonsApi.Find(searchParams, auth.authInfo.token);
       let persons = !Api.IsRequestSuccess(response) || !response.data ? null : response.data;
 
       // Exclude yourself from the list
@@ -84,7 +84,7 @@ export const SearchPage: FunctionComponent<SearchPageProps> = ({ searchOnEveryIn
     setSearchParams(
       createSearchParams({
         [ContactsSearchParam.name]: text,
-        [ContactsSearchParam.department]: departments,
+        [ContactsSearchParam.departments]: departments,
       })
     );
   };

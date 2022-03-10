@@ -55,7 +55,7 @@ export const ContactsPage: FunctionComponent<ContactPageProps> = ({ searchOnEver
         setDepartments(null);
         return;
       }
-      let response = await DepartmentsApi.GetAll(auth.authInfo.token, true);
+      let response = await DepartmentsApi.GetAll(auth.authInfo.token);
       let departments = !Api.IsRequestSuccess(response) || !response.data ? null : response.data;
       setDepartments(departments);
     };
@@ -67,7 +67,7 @@ export const ContactsPage: FunctionComponent<ContactPageProps> = ({ searchOnEver
     setSearchParams(
       createSearchParams({
         [ContactsSearchParam.name]: text,
-        [ContactsSearchParam.department]: departments,
+        [ContactsSearchParam.departments]: departments,
       })
     );
   };

@@ -1,4 +1,4 @@
 export enum ContactsSearchParam {
     name = "name",
-    department = "department",
+    departments = "departments",
 }

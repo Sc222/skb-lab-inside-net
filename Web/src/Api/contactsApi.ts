@@ -12,7 +12,7 @@ export class ContactsApi {
         personId: string,
         contactId: string,
         token: string,
-        useTestingMocks = true
+        useTestingMocks = false
     ): Promise<ApiResponse<string | undefined>> {
         if (useTestingMocks) {
             let personContactsIndex = MockContacts.findIndex((c) => c.PersonId === personId);
@@ -66,7 +66,7 @@ export class ContactsApi {
         personId: string,
         contactId: string,
         token: string,
-        useTestingMocks = true
+        useTestingMocks = false
     ): Promise<ApiResponse<string | undefined>> {
         if (useTestingMocks) {
             let personContactsIndex = MockContacts.findIndex((c) => c.PersonId === personId);
@@ -126,7 +126,7 @@ export class ContactsApi {
         searchParams: URLSearchParams | null,
         personId: string,
         token: string,
-        useTestingMocks = true
+        useTestingMocks = false
     ): Promise<ApiResponse<PersonModel[]>> {
         if (useTestingMocks) {
             let contactsIds = MockContacts.find((c) => c.PersonId === personId);
@@ -142,7 +142,7 @@ export class ContactsApi {
                 let allPersons = Array.from(MockPersons.values());
                 let contacts = allPersons.filter((p) => ids.has(p.id!));
                 if (searchParams) {
-                    let departments: Set<string> = new Set(searchParams.getAll(ContactsSearchParam.department));
+                    let departments: Set<string> = new Set(searchParams.getAll(ContactsSearchParam.departments));
                     contacts = contacts.filter((p) => {
                         let text: string = searchParams.get(ContactsSearchParam.name) ?? p.fullName;
                         let hasDepartment = departments.size > 0 ? departments.has(p.department.name) : true;
