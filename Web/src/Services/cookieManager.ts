@@ -2,12 +2,15 @@ import { AuthContextPerson } from "../Typings/Interfaces/authContextPerson";
 import Cookies from "js-cookie";
 
 export class CookieManager {
-    public addAuthInfo(authContextPerson: AuthContextPerson & { expires: number }): void {
+    public addAuthInfo(authContextPerson: AuthContextPerson & { expires: Date }): void {
+        console.log("expires:", authContextPerson.expires);
         Cookies.set("token", authContextPerson.token, { path: "/", expires: authContextPerson.expires });
         Cookies.set("personId", authContextPerson.personId, { path: "/", expires: authContextPerson.expires });
+        Cookies.set("SOMETHING", "AOAOOA", { path: "/" });
     }
 
     public clearPersonInfo(): void {
+        console.log("CLEAR COOKIES");
         Cookies.remove("token", { path: "/" });
         Cookies.remove("expires", { path: "/" });
         Cookies.remove("personId", { path: "/" });
@@ -24,5 +27,13 @@ export class CookieManager {
             return null;
         }
         return { token, personId };
+    }
+
+    /**
+     * Check if authInfo is expired
+     * @returns `true` if authInfo is expired, `false` otherwise
+     */
+    public isAuthInfoExpired(): boolean {
+        return this.getAuthInfo() === null;
     }
 }

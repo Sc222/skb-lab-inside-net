@@ -64,7 +64,7 @@ const AuthContext = React.createContext<AuthContextType>({
     /*do nothing*/
   },
   getPersonSlackAccessRequestsChannels: async () => {
-    /*do nothin*/
+    /*do nothing*/
   },
 });
 
@@ -73,6 +73,16 @@ export const AuthContextProvider: FunctionComponent = ({ children }) => {
   const authenticationService = new AuthenticationService();
 
   const [authInfo, setAuthInfo] = React.useState<AuthContextPerson | null>(cookieManager.getAuthInfo());
+  console.log("DEFAULT VALUE IN COOKIES IS: ", cookieManager.getAuthInfo());
+
+  //TODO: rework redirection logic
+  const checkIfAuthInfoExpired = (): boolean => {
+    const isTokenExpired = cookieManager.isAuthInfoExpired();
+    if (isTokenExpired) {
+      setAuthInfo(null);
+    }
+    return isTokenExpired;
+  };
 
   //FIXME SECURITY!!! for safety purposes try gettingUserId from token!!! (because userId in local storage may be WRONG)
 
@@ -98,7 +108,7 @@ export const AuthContextProvider: FunctionComponent = ({ children }) => {
 
   const getAuthScope = async (callback: (result: Result<AuthScope>) => void): Promise<void> => {
     let result = ResultBuilder.Error<AuthScope>("Вход не выполнен");
-    if (authInfo) {
+    if (authInfo && !checkIfAuthInfoExpired()) {
       result = await authenticationService.getAuthScope(authInfo.personId, authInfo.token);
     }
     callback(result);
@@ -109,7 +119,7 @@ export const AuthContextProvider: FunctionComponent = ({ children }) => {
     callback: (result: Result<PersonModel[]>) => void
   ): Promise<void> => {
     let result = ResultBuilder.Error<PersonModel[]>("Не удалось получить информацию о контактах пользователя");
-    if (authInfo) {
+    if (authInfo && !checkIfAuthInfoExpired()) {
       let response = await ContactsApi.GetPersonContacts(searchParams, authInfo.personId, authInfo.token);
       if (!Api.IsRequestSuccess(response) || !response.data) {
         result = ResultBuilder.Error(response.error);
@@ -125,7 +135,7 @@ export const AuthContextProvider: FunctionComponent = ({ children }) => {
     callback: (result: Result<string | undefined>) => void
   ): Promise<void> => {
     let result = ResultBuilder.Error<string | undefined>("Не удалось удалить контакт");
-    if (authInfo) {
+    if (authInfo && !checkIfAuthInfoExpired()) {
       let response = await ContactsApi.RemoveFromContacts(authInfo.personId, contactId, authInfo.token);
       if (!Api.IsRequestSuccess(response) || !response.data) {
         result = ResultBuilder.Error(response.error);
@@ -141,7 +151,7 @@ export const AuthContextProvider: FunctionComponent = ({ children }) => {
     callback: (result: Result<string | undefined>) => void
   ): Promise<void> => {
     let result = ResultBuilder.Error<string | undefined>("Не удалось добавить контакт");
-    if (authInfo) {
+    if (authInfo && !checkIfAuthInfoExpired()) {
       let response = await ContactsApi.AddToContacts(authInfo.personId, contactId, authInfo.token);
       if (!Api.IsRequestSuccess(response) || !response.data) {
         result = ResultBuilder.Error(response.error);
@@ -154,7 +164,7 @@ export const AuthContextProvider: FunctionComponent = ({ children }) => {
 
   const getPersonInfo = async (callback: (result: Result<PersonModel>) => void): Promise<void> => {
     let result = ResultBuilder.Error<PersonModel>("Не удалось получить информацию об авторизированном пользователе");
-    if (authInfo) {
+    if (authInfo && !checkIfAuthInfoExpired()) {
       let response = await PersonsApi.GetPersonById(authInfo.personId, authInfo.token);
       if (!Api.IsRequestSuccess(response) || !response.data) {
         result = ResultBuilder.Error(response.error);
@@ -169,7 +179,7 @@ export const AuthContextProvider: FunctionComponent = ({ children }) => {
     let result = ResultBuilder.Error<SlackChannelModel[]>(
       "Не удалось получить информацию об Slack каналах пользователя"
     );
-    if (authInfo) {
+    if (authInfo && !checkIfAuthInfoExpired()) {
       let response = await SlackAccessesApi.GetSlackChannels(authInfo.personId, authInfo.token);
       if (!Api.IsRequestSuccess(response) || !response.data) {
         result = ResultBuilder.Error(response.error);
@@ -186,7 +196,7 @@ export const AuthContextProvider: FunctionComponent = ({ children }) => {
     let result = ResultBuilder.Error<SlackAccessRequestModelExtended[]>(
       "Не удалось получить информацию о запросах на доступ к Slack каналам"
     );
-    if (authInfo) {
+    if (authInfo && !checkIfAuthInfoExpired()) {
       let response = await SlackAccessesApi.GetPersonAccessRequests(authInfo.personId, authInfo.token);
       if (!Api.IsRequestSuccess(response) || !response.data) {
         result = ResultBuilder.Error(response.error);

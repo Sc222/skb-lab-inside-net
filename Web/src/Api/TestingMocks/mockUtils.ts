@@ -7,7 +7,7 @@ export class MockUtils {
         return 100;
     }
 
-    public static GenerateTokenExpirationDate(tokenAliveTimeSec: number): number {
-        return new Date(Date.now() + 1000 * tokenAliveTimeSec).getTime();
+    public static GenerateTokenExpirationDate(tokenAliveTimeSec: number): Date {
+        return new Date(Date.now() + 1000 * tokenAliveTimeSec);
     }
 }

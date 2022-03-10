@@ -6,7 +6,7 @@ import { MockPersons } from "./TestingMocks/mockPersons";
 import { MockUtils } from "./TestingMocks/mockUtils";
 import { ContactsSearchParam } from "../Typings/Enums/contactsSearchParam";
 
-type AuthenticateResponse = { person: PersonModel; token: string; expires: number };
+type AuthenticateResponse = { person: PersonModel; token: string; expires: string };
 
 export class PersonsApi {
     public static async Authenticate(
@@ -28,7 +28,7 @@ export class PersonsApi {
                     data: {
                         person: person,
                         token: "42139536c8a26bca0e49bd1f5069af2400d84b681723b06dac894f4a862fc9871961803886cd5188be493",
-                        expires: MockUtils.GenerateTokenExpirationDate(10 * 60),
+                        expires: MockUtils.GenerateTokenExpirationDate(10 * 60).toDateString(),
                     },
                     status: 200,
                     error: null,
