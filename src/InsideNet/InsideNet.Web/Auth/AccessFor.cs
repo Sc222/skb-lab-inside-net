@@ -38,8 +38,8 @@ public class AccessFor : Attribute, IAuthorizationFilter, IOrderedFilter
     {
         var routeData = context.GetRouteData();
 
-        if (isAllowedForSelf && routeData.Values.TryGetValue("personId", out var requestId))
-            return IdValidator.IsValidAction(context, (Guid)requestId);
+        if (isAllowedForSelf && routeData.Values.TryGetValue("personId", out var personId)) 
+            return Guid.TryParse((string)personId, out var requestPersonId) && IdValidator.IsValidAction(context, requestPersonId);
 
         return false;
     }
