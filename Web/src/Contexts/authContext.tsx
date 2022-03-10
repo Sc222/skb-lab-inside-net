@@ -2,7 +2,7 @@ import React, { FunctionComponent } from "react";
 import { AuthContextPerson } from "../Typings/Interfaces/authContextPerson";
 import { AuthenticationService } from "../Services/authenticationService";
 import { PersonModel } from "../Api/Models/personModel";
-import { LocalStorageService } from "../Services/localStorageService";
+import { CookieManager } from "../Services/cookieManager";
 import { Result, ResultBuilder } from "../Utils/result";
 import { AuthScope } from "../Typings/Enums/authScope";
 import { PersonsApi } from "../Api/personsApi";
@@ -69,10 +69,10 @@ const AuthContext = React.createContext<AuthContextType>({
 });
 
 export const AuthContextProvider: FunctionComponent = ({ children }) => {
-  const localStorageService = new LocalStorageService();
+  const cookieManager = new CookieManager();
   const authenticationService = new AuthenticationService();
 
-  const [authInfo, setAuthInfo] = React.useState<AuthContextPerson | null>(localStorageService.getAuthInfo());
+  const [authInfo, setAuthInfo] = React.useState<AuthContextPerson | null>(cookieManager.getAuthInfo());
 
   //FIXME SECURITY!!! for safety purposes try gettingUserId from token!!! (because userId in local storage may be WRONG)
 
@@ -84,7 +84,7 @@ export const AuthContextProvider: FunctionComponent = ({ children }) => {
     if (result.success) {
       let fetchedPerson = result.success;
       setAuthInfo(fetchedPerson);
-      localStorageService.addAuthInfo(fetchedPerson);
+      cookieManager.addAuthInfo(fetchedPerson);
     }
     callback(result);
   };
@@ -92,7 +92,7 @@ export const AuthContextProvider: FunctionComponent = ({ children }) => {
   const signOut = async (callback: () => void): Promise<void> => {
     await authenticationService.signOut();
     setAuthInfo(null);
-    localStorageService.clearPersonInfo();
+    cookieManager.clearPersonInfo();
     callback();
   };
 

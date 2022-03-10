@@ -6,7 +6,9 @@ import { Result, ResultBuilder } from "../Utils/result";
 import { AuthScope } from "../Typings/Enums/authScope";
 
 export class AuthenticationService {
-    public async signIn(authData: Pick<PersonModel, "email" | "password">): Promise<Result<AuthContextPerson>> {
+    public async signIn(
+        authData: Pick<PersonModel, "email" | "password">
+    ): Promise<Result<AuthContextPerson & { expires: number }>> {
         let response = await PersonsApi.Authenticate(authData);
         if (!Api.IsRequestSuccess(response) || !response.data) {
             return ResultBuilder.Error(response.error); //TODO: keep in mind that this message is shown to user
