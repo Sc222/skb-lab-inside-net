@@ -79,7 +79,8 @@ public class MainSectionsActivity extends AppCompatActivity implements BottomNav
         super.onCreate(savedInstanceState);
         binding = ActivityMainSectionsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        setSupportActionBar(binding.toolbar);
+
+        //setSupportActionBar(binding.toolbar);
 
         binding.bottomNavigation.setOnNavigationItemSelectedListener(this);
 
