@@ -11,7 +11,6 @@ import { RequestChannelAccessTab } from "../../../Components/SlackChannels/reque
 import { GrantChannelsAccessTab } from "../../../Components/SlackChannels/grantChannelsAccessTab";
 import { useSearchParams } from "react-router-dom";
 import { SlackChannelsSearchParam } from "../../../Typings/Enums/slackChannelsSearchParam";
-import { ProcessedRequestsTab } from "src/Components/SlackChannels/processedRequestsTab";
 
 interface SlackChannelsPageProps {}
 
@@ -80,7 +79,7 @@ export const SlackChannelsPage: FunctionComponent<SlackChannelsPageProps> = () =
                     {/*fixme refactor navigation*/}
                     {shouldShowAdminMenu && <Divider orientation="vertical" flexItem variant="middle" />}
                     {shouldShowAdminMenu && <Tab label="Активные запросы" {...generateTabProps("3")} />}
-                    {shouldShowAdminMenu && <Tab label="Обработанные запросы" {...generateTabProps("4")} />}
+                    {/*{shouldShowAdminMenu && <Tab label="Обработанные запросы" {...generateTabProps("4")} />}*/}
                   </Tabs>
                 )}
               </Box>
@@ -99,9 +98,9 @@ export const SlackChannelsPage: FunctionComponent<SlackChannelsPageProps> = () =
                     <TabPanel value={currentTab} name={"3"}>
                       <GrantChannelsAccessTab />
                     </TabPanel>
-                    <TabPanel value={currentTab} name={"4"}>
+                    {/*  <TabPanel value={currentTab} name={"4"}>
                       <ProcessedRequestsTab />
-                    </TabPanel>
+                    </TabPanel>*/}
                   </>
                 )}
               </>
