@@ -12,6 +12,7 @@ import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.ui.AppBarConfiguration;
 
@@ -20,14 +21,25 @@ import com.sc222.insidenet.R;
 import com.sc222.insidenet.databinding.ActivityMainSectionsBinding;
 import com.sc222.insidenet.ui.webview.constants.UrlConstants;
 
+import java.util.Optional;
+
 public class MainSectionsActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        Toast.makeText(getApplicationContext(),"WEBVIEW NAVIGATE TO: "+item.getItemId(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "WEBVIEW NAVIGATE TO: " + item.getItemId(), Toast.LENGTH_SHORT).show();
         return true;
     }
 
-    //TODO:  track active url and update navigationBar
+    //TODO: GLOBAL PROJECT (see below)
+    // - CALENDAR
+    // - better UI on mobile (smaller margins, smaller avatars)
+    // - register \ settings pages (optional)
+
+    //TODO: ANDROID: (see below)
+    // - track active url and update navigationBar
+    // - change webView url using navigationBar
+    // - progressBar while loading pages
+    // - add possibility to update page using Swipe-to-Refresh (optional)
 
     private class DefaultWebClient extends WebViewClient {
         @Override
@@ -45,20 +57,16 @@ public class MainSectionsActivity extends AppCompatActivity implements BottomNav
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             super.onPageStarted(view, url, favicon);
-            Toast.makeText(getApplicationContext(),"LOADING STARTED", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "LOADING STARTED", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
-            Toast.makeText(getApplicationContext(),"LOADING FINISHED", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "LOADING FINISHED", Toast.LENGTH_SHORT).show();
         }
     }
 
-
-    //TODO replace fragments with webview urls
-    //WEBVIEW TODO: set login and logout cookies in login activity and then redirect here. if token is expired -> redirect too
-    //TODO: progressbar
 
     private ActivityMainSectionsBinding binding;
     //private NavController navController;
@@ -80,7 +88,8 @@ public class MainSectionsActivity extends AppCompatActivity implements BottomNav
         binding = ActivityMainSectionsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        //setSupportActionBar(binding.toolbar);
+        setSupportActionBar(binding.toolbar);
+        Optional.ofNullable(getSupportActionBar()).ifPresent(ActionBar::hide);
 
         binding.bottomNavigation.setOnNavigationItemSelectedListener(this);
 
@@ -89,7 +98,7 @@ public class MainSectionsActivity extends AppCompatActivity implements BottomNav
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.profileFragment, R.id.dataAccessFragment, R.id.calendarFragment,R.id.contactsFragment)
+                R.id.profileFragment, R.id.dataAccessFragment, R.id.calendarFragment, R.id.contactsFragment)
                 .build();
 
         //TODO: move to init method
