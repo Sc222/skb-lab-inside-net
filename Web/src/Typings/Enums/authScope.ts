@@ -2,7 +2,7 @@
 export enum AuthScope {
     unknown = "unknown", // all unknown server scopes go here
     regularUser = "regular",
-    departmentManager = "manager",
+    departmentManager = "departmentManager",
     slackAdmin = "slackAdmin",
     admin = "admin",
 }
