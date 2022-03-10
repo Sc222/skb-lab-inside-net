@@ -18,8 +18,8 @@ export const MyChannelListItem: FunctionComponent<MyChannelListItemProps> = ({ c
           width: 48,
           fontSize: "32px",
         }}
-        text={channel.ChannelName}
-        letterIndex={1}
+        text={channel.channelName}
+        letterIndex={0}
       />
     </ListItemAvatar>
 
@@ -29,7 +29,7 @@ export const MyChannelListItem: FunctionComponent<MyChannelListItemProps> = ({ c
         <Link
           target="_blank"
           rel="noopener"
-          href={`https://companydomain.slack.com/messages/${channel.ChannelId}`}
+          href={`https://companydomain.slack.com/messages/${channel.channelId}`}
           variant="inherit"
           color="inherit"
           underline="hover"
@@ -37,10 +37,10 @@ export const MyChannelListItem: FunctionComponent<MyChannelListItemProps> = ({ c
             cursor: "pointer",
           }}
         >
-          {channel.ChannelName}
+          {`#${channel.channelName}`}
         </Link>
       }
-      secondary={channel.ChannelDescription}
+      secondary={channel.channelDescription ?? "Описание отсутствует"}
     />
   </ListItem>
 );

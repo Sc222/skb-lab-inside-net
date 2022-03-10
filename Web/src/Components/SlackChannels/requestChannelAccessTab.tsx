@@ -31,7 +31,7 @@ export const RequestChannelAccessTab: FunctionComponent<RequestChannelAccessTabP
     const getSlackChannels = async () => {
       await auth.getPersonSlackChannelsInfo((result) => {
         if (result.success) {
-          setPersonChannels(result.success.filter((c) => !c.IsInChannel));
+          setPersonChannels(result.success.filter((c) => !c.isInChannel));
         } else {
           // todo process errors somehow
           setPersonChannels(null);
@@ -75,11 +75,11 @@ export const RequestChannelAccessTab: FunctionComponent<RequestChannelAccessTabP
       {personChannels && personRequests !== null ? (
         <List>
           {personChannels.map((channel, index) => (
-            <div key={channel.ChannelId}>
+            <div key={channel.channelId}>
               {/*fixme optimize findIndex*/}
               <RequestChannelListItem
                 channel={channel}
-                isRequestSent={personRequests?.findIndex((r) => r.ChannelId === channel.ChannelId) !== -1}
+                isRequestSent={personRequests?.findIndex((r) => r.ChannelId === channel.channelId) !== -1}
                 onRequestAccess={onRequestChannelAccess}
               />
               {index !== personChannels.length - 1 && <Divider variant="middle" />}

@@ -1,9 +1,8 @@
 export interface SlackChannelModel {
-    readonly ChannelId: string;
-    readonly ChannelName: string;
-    readonly IsInChannel: boolean;
+    readonly channelId: string;
+    readonly channelName: string;
+    readonly isInChannel: boolean;
 
-    //Other
-    readonly ChannelDescription: string;
-   // readonly IsRequested: boolean;//todo временно, затем вместо этого поля запрашивать AccessRequest'ы
+    //TODO: add this to slackService
+    readonly channelDescription?: string;
 }

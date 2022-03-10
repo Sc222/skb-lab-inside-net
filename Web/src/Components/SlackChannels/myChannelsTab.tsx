@@ -17,7 +17,7 @@ export const MyChannelsTab: FunctionComponent<MyChannelsTabProps> = () => {
     const getSlackChannels = async () => {
       await auth.getPersonSlackChannelsInfo((result) => {
         if (result.success) {
-          setPersonChannels(result.success.filter((c) => c.IsInChannel));
+          setPersonChannels(result.success.filter((c) => c.isInChannel));
         } else {
           // todo process errors somehow
           setPersonChannels(null);
@@ -32,7 +32,7 @@ export const MyChannelsTab: FunctionComponent<MyChannelsTabProps> = () => {
       {personChannels ? (
         <List>
           {personChannels.map((channel, index) => (
-            <div key={channel.ChannelId}>
+            <div key={channel.channelId}>
               <MyChannelListItem channel={channel} />
               {index !== personChannels.length - 1 && <Divider variant="middle" />}
             </div>

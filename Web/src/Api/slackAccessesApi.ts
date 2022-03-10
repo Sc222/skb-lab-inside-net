@@ -15,15 +15,15 @@ export class SlackAccessesApi {
     public static async GetSlackChannels(
         personId: string,
         token: string,
-        useTestingMocks = true
+        useTestingMocks = false
     ): Promise<ApiResponse<SlackChannelModel[]>> {
         if (useTestingMocks) {
             let result: ApiResponse<SlackChannelModel[]> = {
                 data: MockChannels.map((c) => ({
-                    ChannelId: c.ChannelId,
-                    ChannelName: c.ChannelName,
-                    ChannelDescription: c.ChannelDescription,
-                    IsInChannel: c.PersonsInChannel.has(personId),
+                    channelId: c.ChannelId,
+                    channelName: c.ChannelName,
+                    channelDescription: c.ChannelDescription,
+                    isInChannel: c.PersonsInChannel.has(personId),
                 })),
                 status: 200,
                 error: null,
@@ -62,7 +62,7 @@ export class SlackAccessesApi {
     public static async CreateAccessRequest(
         accessRequest: Omit<SlackAccessRequestModel, "Id">,
         token: string,
-        useTestingMocks = true
+        useTestingMocks = false
     ): Promise<ApiResponse<string>> {
         if (useTestingMocks) {
             const dbId = v4();
@@ -108,7 +108,7 @@ export class SlackAccessesApi {
     //FIXME temporarily returns info about profile + channel in single model
     public static async GetAllAccessRequests(
         token: string,
-        useTestingMocks = true
+        useTestingMocks = false
     ): Promise<ApiResponse<SlackAccessRequestModelExtended[]>> {
         if (useTestingMocks) {
             let result: ApiResponse<SlackAccessRequestModelExtended[]> = {
@@ -167,7 +167,7 @@ export class SlackAccessesApi {
     public static async GetPersonAccessRequests(
         personId: string,
         token: string,
-        useTestingMocks = true
+        useTestingMocks = false
     ): Promise<ApiResponse<SlackAccessRequestModelExtended[]>> {
         if (useTestingMocks) {
             let result: ApiResponse<SlackAccessRequestModelExtended[]> = {
@@ -227,7 +227,7 @@ export class SlackAccessesApi {
     public static async ApproveAccessRequest(
         accessRequest: SlackAccessRequestModel,
         token: string,
-        useTestingMocks = true
+        useTestingMocks = false
     ): Promise<ApiResponse<string | undefined>> {
         if (useTestingMocks) {
             let currentAccessRequest = MockSlackAccessRequests.get(accessRequest.Id);
@@ -276,7 +276,7 @@ export class SlackAccessesApi {
     public static async DisapproveAccessRequest(
         accessRequest: SlackAccessRequestModel,
         token: string,
-        useTestingMocks = true
+        useTestingMocks = false
     ): Promise<ApiResponse<string | undefined>> {
         if (useTestingMocks) {
             let currentAccessRequest = MockSlackAccessRequests.get(accessRequest.Id);
