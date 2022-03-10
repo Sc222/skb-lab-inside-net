@@ -41,10 +41,10 @@ public class LauncherFragment extends Fragment {
         // todo conditional navigation example: https://developer.android.com/guide/navigation/navigation-conditional
 
         //if not logged in
-        navController.navigate(R.id.action_launcherFragment_to_authActivity);
+        //navController.navigate(R.id.action_launcherFragment_to_authActivity);
 
         //if logged in
-        //navController.navigate(R.id.action_launcherFragment_to_profileActivity);
+        navController.navigate(R.id.action_launcherFragment_to_profileActivity);
     }
 
     @Override
