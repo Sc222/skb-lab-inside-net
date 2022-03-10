@@ -3,17 +3,21 @@ import {
   Button,
   Card,
   CardContent,
+  IconButton,
   Link,
   ListItem,
   ListItemAvatar,
   ListItemText,
   Typography,
+  useTheme,
 } from "@mui/material";
 import React, { FunctionComponent } from "react";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { Link as RouterLink } from "react-router-dom";
 import { SiteRoute } from "../../Typings/Enums/siteRoute";
 import { PersonModel } from "../../Api/Models/personModel";
+import { useDesktop, useMobile, useTablet } from "../../Hooks/responsiveHooks";
+import { AddOutlined, DeleteOutlined, EditOutlined } from "@mui/icons-material";
 
 interface ProfileToolbarProps {
   person: PersonModel | null;
@@ -33,6 +37,11 @@ export const ProfileToolbar: FunctionComponent<ProfileToolbarProps> = ({
   isPersonInContacts,
   onIsInContactsChange,
 }) => {
+  const theme = useTheme();
+  const isMobile = useMobile(theme);
+  const isTablet = useTablet(theme);
+  const isDesktop = useDesktop(theme);
+
   return (
     <>
       {!isLoading && person && (
@@ -47,27 +56,45 @@ export const ProfileToolbar: FunctionComponent<ProfileToolbarProps> = ({
                     <>
                       {isAuthPersonProfilePage ? (
                         <>
-                          {authPersonId && (
+                          {authPersonId && !isMobile && (
                             <Link
                               component={RouterLink}
                               to={`${SiteRoute.persons}/${authPersonId}/${SiteRoute.settings}`}
                             >
-                              <Button variant="outlined" component="span" size="medium">
-                                Редактировать
-                              </Button>
+                              {isTablet && (
+                                <IconButton size="large" color="primary">
+                                  <EditOutlined fontSize="inherit" />
+                                </IconButton>
+                              )}
+                              {isDesktop && (
+                                <Button variant="outlined" component="span" size="medium">
+                                  Редактировать
+                                </Button>
+                              )}
                             </Link>
                           )}
                         </>
                       ) : (
                         <>
-                          <Button
-                            onClick={() => onIsInContactsChange(!isPersonInContacts)}
-                            variant={isPersonInContacts ? "outlined" : "contained"}
-                            component="span"
-                            size="medium"
-                          >
-                            {isPersonInContacts ? "Удалить" : "Добавить"}
-                          </Button>
+                          {isMobile && (
+                            <IconButton
+                              size="large"
+                              color={isPersonInContacts ? "default" : "primary"}
+                              onClick={() => onIsInContactsChange(!isPersonInContacts)}
+                            >
+                              {isPersonInContacts ? <DeleteOutlined fontSize="inherit" /> : <AddOutlined />}
+                            </IconButton>
+                          )}
+                          {(isTablet || isDesktop) && (
+                            <Button
+                              onClick={() => onIsInContactsChange(!isPersonInContacts)}
+                              variant={isPersonInContacts ? "outlined" : "contained"}
+                              component="span"
+                              size="medium"
+                            >
+                              {isPersonInContacts ? "Удалить" : "Добавить"}
+                            </Button>
+                          )}
                         </>
                       )}
                     </>
@@ -89,7 +116,7 @@ export const ProfileToolbar: FunctionComponent<ProfileToolbarProps> = ({
                 </Avatar>
               </ListItemAvatar>
               <ListItemText
-                primary={<Typography variant="h4">{person.fullName}</Typography>}
+                primary={<Typography variant={isMobile || isTablet ? "h5" : "h4"}>{person.fullName}</Typography>}
                 secondary={
                   <>
                     <Typography variant="h6">{person.position.name}</Typography>
