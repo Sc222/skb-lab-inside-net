@@ -94,7 +94,7 @@ export class ContactsApi {
 
         let axiosInstance = axios.create({ baseURL: Api.BaseUrl });
         return axiosInstance
-            .put<string | undefined>(`/contacts/${personId}/add/${contactId}`, {
+            .put<string | undefined>(`/contacts/${personId}/add/${contactId}`, undefined, {
                 headers: Api.AuthorizationHeaders(token),
             })
             .then((response) => {
