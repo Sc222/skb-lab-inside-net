@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect } from "react";
-import { Box, Divider, List, Typography } from "@mui/material";
+import { Box, CircularProgress, Divider, List, Typography } from "@mui/material";
 import { useAuthContext } from "src/Contexts/authContext";
 import { SlackAccessesApi } from "../../Api/slackAccessesApi";
 import { SlackAccessRequestModel } from "../../Api/Models/slackAccessRequestModel";
@@ -21,7 +21,7 @@ export const GrantChannelsAccessTab: FunctionComponent<GrantChannelsAccessTabPro
       const response = await SlackAccessesApi.GetAllAccessRequests(auth.authInfo.token);
       if (Api.IsRequestSuccess(response) && response.data) {
         //TODO: filter using "pending status"
-        setPendingAccessRequests(response.data.filter((r) => r).reverse());
+        setPendingAccessRequests(response.data.filter((r) => !r.disapproveReason).reverse());
       } else {
         //todo process error
         setPendingAccessRequests(null);
@@ -36,7 +36,7 @@ export const GrantChannelsAccessTab: FunctionComponent<GrantChannelsAccessTabPro
   const onChangeRequestStatus = async (request: SlackAccessRequestModel) => {
     if (auth.authInfo) {
       if (request.isDisapproved) {
-        await SlackAccessesApi.DisapproveAccessRequest(request, auth.authInfo.token);
+        await SlackAccessesApi.UpdateAccessRequest(request, auth.authInfo.token);
       } else {
         await SlackAccessesApi.ApproveAccessRequest(request, auth.authInfo.token);
       }
@@ -71,7 +71,10 @@ export const GrantChannelsAccessTab: FunctionComponent<GrantChannelsAccessTabPro
           )}
         </List>
       ) : (
-        <Typography>{/*TODO LOADING INDICATOR*/}</Typography>
+        <Box sx={{ m: 1, display: "flex", justifyContent: "center" }}>
+          {/*TODO MOVE TO LOADING COMPONENT*/}
+          <CircularProgress />
+        </Box>
       )}
     </>
   );

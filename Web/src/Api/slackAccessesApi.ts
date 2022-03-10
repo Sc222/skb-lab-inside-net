@@ -251,7 +251,7 @@ export class SlackAccessesApi {
 
         let axiosInstance = axios.create({ baseURL: Api.BaseUrl });
         return axiosInstance
-            .post<string | undefined>(`/slackAccesses/accessRequests/approve`, accessRequest, {
+            .put<string | undefined>(`/slackAccesses/accessRequests/approve`, accessRequest, {
                 headers: Api.PostRequestHeaders(token),
             })
             .then((response) => {
@@ -272,7 +272,7 @@ export class SlackAccessesApi {
             });
     }
 
-    public static async DisapproveAccessRequest(
+    public static async UpdateAccessRequest(
         accessRequest: SlackAccessRequestModel,
         token: string,
         useTestingMocks = false
@@ -300,7 +300,7 @@ export class SlackAccessesApi {
 
         let axiosInstance = axios.create({ baseURL: Api.BaseUrl });
         return axiosInstance
-            .post<string | undefined>(`/slackAccesses/accessRequests/disapprove`, accessRequest, {
+            .put<string | undefined>(`/slackAccesses/accessRequests`, accessRequest, {
                 headers: Api.PostRequestHeaders(token),
             })
             .then((response) => {

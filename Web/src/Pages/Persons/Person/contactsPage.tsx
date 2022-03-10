@@ -1,5 +1,16 @@
 import React, { FunctionComponent, useEffect } from "react";
-import { Box, Card, CardContent, Container, Divider, Link, List, SelectChangeEvent, Typography } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardContent,
+  CircularProgress,
+  Container,
+  Divider,
+  Link,
+  List,
+  SelectChangeEvent,
+  Typography,
+} from "@mui/material";
 import { useAuthContext } from "src/Contexts/authContext";
 import { DepartmentModel } from "../../../Api/Models/departmentModel";
 import { ContactsSearchParam } from "../../../Typings/Enums/contactsSearchParam";
@@ -126,7 +137,7 @@ export const ContactsPage: FunctionComponent<ContactPageProps> = ({ searchOnEver
         <Box sx={{ mt: 3 }}>
           <Card>
             <CardContent sx={{ py: "0 !important" }}>
-              {authPersonContacts ? (
+              {authPersonContacts !== null ? (
                 <List>
                   {authPersonContacts.map((contact, index) => (
                     <div key={contact.id}>
@@ -161,7 +172,10 @@ export const ContactsPage: FunctionComponent<ContactPageProps> = ({ searchOnEver
                   )}
                 </List>
               ) : (
-                <>{/*TODO LOADING INDICATOR*/}</>
+                <Box sx={{ m: 4, display: "flex", justifyContent: "center" }}>
+                  {/*TODO MOVE TO LOADING COMPONENT*/}
+                  <CircularProgress />
+                </Box>
               )}
             </CardContent>
           </Card>

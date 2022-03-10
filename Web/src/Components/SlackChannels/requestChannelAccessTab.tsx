@@ -1,8 +1,8 @@
 import React, { FunctionComponent, useEffect } from "react";
-import { Box, Divider, List, Typography } from "@mui/material";
+import { Box, CircularProgress, Divider, List, Typography } from "@mui/material";
 import { useAuthContext } from "src/Contexts/authContext";
 import { SlackChannelModel } from "../../Api/Models/slackChannelModel";
-import { RequestChannelListItem } from "./requestChannelListItem";
+import { RequestChannelListItem, RequestStatus } from "./requestChannelListItem";
 import { SlackAccessesApi } from "../../Api/slackAccessesApi";
 import { SlackAccessRequestModel } from "../../Api/Models/slackAccessRequestModel";
 import { PersonModel } from "../../Api/Models/personModel";
@@ -76,17 +76,29 @@ export const RequestChannelAccessTab: FunctionComponent<RequestChannelAccessTabP
     <>
       {personChannels && personRequests !== null ? (
         <List>
-          {personChannels.map((channel, index) => (
-            <div key={channel.channelId}>
-              {/*fixme optimize findIndex*/}
-              <RequestChannelListItem
-                channel={channel}
-                isRequestSent={personRequests?.findIndex((r) => r.channelId === channel.channelId) !== -1}
-                onRequestAccess={onRequestChannelAccess}
-              />
-              {index !== personChannels.length - 1 && <Divider variant="middle" />}
-            </div>
-          ))}
+          {personChannels.map((channel, index) => {
+            const channelRequests = personRequests?.filter((r) => r.channelId === channel.channelId);
+            const hasRequests = channelRequests.length > 0;
+            // All requests were disapproved
+            const areAllRequestsDisapproved =
+              channelRequests.filter((r) => r.isDisapproved).length === channelRequests.length;
+            let requestStatus = RequestStatus.none;
+            if (hasRequests) {
+              requestStatus = areAllRequestsDisapproved ? RequestStatus.disapproved : RequestStatus.pending;
+            }
+
+            return (
+              <div key={channel.channelId}>
+                {/*fixme optimize findIndex*/}
+                <RequestChannelListItem
+                  channel={channel}
+                  status={requestStatus}
+                  onRequestAccess={onRequestChannelAccess}
+                />
+                {index !== personChannels.length - 1 && <Divider variant="middle" />}
+              </div>
+            );
+          })}
 
           {/* nothing found*/}
           {personChannels.length === 0 && (
@@ -103,7 +115,10 @@ export const RequestChannelAccessTab: FunctionComponent<RequestChannelAccessTabP
           )}
         </List>
       ) : (
-        <Typography>{/*TODO LOADING INDICATOR*/}</Typography>
+        <Box sx={{ m: 1, display: "flex", justifyContent: "center" }}>
+          {/*TODO MOVE TO LOADING COMPONENT*/}
+          <CircularProgress />
+        </Box>
       )}
     </>
   );

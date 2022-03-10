@@ -1,5 +1,15 @@
 import React, { FunctionComponent, useEffect } from "react";
-import { Box, Card, CardContent, Container, Divider, List, SelectChangeEvent, Typography } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardContent,
+  CircularProgress,
+  Container,
+  Divider,
+  List,
+  SelectChangeEvent,
+  Typography,
+} from "@mui/material";
 import { SearchContactCard } from "../../Components/Search/searchContactCard";
 import { SearchContactsToolbar } from "../../Components/Search/searchContactsToolbar";
 import { SearchContact } from "../../Typings/Types/searchContact";
@@ -149,30 +159,29 @@ export const SearchPage: FunctionComponent<SearchPageProps> = ({ searchOnEveryIn
         <Box sx={{ mt: 3 }}>
           <Card>
             <CardContent sx={{ py: "0 !important" }}>
-              {authPersonContactIds && (
-                <>
-                  {contacts ? (
-                    <List>
-                      {contacts.map((contact, index) => (
-                        <div key={contact.id}>
-                          <SearchContactCard
-                            contact={contact}
-                            isInContacts={authPersonContactIds.has(contact.id!)}
-                            onIsInContactsChange={onIsInContactsChange}
-                          />
-                          {index !== contacts.length - 1 && <Divider variant="middle" />}
-                        </div>
-                      ))}
-                      {contacts.length === 0 && (
-                        <Typography sx={{ py: 2 }} textAlign="center" variant="h6">
-                          Ничего не найдено
-                        </Typography>
-                      )}
-                    </List>
-                  ) : (
-                    <Typography>{/*TODO LOADING INDICATOR*/}</Typography>
+              {authPersonContactIds && contacts !== null ? (
+                <List>
+                  {contacts.map((contact, index) => (
+                    <div key={contact.id}>
+                      <SearchContactCard
+                        contact={contact}
+                        isInContacts={authPersonContactIds.has(contact.id!)}
+                        onIsInContactsChange={onIsInContactsChange}
+                      />
+                      {index !== contacts.length - 1 && <Divider variant="middle" />}
+                    </div>
+                  ))}
+                  {contacts.length === 0 && (
+                    <Typography sx={{ py: 2 }} textAlign="center" variant="h6">
+                      Ничего не найдено
+                    </Typography>
                   )}
-                </>
+                </List>
+              ) : (
+                <Box sx={{ m: 4, display: "flex", justifyContent: "center" }}>
+                  {/*TODO MOVE TO LOADING COMPONENT*/}
+                  <CircularProgress />
+                </Box>
               )}
             </CardContent>
           </Card>

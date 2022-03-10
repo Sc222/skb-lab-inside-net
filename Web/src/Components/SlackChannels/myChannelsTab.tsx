@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect } from "react";
-import { Box, Divider, List, Typography } from "@mui/material";
+import { Box, CircularProgress, Divider, List, Typography } from "@mui/material";
 import { useAuthContext } from "src/Contexts/authContext";
 import { SlackChannelModel } from "../../Api/Models/slackChannelModel";
 import { MyChannelListItem } from "./myChannelListItem";
@@ -29,7 +29,7 @@ export const MyChannelsTab: FunctionComponent<MyChannelsTabProps> = () => {
 
   return (
     <>
-      {personChannels ? (
+      {personChannels !== null ? (
         <List>
           {personChannels.map((channel, index) => (
             <div key={channel.channelId}>
@@ -53,7 +53,10 @@ export const MyChannelsTab: FunctionComponent<MyChannelsTabProps> = () => {
           )}
         </List>
       ) : (
-        <Typography>{/*TODO LOADING INDICATOR*/}</Typography>
+        <Box sx={{ m: 1, display: "flex", justifyContent: "center" }}>
+          {/*TODO MOVE TO LOADING COMPONENT*/}
+          <CircularProgress />
+        </Box>
       )}
     </>
   );

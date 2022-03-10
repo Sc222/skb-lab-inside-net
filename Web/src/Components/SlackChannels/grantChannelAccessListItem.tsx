@@ -15,12 +15,20 @@ export const GrantChannelAccessListItem: FunctionComponent<GrantChannelAccessLis
   onChangeRequestStatus,
 }) => {
   const [message, setMessage] = React.useState("");
+  const [isError, setIsError] = React.useState(false);
 
   const onMessageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value && isError) {
+      setIsError(false);
+    }
     setMessage(event.target.value);
   };
 
   const onReject = (_: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
+    if (!message) {
+      setIsError(true);
+      return;
+    }
     onChangeRequestStatus({
       id: accessRequest.id,
       channelId: accessRequest.channelId,
@@ -33,12 +41,16 @@ export const GrantChannelAccessListItem: FunctionComponent<GrantChannelAccessLis
   };
 
   const onApprove = (_: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
+    if (!message) {
+      setIsError(true);
+      return;
+    }
     onChangeRequestStatus({
       id: accessRequest.id,
       channelId: accessRequest.channelId,
       channelName: accessRequest.channelName,
       // Status: "approved",
-      isDisapproved: true,
+      isDisapproved: false,
       person: accessRequest.person,
       disapproveReason: message,
     });
@@ -58,7 +70,7 @@ export const GrantChannelAccessListItem: FunctionComponent<GrantChannelAccessLis
             color="primary"
             variant="outlined"
             size="medium"
-            label={accessRequest.channelId}
+            label={`#${accessRequest.channelName}`}
             href={`https://companydomain.slack.com/messages/${accessRequest.channelId}`}
           />
         }
@@ -95,7 +107,7 @@ export const GrantChannelAccessListItem: FunctionComponent<GrantChannelAccessLis
               {accessRequest.person.fullName}
             </Link>
           }
-          secondary={accessRequest.person.position}
+          secondary={accessRequest.person.position.name}
         />
       </ListItem>
 
@@ -116,6 +128,8 @@ export const GrantChannelAccessListItem: FunctionComponent<GrantChannelAccessLis
             label="Сообщение"
             variant="outlined"
             size="small"
+            required
+            error={isError}
           />
         </Grid>
         <Grid item xs={12} sx={{ display: "inline-flex" }}>
