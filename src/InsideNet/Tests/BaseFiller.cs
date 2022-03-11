@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using MoreLinq;
 using NUnit.Framework;
 using Storage;
 using Storage.Entities;
@@ -35,16 +36,17 @@ public class Tests
         var departments = GenerateDepartments();
         var people = GeneratePeople(positions, departments, roles);
 
-        rolesRepo.CreateRange(roles.Select(r => r.Value));
-        positionsRepo.CreateRange(positions.Select(p => p.Value));
-        departmentsRepo.CreateRange(departments.Select(d => d.Value));
+        rolesRepo.CreateRange(roles.Select(r => r.Value).DistinctBy(r => r.Id));
+        positionsRepo.CreateRange(positions.Select(p => p.Value).DistinctBy(p => p.Id));
+        departmentsRepo.CreateRange(departments.Select(d => d.Value).DistinctBy(d => d.Id));
         peopleRepo.CreateRange(people.Select(p => p.Value));
 
         var vacation = new CalendarData
         {
             StartTime = DateTime.Now,
             EndTime = DateTime.Now + TimeSpan.FromDays(14),
-            Person = people[UserType.Programmer]
+            Person = people[UserType.Programmer1],
+            Subject = "Отпуск"
         };
 
         vacationsRepo.Create(vacation);
@@ -52,7 +54,7 @@ public class Tests
         var contact = new PersonContact
         {
             PersonId = people[UserType.DepartmentManager].Id,
-            ContactId = people[UserType.Programmer].Id
+            ContactId = people[UserType.Programmer1].Id
         };
 
         contactsRepo.Create(contact);
@@ -69,12 +71,24 @@ public class Tests
                 "canEditCalendars",
                 "canEditPositions"
             },
-            Name = "departmentManager"
+            Name = "departmentManager",
+            Id = Guid.NewGuid()
         };
-        var programmer = new Role
+        var defaultRole = new Role
         {
             AllowedActions = new List<string>(),
-            Name = "regularUser"
+            Name = "regularUser",
+            Id = Guid.NewGuid()
+        };
+        var slackAdmin = new Role
+        {
+            AllowedActions = new List<string>
+            {
+                "canEditNotificationsChannels",
+                "canResolveAccessRequests"
+            },
+            Name = "slackAdmin",
+            Id = Guid.NewGuid()
         };
         var admin = new Role
         {
@@ -89,33 +103,49 @@ public class Tests
                 "canEditPositions",
                 "canEditNotificationsChannels"
             },
-            Name = "admin"
+            Name = "admin",
+            Id = Guid.NewGuid()
         };
         return new Dictionary<UserType, Role>
         {
             { UserType.DepartmentManager, departmentManager },
-            { UserType.Programmer, programmer },
-            { UserType.Admin, admin }
+            { UserType.Programmer1, defaultRole },
+            { UserType.Admin, admin },
+            { UserType.Programmer2, defaultRole },
+            { UserType.Programmer3, defaultRole },
+            { UserType.SlackAdmin, slackAdmin }
         };
     }
 
     private Dictionary<UserType, Department> GenerateDepartments()
     {
+        var programmersDepartment = new Department { Name = "Отдел программистов", Id = Guid.NewGuid() };
+        var mainDepartment = new Department { Name = "Главное отделение", Id = Guid.NewGuid() };
+        var hrDepartment = new Department { Name = "HR-отдел", Id = Guid.NewGuid() };
         return new()
         {
-            { UserType.DepartmentManager, new Department { Name = "HR-отдел" } },
-            { UserType.Programmer, new Department { Name = "Отдел программистов" } },
-            { UserType.Admin, new Department { Name = "Главное отделение" } }
+            { UserType.DepartmentManager, hrDepartment },
+            { UserType.Programmer1, programmersDepartment },
+            { UserType.Programmer2, programmersDepartment },
+            { UserType.Programmer3, programmersDepartment },
+            { UserType.Admin, mainDepartment },
+            { UserType.SlackAdmin, mainDepartment }
         };
     }
 
     private Dictionary<UserType, Position> GenerateUserPositions()
     {
+        var programmerPosition = new Position { Id = Guid.NewGuid(), Name = "Программист" };
+        var departmentManagerPosition = new Position { Name = "Менеджер", Id = Guid.NewGuid()};
+        var adminPosition = new Position { Name = "Админ", Id = Guid.NewGuid()};
         return new()
         {
-            { UserType.DepartmentManager, new Position { Name = "Менеджер" } },
-            { UserType.Programmer, new Position { Name = "Программист" } },
-            { UserType.Admin, new Position { Name = "Админ" } }
+            { UserType.DepartmentManager, departmentManagerPosition },
+            { UserType.Programmer1, programmerPosition },
+            { UserType.Admin, adminPosition },
+            { UserType.Programmer2, programmerPosition },
+            { UserType.Programmer3, programmerPosition },
+            { UserType.SlackAdmin, programmerPosition }
         };
     }
 
@@ -131,16 +161,38 @@ public class Tests
             Department = departments[UserType.DepartmentManager],
             Role = roles[UserType.DepartmentManager]
         };
-        var programmer = new Person
+        var programmer1 = new Person
         {
             Email = "k@k.com",
             Login = "user",
             Password = "user",
             FullName = "Анатолий Генадьевич Зас",
-            Position = positions[UserType.Programmer],
-            Department = departments[UserType.Programmer],
-            Role = roles[UserType.Programmer],
-            Telegram = "@abc"
+            Position = positions[UserType.Programmer1],
+            Department = departments[UserType.Programmer1],
+            Role = roles[UserType.Programmer1],
+            Telegram = "@was_ist_zas"
+        };
+        var programmer2 = new Person
+        {
+            Email = "q@q.com",
+            Login = "ketamin",
+            Password = "ketamin",
+            FullName = "Иван Витальевич Приходько",
+            Position = positions[UserType.Programmer2],
+            Department = departments[UserType.Programmer2],
+            Role = roles[UserType.Programmer2],
+            Telegram = "@prihodi_ko_mne_vecherom"
+        };
+        var programmer3 = new Person
+        {
+            Email = "l@l.com",
+            Login = "brawler",
+            Password = "stars",
+            FullName = "Владимир Терентьевич Жлоб",
+            Position = positions[UserType.Programmer3],
+            Department = departments[UserType.Programmer3],
+            Role = roles[UserType.Programmer3],
+            Telegram = "@generous_soul"
         };
         var admin = new Person
         {
@@ -153,10 +205,24 @@ public class Tests
             Role = roles[UserType.Admin],
             PhoneNumber = "88005553535"
         };
+        var slackAdmin = new Person
+        {
+            Email = "b@b.com",
+            Login = "pulya",
+            Password = "dulya",
+            FullName = "Данил Петрович Чемозин",
+            Position = positions[UserType.SlackAdmin],
+            Department = departments[UserType.SlackAdmin],
+            Role = roles[UserType.SlackAdmin],
+            Telegram = "@acceptedguy"
+        };
         return new Dictionary<UserType, Person>
         {
             { UserType.DepartmentManager, manager },
-            { UserType.Programmer, programmer },
+            { UserType.Programmer1, programmer1 },
+            { UserType.Programmer2, programmer2 },
+            { UserType.Programmer3, programmer3 },
+            { UserType.SlackAdmin, slackAdmin },
             { UserType.Admin, admin }
         };
     }
@@ -164,7 +230,10 @@ public class Tests
     private enum UserType
     {
         DepartmentManager,
-        Programmer,
-        Admin
+        Programmer1,
+        Admin,
+        SlackAdmin,
+        Programmer2,
+        Programmer3,
     }
 }
