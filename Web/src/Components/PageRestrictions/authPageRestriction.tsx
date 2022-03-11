@@ -39,7 +39,9 @@ export const AuthPageRestriction: FunctionComponent<AuthPageRestriction> = ({ ac
     // trying to go to when they were redirected. This allows us to send them
     // along to that page after they login, which is a nicer user experience
     // than dropping them off on the home page.
-    return <Navigate to={SiteRoute.login} state={{ from: location }} replace />;
+    // FIXME:  from: location does not always work actually
+    // !!! replace is `false` to detect this redirection in android web app
+    return <Navigate to={SiteRoute.login} state={{ from: location }} replace={false} />;
   }
 
   if (!authProfileScope) {
