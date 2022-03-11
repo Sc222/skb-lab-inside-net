@@ -19,6 +19,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.sc222.insidenet.R;
 import com.sc222.insidenet.databinding.ActivityMainSectionsBinding;
+import com.sc222.insidenet.ui.webview.DefaultWebInterface;
 import com.sc222.insidenet.ui.webview.constants.UrlConstants;
 
 import java.util.Optional;
@@ -109,6 +110,7 @@ public class MainSectionsActivity extends AppCompatActivity implements BottomNav
         // webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
         binding.webView.setWebViewClient(new DefaultWebClient());
         binding.webView.loadUrl(UrlConstants.WEB_VIEW_URL);
+        binding.webView.addJavascriptInterface(new DefaultWebInterface(this),"Android");
 
 
 
