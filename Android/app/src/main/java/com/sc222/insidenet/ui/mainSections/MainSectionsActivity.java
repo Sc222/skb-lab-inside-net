@@ -19,7 +19,6 @@ import androidx.navigation.ui.AppBarConfiguration;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.sc222.insidenet.R;
 import com.sc222.insidenet.databinding.ActivityMainSectionsBinding;
-import com.sc222.insidenet.ui.webview.DefaultWebInterface;
 import com.sc222.insidenet.ui.webview.constants.UrlConstants;
 
 import java.util.Optional;
@@ -41,6 +40,11 @@ public class MainSectionsActivity extends AppCompatActivity implements BottomNav
     // - change webView url using navigationBar
     // - progressBar while loading pages
     // - add possibility to update page using Swipe-to-Refresh (optional)
+    // - !!! HIDE BOTTOM NAV IF NOT LOGGED IN (inject android logic using )
+    //
+
+    //FIXME: CRITICAL
+    // website crashes on emulators (idk, try connecting to production build)
 
     private class DefaultWebClient extends WebViewClient {
         @Override
@@ -49,10 +53,30 @@ public class MainSectionsActivity extends AppCompatActivity implements BottomNav
                 // This is my website, so do not override; let my WebView load the page
                 return false;
             }
+
+            // Toast.makeText(getApplicationContext(), "URL CHANGE: "+request.getUrl().getPath(),Toast.LENGTH_LONG).show();
+
             // Otherwise, the link is not for a page on my site, so launch another Activity that handles URLs
             Intent intent = new Intent(Intent.ACTION_VIEW, request.getUrl());
             startActivity(intent);
             return true;
+        }
+
+        @Override
+        public void doUpdateVisitedHistory(WebView view, String url, boolean isReload) {
+            super.doUpdateVisitedHistory(view, url, isReload);
+
+            //view.getUrl()
+
+            if(url.endsWith("login")){
+                Toast.makeText(getApplicationContext(), "ОБРАБОТАТЬ ЛОГИН",Toast.LENGTH_LONG).show();
+                //TODO: hide navigation here
+            }else if(url.contains("profile")){ //TODO: use regexp here
+                //show navigation here
+                Toast.makeText(getApplicationContext(), "ОБРАБОТАТЬ СТРАНИЦУ ПРОФИЛЯ",Toast.LENGTH_LONG).show();
+            }
+
+
         }
 
         @Override
@@ -64,7 +88,7 @@ public class MainSectionsActivity extends AppCompatActivity implements BottomNav
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
-            Toast.makeText(getApplicationContext(), "LOADING FINISHED", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), "LOADING FINISHED: "+url, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -78,6 +102,7 @@ public class MainSectionsActivity extends AppCompatActivity implements BottomNav
             this.finishAffinity();
         else
             super.onBackPressed();*/
+        //TODO: CLOSE APP
         super.onBackPressed();
     }
 
@@ -107,10 +132,11 @@ public class MainSectionsActivity extends AppCompatActivity implements BottomNav
         webSettings.setJavaScriptEnabled(true);
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setUseWideViewPort(true);
+        webSettings.setDomStorageEnabled(true);
         // webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
         binding.webView.setWebViewClient(new DefaultWebClient());
         binding.webView.loadUrl(UrlConstants.WEB_VIEW_URL);
-        binding.webView.addJavascriptInterface(new DefaultWebInterface(this),"Android");
+        //binding.webView.addJavascriptInterface(new DefaultWebInterface(this),"Android");
 
 
 
