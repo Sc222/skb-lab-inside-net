@@ -10,6 +10,7 @@
         "build-dev": "cross-env NODE_ENV=development webpack --config webpack.dev.js"
     },
     "dependencies": {
+        "@babel/runtime": "^7.17.2",
         "@emotion/react": "^11.7.1",
         "@emotion/styled": "^11.6.0",
         "@mui/icons-material": "^5.2.5",
@@ -51,6 +52,7 @@
         "@syncfusion/ej2-react-treegrid": "19.4.42",
         "@syncfusion/ej2-react-treemap": "19.4.38",
         "axios": "^0.21.1",
+        "caniuse-lite": "^1.0.30001314",
         "cldr-data": "^36.0.0",
         "formik": "^2.2.9",
         "history": "^5.0.0",
@@ -67,6 +69,7 @@
     "devDependencies": {
         "@babel/core": "^7.14.6",
         "@babel/eslint-parser": "^7.15.0",
+        "@babel/plugin-transform-runtime": "^7.17.0",
         "@babel/preset-env": "^7.14.7",
         "@babel/preset-react": "^7.14.5",
         "@babel/preset-typescript": "^7.14.5",
