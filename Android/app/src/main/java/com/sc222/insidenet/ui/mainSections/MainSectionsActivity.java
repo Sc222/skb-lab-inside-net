@@ -3,8 +3,10 @@ package com.sc222.insidenet.ui.mainSections;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -68,12 +70,12 @@ public class MainSectionsActivity extends AppCompatActivity implements BottomNav
 
             //view.getUrl()
 
-            if(url.endsWith("login")){
-                Toast.makeText(getApplicationContext(), "ОБРАБОТАТЬ ЛОГИН",Toast.LENGTH_LONG).show();
+            if (url.endsWith("login")) {
+                Toast.makeText(getApplicationContext(), "ОБРАБОТАТЬ ЛОГИН", Toast.LENGTH_LONG).show();
                 //TODO: hide navigation here
-            }else if(url.contains("profile")){ //TODO: use regexp here
+            } else if (url.contains("profile")) { //TODO: use regexp here
                 //show navigation here
-                Toast.makeText(getApplicationContext(), "ОБРАБОТАТЬ СТРАНИЦУ ПРОФИЛЯ",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "ОБРАБОТАТЬ СТРАНИЦУ ПРОФИЛЯ", Toast.LENGTH_LONG).show();
             }
 
 
@@ -89,6 +91,16 @@ public class MainSectionsActivity extends AppCompatActivity implements BottomNav
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
             //Toast.makeText(getApplicationContext(), "LOADING FINISHED: "+url, Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+            String errorMessage = "Unexpected error";
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                errorMessage = error.getDescription().toString();
+            }
+            //Your code to do
+            Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_LONG).show();
         }
     }
 
