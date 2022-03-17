@@ -150,7 +150,9 @@ export const LoginPage: FunctionComponent<LoginPageProps> = () => {
             >
               Зарегистрироваться
             </Link>{" "}
-            или {/*TODO CREATE SPECIAL LDAP-REGISTER PAGE !!!*/}
+            {/*//TODO CREATE SPECIAL LDAP-REGISTER PAGE !!!*/}
+            {/*или
+
             <Link
               component={RouterLink}
               to={SiteRoute.register}
@@ -162,7 +164,7 @@ export const LoginPage: FunctionComponent<LoginPageProps> = () => {
               }}
             >
               Войти через AD
-            </Link>
+            </Link>*/}
           </Typography>
           {loginError && (
             <Box sx={{ my: 2 }}>
