@@ -4,8 +4,6 @@ import {
   Day,
   DragAndDrop,
   ExcelExport,
-  ExportFieldInfo,
-  ExportOptions,
   Inject,
   Month,
   Resize,
@@ -21,7 +19,6 @@ import {
 
 import { extend } from "@syncfusion/ej2-base";
 import { loadRussianCalendarLocale } from "../calendarLocalization";
-import { CalendarData } from "../PersonalCalendar/datasource";
 import { PersonModel } from "../../../Api/Models/personModel";
 import { DropDownListComponent } from "@syncfusion/ej2-react-dropdowns";
 import { DatePickerComponent } from "@syncfusion/ej2-react-calendars";
@@ -30,29 +27,67 @@ import { Link as RouterLink } from "react-router-dom";
 import { SiteRoute } from "../../../Typings/Enums/siteRoute";
 import { TextBoxComponent } from "@syncfusion/ej2-react-inputs";
 import { Person } from "@mui/icons-material";
+import { AjaxOption, CustomDataAdaptor, DataManager } from "@syncfusion/ej2-data";
+import { CalendarsApi } from "../../../Api/calendarsApi";
+import {
+  CalendarModelMapped,
+  CalendarModelToScheduleComponentData,
+  ScheduleComponentDataToCalendarModel,
+} from "../../../Api/Models/calendarModel";
+import { DepartmentCalendarSearchParam } from "../../../Typings/Enums/departmentCalendarSearchParam";
 
 loadRussianCalendarLocale();
 
 interface DepartmentCalendarProps {
-  initialData: CalendarData[];
-  persons: PersonModel[];
-  onDataUpdate?: (newData: CalendarData[]) => void;
+  token: string;
+  departmentManager: PersonModel;
+  departmentPersons: PersonModel[];
 
   //fixme hardcode
-  eventsToShow: Array<"Отпуск" | "Командировка" | "Учеба">;
+  eventsToShow: Array<undefined | "Отпуск" | "Командировка" | "Учеба">;
 }
 
 export class DepartmentCalendar extends React.PureComponent<DepartmentCalendarProps> {
-  private data: any;
-  private scheduleObj: any;
-  /*private employeeData: Record<string, any>[] = [
-    { Text: "Alice", Id: 1, GroupId: 1, Color: "#bbdc00", Designation: "Content writer" },
-    { Text: "Nancy", Id: 2, GroupId: 2, Color: "#9e5fff", Designation: "Designer" },
-    { Text: "Robert", Id: 3, GroupId: 1, Color: "#bbdc00", Designation: "Software Engineer" },
-    { Text: "Robson", Id: 4, GroupId: 2, Color: "#9e5fff", Designation: "Support Engineer" },
-    { Text: "Laura", Id: 5, GroupId: 1, Color: "#bbdc00", Designation: "Human Resource" },
-    { Text: "Margaret", Id: 6, GroupId: 2, Color: "#9e5fff", Designation: "Content Analyst" },
-  ];*/
+  static defaultProps = {
+    eventsToShow: [undefined, "Отпуск", "Командировка", "Учеба"],
+  };
+
+  private _dataToUpdate: {
+    changedRecords: CalendarModelMapped[] | null;
+    addedRecord: CalendarModelMapped | null;
+    personIdToAdd: string | null;
+    deletedRecords: CalendarModelMapped[] | null;
+  } = { changedRecords: null, addedRecord: null, personIdToAdd: null, deletedRecords: null };
+
+  private scheduleObj: ScheduleComponent | null = null;
+
+  /* RELOAD CALENDAR DATA */
+  //FIXME: DRY, after data update reload is done twice, fix this!!!
+  private _reloadCalendarData = (option: AjaxOption) => {
+    console.log("reload department calendar");
+
+    const searchParams = new URLSearchParams();
+    if (this.scheduleObj) {
+      searchParams.set(DepartmentCalendarSearchParam.department, this.props.departmentManager.department.name);
+      searchParams.set(DepartmentCalendarSearchParam.from, this.scheduleObj.activeView.startDate().toJSON());
+      searchParams.set(DepartmentCalendarSearchParam.to, this.scheduleObj.activeView.endDate().toJSON());
+    }
+
+    CalendarsApi.GetForDepartment(
+      this.props.departmentManager.id!,
+      searchParams,
+      this.props.token,
+      (data, request) => {
+        const preparedRequest = extend({}, option, { httpRequest: request });
+        const dataMapped = data.map((calendar) => CalendarModelToScheduleComponentData(calendar));
+        option.onSuccess?.({ result: dataMapped, size: dataMapped.length }, preparedRequest);
+      },
+      (request) => {
+        const preparedRequest = extend({}, option, { httpRequest: request });
+        option.onFailure?.(preparedRequest);
+      }
+    );
+  };
 
   //fixme move to file
   private resourceData: { Subject: string; Color: string }[] = [
@@ -61,38 +96,81 @@ export class DepartmentCalendar extends React.PureComponent<DepartmentCalendarPr
     { Subject: "Учеба", /*Id: 3,*/ Color: "#DA6868" },
   ];
 
+  private dataManager: DataManager = new DataManager({
+    adaptor: new CustomDataAdaptor({
+      getData: async (option: AjaxOption) => {
+        this._reloadCalendarData(option);
+      },
+
+      // TODO: remove syncfusion library, полное говно
+      batchUpdate: async (option: AjaxOption) => {
+        const addedRecords = this._dataToUpdate.addedRecord ? [this._dataToUpdate.addedRecord] : [];
+        const changedRecords = this._dataToUpdate.changedRecords ?? [];
+        const deletedRecords = this._dataToUpdate.deletedRecords ?? [];
+
+        const addedRecordsMapped = addedRecords.map((r) =>
+          ScheduleComponentDataToCalendarModel(r, true, this.props.departmentManager)
+        );
+        const changedRecordsMapped = changedRecords.map((r) =>
+          ScheduleComponentDataToCalendarModel(r, false, this.props.departmentManager)
+        );
+        const deletedRecordsIds = deletedRecords.map((r) => r.Id).filter((id): id is string => id !== undefined);
+        for (let record of addedRecordsMapped) {
+          await CalendarsApi.Create(record, this.props.token);
+        }
+        for (let record of changedRecordsMapped) {
+          await CalendarsApi.Update(record, this.props.token);
+        }
+        for (let id of deletedRecordsIds) {
+          await CalendarsApi.Delete(id, this.props.token);
+        }
+
+        this._reloadCalendarData(option); //FIXME: causes double reload, find a way to fix this
+
+        // Reset old data
+        this._dataToUpdate = { changedRecords: null, deletedRecords: null, addedRecord: null, personIdToAdd: null };
+      },
+    }),
+    crossDomain: true,
+  });
+
   constructor(props: DepartmentCalendarProps) {
     super(props);
   }
-  textToBgColor = (text: string): string => {
-    let hash = 0;
-    let i;
-    /* eslint-disable no-bitwise */
-    for (i = 0; i < text.length; i += 1) {
-      hash = text.charCodeAt(i) + ((hash << 5) - hash);
+
+  private _onActionBegin = (action: ActionEventArgs): void => {
+    console.log("calendar action: ", action.requestType);
+    switch (action.requestType) {
+      case "eventChange":
+        this._dataToUpdate.changedRecords = (action.changedRecords as CalendarModelMapped[]) ?? null;
+        break;
+      case "eventCreate":
+        if (this._dataToUpdate.personIdToAdd) {
+          this._dataToUpdate.addedRecord = action.addedRecords
+            ? (action.addedRecords[0] as CalendarModelMapped) ?? null
+            : null;
+
+          if (this._dataToUpdate.addedRecord) {
+            this._dataToUpdate.addedRecord.PersonId = this._dataToUpdate.personIdToAdd;
+            this._dataToUpdate.addedRecord.Person = { id: this._dataToUpdate.personIdToAdd }; //FIXME ESLINT IGNORE
+          }
+        }
+        break;
+      case "eventRemove":
+        this._dataToUpdate.deletedRecords = (action.deletedRecords as CalendarModelMapped[]) ?? null;
+        break;
     }
-    let color = "#";
-    for (i = 0; i < 3; i += 1) {
-      const value = (hash >> (i * 8)) & 0xff;
-      color += `00${value.toString(16)}`.substr(-2);
-    }
-    /* eslint-enable no-bitwise */
-    return color;
   };
 
-  onEventRendered(args: any) {
-    if (this.props.onDataUpdate) {
-      this.props.onDataUpdate(this.data);
-    }
+  private _onEventRendered = (args: any) => {
     let eventType = this.resourceData.find((d) => d.Subject === args.data.Subject);
     if (!args.element || !eventType) {
       return;
     }
     args.element.style.backgroundColor = eventType.Color;
-  }
-
-  private onActionBegin(args: ActionEventArgs): void {
-    if (args.requestType === "toolbarItemRendering") {
+  };
+  /* // TODO BETTER EXCEL EXPORTING
+      if (args.requestType === "toolbarItemRendering") {
       let exportItem = {
         align: "Right",
         showTextOn: "Both",
@@ -101,10 +179,9 @@ export class DepartmentCalendar extends React.PureComponent<DepartmentCalendarPr
         click: this.onExportClick.bind(this),
       };
       args.items?.push(exportItem);
-    }
-  }
+    }*/
 
-  private onExportClick(): void {
+  /*private onExportClick(): void {
     // TODO BETTER EXCEL EXPORTING
     const exportFields: ExportFieldInfo[] = [
       { name: "Id", text: "Id" },
@@ -115,9 +192,10 @@ export class DepartmentCalendar extends React.PureComponent<DepartmentCalendarPr
     const exportValues: ExportOptions = { fieldsInfo: exportFields };
     console.log("export");
     this.scheduleObj.exportToExcel();
-  }
+  }*/
 
-  /*  componentDidMount() {
+  /* TODO: EVENT SORT BY TYPES
+   componentDidMount() {
     if (this.props.eventsToShow.length > 0) {
       let predicate: Predicate | null = null;
       this.props.eventsToShow.forEach((event) => {
@@ -133,20 +211,7 @@ export class DepartmentCalendar extends React.PureComponent<DepartmentCalendarPr
     }
   }*/
 
-  /*  private getEmployeeName(value: ResourceDetails): string {
-    return (value as ResourceDetails).resourceData[(value as ResourceDetails).resource.textField] as string;
-  }
-
-  private getEmployeeImage(value: ResourceDetails): string {
-    return this.getEmployeeName(value).toLowerCase();
-  }
-
-  private getEmployeeDesignation(value: ResourceDetails): string {
-    return (value as ResourceDetails).resourceData.Designation as string;
-  }*/
-
   public render(): JSX.Element {
-    this.data = extend([], this.props.initialData, undefined, true);
     return (
       <div className="schedule-control-section">
         <div className="col-lg-12 control-section">
@@ -157,20 +222,24 @@ export class DepartmentCalendar extends React.PureComponent<DepartmentCalendarPr
                 height="650px"
                 locale="ru"
                 cssClass="demo"
-                resourceHeaderTemplate={this.resourceHeaderTemplate.bind(this)}
-                eventSettings={{ dataSource: this.data }}
+                resourceHeaderTemplate={this._resourceHeaderTemplate.bind(this)}
+                eventSettings={{ dataSource: this.dataManager }}
                 ref={(t) => (this.scheduleObj = t)}
-                eventRendered={this.onEventRendered.bind(this)}
-                editorTemplate={this.editorTemplate.bind(this)}
+                editorTemplate={this._editorTemplate}
                 showQuickInfo={false}
                 group={{ enableCompactView: false, resources: ["Persons"] }}
-                actionBegin={this.onActionBegin.bind(this)}
+                actionBegin={this._onActionBegin}
+                eventRendered={this._onEventRendered}
               >
                 <ResourcesDirective>
-                  <ResourceDirective field="PersonId" name="Persons" dataSource={this.props.persons} idField="Id" />
+                  <ResourceDirective
+                    field="PersonId"
+                    name="Persons"
+                    dataSource={this.props.departmentPersons}
+                    idField="id"
+                  />
                   <ResourceDirective
                     field="Subject"
-                    name="EventTypes"
                     dataSource={this.resourceData}
                     idField="Subject"
                     colorField="Color"
@@ -189,10 +258,8 @@ export class DepartmentCalendar extends React.PureComponent<DepartmentCalendarPr
     );
   }
 
-  private resourceHeaderTemplate(props: ResourceDetails): JSX.Element {
-    console.log("person: ", props.resourceData);
+  private _resourceHeaderTemplate(props: ResourceDetails): JSX.Element {
     let person: PersonModel = props.resourceData as PersonModel;
-
     return (
       <div className="template-wrap">
         <div>
@@ -241,19 +308,12 @@ export class DepartmentCalendar extends React.PureComponent<DepartmentCalendarPr
     );
   }
 
-  editorTemplate(props: any) {
+  private _editorTemplate = (props: (CalendarModelMapped & { [key: string]: any }) | undefined) => {
+    this._dataToUpdate.personIdToAdd = props?.PersonId ?? null;
     /*FIXME REFACTOR THIS SHIT*/
     return props !== undefined ? (
       <table className="custom-event-editor" style={{ width: "100%", marginTop: "24px" }}>
         <tbody>
-          {/* <tr>
-            <td className="e-textlabel" style={{ paddingBottom: "32px", paddingRight: "16px" }}>
-              Summary
-            </td>
-            <td colSpan={4}>
-              <input id="Summary" className="e-field e-input" type="text" name="Subject" style={{ width: "100%" }} />
-            </td>
-          </tr>*/}
           <tr>
             <td className="e-textlabel" style={{ paddingBottom: "24px", paddingRight: "8px" }}>
               Комментарий
@@ -297,7 +357,7 @@ export class DepartmentCalendar extends React.PureComponent<DepartmentCalendarPr
                 format="dd/MM/yy"
                 id="StartTime"
                 data-name="StartTime"
-                value={new Date(props.startTime || props.StartTime)}
+                value={new Date(props.StartTime || props.startTime)}
                 className="e-field"
               />
             </td>
@@ -312,7 +372,7 @@ export class DepartmentCalendar extends React.PureComponent<DepartmentCalendarPr
                 format="dd/MM/yy"
                 id="EndTime"
                 data-name="EndTime"
-                value={new Date(props.endTime || props.EndTime)}
+                value={new Date(props.EndTime || props.endTime)}
                 className="e-field"
               />
             </td>
@@ -322,5 +382,5 @@ export class DepartmentCalendar extends React.PureComponent<DepartmentCalendarPr
     ) : (
       <div />
     );
-  }
+  };
 }

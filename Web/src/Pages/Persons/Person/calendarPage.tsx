@@ -14,6 +14,8 @@ import { CalendarPageToolbar } from "../../../Components/Calendar/calendarPageTo
 import { PersonModel } from "../../../Api/Models/personModel";
 import { PersonsApi } from "../../../Api/personsApi";
 import { Api } from "../../../Api/api";
+import { DepartmentCalendar } from "src/Components/Calendar/DepartmentCalendar/departmentCalendar";
+import { ContactsSearchParam } from "../../../Typings/Enums/contactsSearchParam";
 
 interface CalendarPageProps {}
 
@@ -23,7 +25,7 @@ export const CalendarPage: FunctionComponent<CalendarPageProps> = () => {
   const currentTab = searchParamsTab !== null && Number.isFinite(Number(searchParamsTab)) ? searchParamsTab : "0"; //todo typings
   const [authProfileScope, setAuthProfileScope] = React.useState<AuthScope | null>(null);
   const [authPersonInfo, setAuthPersonInfo] = React.useState<PersonModel | null>(null);
-  const [departmentPersons, setDepartmentPersons] = React.useState<PersonModel[]>([]);
+  const [departmentPersons, setDepartmentPersons] = React.useState<PersonModel[] | null>(null);
 
   const auth = useAuthContext();
   const person = usePersonContext();
@@ -62,15 +64,15 @@ export const CalendarPage: FunctionComponent<CalendarPageProps> = () => {
       if (!auth.authInfo?.token || !authPersonInfo) {
         return;
       }
-      let response = await PersonsApi.GetAll(auth.authInfo.token);
+
+      const searchParams = new URLSearchParams();
+      searchParams.set(ContactsSearchParam.departments, authPersonInfo.department.name);
+
+      let response = await PersonsApi.Find(searchParams, auth.authInfo.token);
       let persons = !Api.IsRequestSuccess(response) || !response.data ? null : response.data;
 
       // Exclude yourself from the list
-      setDepartmentPersons(
-        persons
-          ? persons.filter((p) => p.id !== authPersonInfo.id && p.department.id === authPersonInfo.department.id)
-          : []
-      );
+      setDepartmentPersons(persons ? persons.filter((p) => p.id !== authPersonInfo.id) : []);
     };
     getDepartmentPersons();
   }, [auth.authInfo?.token, authPersonInfo]);
@@ -126,24 +128,19 @@ export const CalendarPage: FunctionComponent<CalendarPageProps> = () => {
                   </Box>
                 </TabPanel>
                 {/*fixme 2 is divider, so it's skipped... damn*/}
-                {authProfileScope === AuthScope.departmentManager && authPersonInfo && (
-                  <TabPanel value={currentTab} name={"2"}>
-                    {/*<DepartmentCalendar
-                      persons={departmentPersons}
-                      initialData={CalendarSource.UsersCalendarData.filter(
-                        (v) =>
-                          v.Person?.department?.id === authPersonInfo.department.id &&
-                          v.Person?.id !== authPersonInfo.id
-                      )}
-                      onDataUpdate={(newData) => {
-                        Object.assign(CalendarSource.UsersCalendarData, newData);
-                        {
-                          // fixme assign correct Person field if object is created 
-                        }
-                      }}
-                    />*/}
-                  </TabPanel>
-                )}
+                {authProfileScope === AuthScope.departmentManager &&
+                  auth.authInfo &&
+                  person.person &&
+                  authPersonInfo &&
+                  departmentPersons && (
+                    <TabPanel value={currentTab} name={"2"}>
+                      <DepartmentCalendar
+                        token={auth.authInfo.token}
+                        departmentManager={authPersonInfo}
+                        departmentPersons={departmentPersons}
+                      />
+                    </TabPanel>
+                  )}
               </>
             </CardContent>
           </Card>

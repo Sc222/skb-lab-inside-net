@@ -53,9 +53,9 @@ export class PersonalCalendar extends React.PureComponent<PersonalCalendarProps>
   private scheduleObj: ScheduleComponent | null = null;
 
   /* RELOAD CALENDAR DATA */
-  //FIXME: after data update reload is done twice, fix this!!!
+  //FIXME: DRY, after data update reload is done twice, fix this!!!
   private _reloadCalendarData = (option: AjaxOption) => {
-    console.log("reload");
+    console.log("reload personal calendar");
 
     const searchParams = new URLSearchParams();
     if (this.scheduleObj) {
@@ -79,6 +79,7 @@ export class PersonalCalendar extends React.PureComponent<PersonalCalendarProps>
     );
   };
 
+  //FIXME DRY
   private dataManager: DataManager = new DataManager({
     adaptor: new CustomDataAdaptor({
       getData: async (option: AjaxOption) => {
@@ -98,10 +99,6 @@ export class PersonalCalendar extends React.PureComponent<PersonalCalendarProps>
           ScheduleComponentDataToCalendarModel(r, false, this.props.person)
         );
         const deletedRecordsIds = deletedRecords.map((r) => r.Id).filter((id): id is string => id !== undefined);
-
-        console.log("RAW: ", this._dataToUpdate);
-        console.log("WHAT SHOULD WE DO: ", addedRecordsMapped, changedRecordsMapped, deletedRecordsIds);
-
         for (let record of addedRecordsMapped) {
           await CalendarsApi.Create(record, this.props.token);
         }
@@ -122,13 +119,16 @@ export class PersonalCalendar extends React.PureComponent<PersonalCalendarProps>
   });
 
   // TODO: move to file
-  private resourceData: Record<string, any>[] = [
-    { Text: "Отпуск", /*Id: 1,*/ Color: "#00B5B8" },
-    { Text: "Командировка", /*Id: 2,*/ Color: "#2196F3" },
-    { Text: "Учеба", /*Id: 3,*/ Color: "#DA6868" },
+
+  //fixme move to file
+  private resourceData: { Subject: string; Color: string }[] = [
+    { Subject: "Отпуск", /*Id: 1,*/ Color: "#00B5B8" },
+    { Subject: "Командировка", /*Id: 2,*/ Color: "#2196F3" },
+    { Subject: "Учеба", /*Id: 3,*/ Color: "#DA6868" },
   ];
+
   private _onActionBegin = (action: ActionEventArgs) => {
-    console.log(action.requestType);
+    console.log("calendar action: ", action.requestType);
     switch (action.requestType) {
       case "eventChange":
         this._dataToUpdate.changedRecords = (action.changedRecords as CalendarModelMapped[]) ?? null;
@@ -206,7 +206,12 @@ export class PersonalCalendar extends React.PureComponent<PersonalCalendarProps>
                 </ViewsDirective>
               )}
               <ResourcesDirective>
-                <ResourceDirective field="Subject" dataSource={this.resourceData} idField="Text" colorField="Color" />
+                <ResourceDirective
+                  field="Subject"
+                  dataSource={this.resourceData}
+                  idField="Subject"
+                  colorField="Color"
+                />
               </ResourcesDirective>
               <Inject services={[Month, Year, TimelineMonth, Resize, DragAndDrop]} />
             </ScheduleComponent>
@@ -221,13 +226,13 @@ export class PersonalCalendar extends React.PureComponent<PersonalCalendarProps>
     return props !== undefined ? (
       <table className="custom-event-editor" style={{ width: "100%", marginTop: "24px" }}>
         <tbody>
-          {!this.props.isPreview && props.managerComment && (
+          {!this.props.isPreview && props.ManagerComment && (
             <tr>
               <td className="e-textlabel" style={{ paddingBottom: "24px", paddingRight: "8px" }}>
                 Комментарий менеджера
               </td>
               <td colSpan={4} style={{ paddingBottom: "24px" }}>
-                {props.managerComment}
+                {props.ManagerComment}
               </td>
             </tr>
           )}
