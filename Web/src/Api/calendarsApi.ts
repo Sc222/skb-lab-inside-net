@@ -1,19 +1,20 @@
 import { Api } from "./api";
-import { CalendarModel } from "./Models/calendarModel";
+import { CalendarModel, CalendarModelOnlyWithPersonId } from "./Models/calendarModel";
 import { ApiResponse } from "./apiResponse";
 import axios, { AxiosError } from "axios";
 import update from "immutability-helper";
 import { Utils } from "../Utils/utils";
 
 export class CalendarsApi {
-    // Get personal calendar info
+    /** Get personal calendar info */
     public static GetForPerson = (
         personId: string,
-        searchParams: URLSearchParams,
+        searchParams: URLSearchParams, // from, to
         token: string,
         onSuccess: (data: CalendarModel[], request: XMLHttpRequest) => void,
         onError: (request: XMLHttpRequest) => void
     ): void => {
+        //fixme dry
         const xhttp: XMLHttpRequest = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4) {
@@ -28,10 +29,40 @@ export class CalendarsApi {
         xhttp.open("GET", `${Api.BaseUrl}/calendars/${personId}?${searchParams.toString()}`, true);
         xhttp.setRequestHeader("Authorization", `Bearer ${token}`);
         xhttp.send();
-        //TODO: use this to send body xhttp.send(option.data);
     };
 
-    public static async Create(calendar: CalendarModel, token: string): Promise<ApiResponse<Record<string, never>>> {
+    /** Get department calendar info */
+    public static GetForDepartment = (
+        personIdToExclude: string,
+        searchParams: URLSearchParams, // department, from, to
+        token: string,
+        onSuccess: (data: CalendarModel[], request: XMLHttpRequest) => void,
+        onError: (request: XMLHttpRequest) => void
+    ): void => {
+        //fixme dry
+        const xhttp: XMLHttpRequest = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4) {
+                if ((xhttp.status >= 200 && xhttp.status <= 299) || xhttp.status === 304) {
+                    const data: CalendarModel[] = JSON.parse(xhttp.responseText);
+                    onSuccess(
+                        data.filter((data) => data.person.id !== personIdToExclude),
+                        xhttp
+                    );
+                } else {
+                    onError(xhttp);
+                }
+            }
+        };
+        xhttp.open("GET", `${Api.BaseUrl}/calendars?${searchParams.toString()}`, true);
+        xhttp.setRequestHeader("Authorization", `Bearer ${token}`);
+        xhttp.send();
+    };
+
+    public static async Create(
+        calendar: CalendarModelOnlyWithPersonId,
+        token: string
+    ): Promise<ApiResponse<Record<string, never>>> {
         //fixme dry
         let calendarToSend = update(calendar, {});
         calendarToSend.startTime = Utils.DateToJsonWithTimezoneShift(new Date(calendar.startTime));
@@ -59,7 +90,10 @@ export class CalendarsApi {
     }
 
     //fixme DRY
-    public static async Update(calendar: CalendarModel, token: string): Promise<ApiResponse<Record<string, never>>> {
+    public static async Update(
+        calendar: CalendarModelOnlyWithPersonId,
+        token: string
+    ): Promise<ApiResponse<Record<string, never>>> {
         let calendarToSend = update(calendar, {});
         calendarToSend.startTime = Utils.DateToJsonWithTimezoneShift(new Date(calendar.startTime));
         calendarToSend.endTime = Utils.DateToJsonWithTimezoneShift(new Date(calendar.endTime));

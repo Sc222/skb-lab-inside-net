@@ -9,8 +9,11 @@ export interface CalendarModel {
     endTime: string;
 }
 
+export type CalendarModelOnlyWithPersonId = Omit<CalendarModel, "person"> & { person: { id?: string } };
+
 export interface CalendarModelMapped {
     Id?: string;
+    PersonId: string; // needed for data grouping in departmentCalendar
     Person: PersonModel;
     Subject: string;
     ManagerComment: string;
@@ -22,6 +25,7 @@ const SubjectFallbackString = "Неизвестный тип события";
 
 export const CalendarModelToScheduleComponentData = (calendar: CalendarModel): CalendarModelMapped => ({
     Id: calendar.id,
+    PersonId: calendar.person.id ?? "",
     Person: calendar.person,
     Subject: calendar.subject ?? SubjectFallbackString,
     ManagerComment: calendar.managerComment,
@@ -33,7 +37,7 @@ export const ScheduleComponentDataToCalendarModel = (
     calendar: CalendarModelMapped,
     shouldRemoveCalendarId: boolean,
     personToOverride?: PersonModel // overrides only if calendar.person is undefined
-): CalendarModel => {
+): CalendarModelOnlyWithPersonId => {
     let finalPerson = calendar.Person;
     if (!finalPerson && personToOverride) {
         //fixme remove this
