@@ -14,4 +14,8 @@ export class Utils {
             behavior: "smooth",
         });
     }
+
+    public static DateToJsonWithTimezoneShift(date: Date): string {
+        return new Date(date.getTime() - date.getTimezoneOffset() * 60000).toJSON();
+    }
 }
