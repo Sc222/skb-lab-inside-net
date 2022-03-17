@@ -26,7 +26,6 @@ import { PersonModel } from "../../../Api/Models/personModel";
 import { SlackChannelModel } from "../../../Api/Models/slackChannelModel";
 import { MyChannelListItem } from "../../../Components/SlackChannels/myChannelListItem";
 import { PersonalCalendar } from "../../../Components/Calendar/PersonalCalendar/personalCalendar";
-import { CalendarSource } from "../../../Components/Calendar/PersonalCalendar/datasource";
 
 //TODO: split profilePage by CARDS
 //TODO: optimize rerenders
@@ -298,13 +297,9 @@ export const ProfilePage: FunctionComponent<ProfilePageProps> = () => {
                         />
                         <Divider />
                         <CardContent>
-                          <PersonalCalendar
-                            initialData={CalendarSource.UsersCalendarData.filter(
-                              (v) => v.Person?.id === profilePerson?.id
-                            )}
-                            eventsToShow={["Отпуск", "Командировка", "Учеба"]}
-                            isPreview
-                          />
+                          {auth.authInfo && profilePerson && (
+                            <PersonalCalendar token={auth.authInfo.token} person={profilePerson} isPreview />
+                          )}
                         </CardContent>
                       </Card>
                     </Grid>

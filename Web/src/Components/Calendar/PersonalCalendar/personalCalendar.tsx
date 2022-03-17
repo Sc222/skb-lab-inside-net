@@ -12,64 +12,143 @@ import {
   ViewsDirective,
   Year,
 } from "@syncfusion/ej2-react-schedule";
-//FIXME REMOVE THIS LATER
-//import the loadCldr from ej2-base
 import { extend } from "@syncfusion/ej2-base";
-import { CalendarData } from "./datasource";
-import { PopupOpenEventArgs } from "@syncfusion/ej2-schedule/src/schedule/base/interface";
 import { DropDownListComponent } from "@syncfusion/ej2-react-dropdowns";
 import { DatePickerComponent } from "@syncfusion/ej2-react-calendars";
-import { Predicate, Query } from "@syncfusion/ej2-data";
+import { AjaxOption, CustomDataAdaptor, DataManager } from "@syncfusion/ej2-data";
 import { loadRussianCalendarLocale } from "../calendarLocalization";
+import { CalendarsApi } from "../../../Api/calendarsApi";
+import { PersonCalendarSearchParam } from "../../../Typings/Enums/personCalendarSearchParam";
+import {
+  CalendarModelMapped,
+  CalendarModelToScheduleComponentData,
+  ScheduleComponentDataToCalendarModel,
+} from "../../../Api/Models/calendarModel";
+import { PersonModel } from "../../../Api/Models/personModel";
+import { ActionEventArgs } from "@syncfusion/ej2-schedule/src/schedule/base/interface";
 
 loadRussianCalendarLocale();
 
-/**
- * Schedule local data sample
- */
 interface PersonalCalendarProps {
-  initialData: CalendarData[];
-  onDataUpdate?: (newData: CalendarData[]) => void;
+  token: string;
+  person: PersonModel;
 
   //fixme hardcode
-  eventsToShow: Array<"Отпуск" | "Командировка" | "Учеба">;
+  eventsToShow: Array<undefined | "Отпуск" | "Командировка" | "Учеба">;
   isPreview: boolean;
 }
 
 export class PersonalCalendar extends React.PureComponent<PersonalCalendarProps> {
   static defaultProps = {
     isPreview: false,
+    eventsToShow: [], // [undefined, "Отпуск", "Командировка", "Учеба"],
   };
 
-  private data: any;
-  private scheduleObj: any;
+  private _dataToUpdate: {
+    changedRecords: CalendarModelMapped[] | null;
+    addedRecords: CalendarModelMapped[] | null;
+    deletedRecords: CalendarModelMapped[] | null;
+  } = { changedRecords: null, addedRecords: null, deletedRecords: null };
 
-  //fixme move to file
+  private scheduleObj: ScheduleComponent | null = null;
+
+  /* RELOAD CALENDAR DATA */
+  //FIXME: after data update reload is done twice, fix this!!!
+  private _reloadCalendarData = (option: AjaxOption) => {
+    console.log("reload");
+
+    const searchParams = new URLSearchParams();
+    if (this.scheduleObj) {
+      searchParams.set(PersonCalendarSearchParam.from, this.scheduleObj.activeView.startDate().toJSON());
+      searchParams.set(PersonCalendarSearchParam.to, this.scheduleObj.activeView.endDate().toJSON());
+    }
+
+    CalendarsApi.GetForPerson(
+      this.props.person.id!,
+      searchParams,
+      this.props.token,
+      (data, request) => {
+        const preparedRequest = extend({}, option, { httpRequest: request });
+        const dataMapped = data.map((calendar) => CalendarModelToScheduleComponentData(calendar));
+        option.onSuccess?.({ result: dataMapped, size: dataMapped.length }, preparedRequest);
+      },
+      (request) => {
+        const preparedRequest = extend({}, option, { httpRequest: request });
+        option.onFailure?.(preparedRequest);
+      }
+    );
+  };
+
+  private dataManager: DataManager = new DataManager({
+    adaptor: new CustomDataAdaptor({
+      getData: async (option: AjaxOption) => {
+        this._reloadCalendarData(option);
+      },
+
+      // TODO: remove syncfusion library, полное говно
+      batchUpdate: async (option: AjaxOption) => {
+        const addedRecords = this._dataToUpdate.addedRecords ?? [];
+        const changedRecords = this._dataToUpdate.changedRecords ?? [];
+        const deletedRecords = this._dataToUpdate.deletedRecords ?? [];
+
+        const addedRecordsMapped = addedRecords.map((r) =>
+          ScheduleComponentDataToCalendarModel(r, true, this.props.person)
+        );
+        const changedRecordsMapped = changedRecords.map((r) =>
+          ScheduleComponentDataToCalendarModel(r, false, this.props.person)
+        );
+        const deletedRecordsIds = deletedRecords.map((r) => r.Id).filter((id): id is string => id !== undefined);
+
+        console.log("RAW: ", this._dataToUpdate);
+        console.log("WHAT SHOULD WE DO: ", addedRecordsMapped, changedRecordsMapped, deletedRecordsIds);
+
+        for (let record of addedRecordsMapped) {
+          await CalendarsApi.Create(record, this.props.token);
+        }
+        for (let record of changedRecordsMapped) {
+          await CalendarsApi.Update(record, this.props.token);
+        }
+        for (let id of deletedRecordsIds) {
+          await CalendarsApi.Delete(id, this.props.token);
+        }
+
+        this._reloadCalendarData(option); //FIXME: causes double reload, find a way to fix this
+
+        // Reset old data
+        this._dataToUpdate = { changedRecords: null, deletedRecords: null, addedRecords: null };
+      },
+    }),
+    crossDomain: true,
+  });
+
+  // TODO: move to file
   private resourceData: Record<string, any>[] = [
     { Text: "Отпуск", /*Id: 1,*/ Color: "#00B5B8" },
     { Text: "Командировка", /*Id: 2,*/ Color: "#2196F3" },
     { Text: "Учеба", /*Id: 3,*/ Color: "#DA6868" },
   ];
+  private _onActionBegin = (action: ActionEventArgs) => {
+    console.log(action.requestType);
+    switch (action.requestType) {
+      case "eventChange":
+        this._dataToUpdate.changedRecords = (action.changedRecords as CalendarModelMapped[]) ?? null;
+        break;
+      case "eventCreate":
+        this._dataToUpdate.addedRecords = (action.addedRecords as CalendarModelMapped[]) ?? null;
+        break;
+      case "eventRemove":
+        this._dataToUpdate.deletedRecords = (action.deletedRecords as CalendarModelMapped[]) ?? null;
+        break;
+    }
+  };
 
   constructor(props: PersonalCalendarProps) {
     super(props);
-    this.data = extend([], this.props.initialData, undefined, true);
   }
 
-  onEventRendered(args: any) {
-    if (this.props.onDataUpdate) {
-      this.props.onDataUpdate(this.data);
-    }
-
-    //let categoryColor = args.data.CategoryColor;
-    //if (!args.element || !categoryColor) {
-    //  return;
-    //}
-    //args.element.style.backgroundColor = categoryColor;
-  }
-
-  componentDidMount() {
-    if (this.props.eventsToShow.length > 0) {
+  public componentDidMount(): void {
+    //TODO: FILTER EVENTS BY SUBJECT
+    /*if (this.props.eventsToShow.length > 0) {
       let predicate: Predicate | null = null;
       this.props.eventsToShow.forEach((event) => {
         if (predicate) {
@@ -78,15 +157,15 @@ export class PersonalCalendar extends React.PureComponent<PersonalCalendarProps>
           predicate = new Predicate("Subject", "equal", event);
         }
       });
-      if (predicate) {
+      if (predicate && this.scheduleObj) {
         this.scheduleObj.eventSettings.query = new Query().where(predicate);
       }
-    }
+    }*/
   }
 
   //todo use this for event filters
-  private onChange(): void {
-    /* let checkBoxes: CheckBox[] = [this.ownerOneObj, this.ownerTwoObj, this.ownerThreeObj];
+  /*private onChange(): void {
+    /!* let checkBoxes: CheckBox[] = [this.ownerOneObj, this.ownerTwoObj, this.ownerThreeObj];
     checkBoxes.forEach((checkBoxObj: CheckBox) => {
       if (checkBoxObj.checked) {
         if (predicate) {
@@ -95,18 +174,11 @@ export class PersonalCalendar extends React.PureComponent<PersonalCalendarProps>
           predicate = new Predicate('OwnerId', 'equal', parseInt(checkBoxObj.value, 10));
         }
       }
-    });*/
+    });*!/
     //scheduleObj.eventSettings.query = new Query().where(predicate);
-  }
+  }*/
 
-  private popupOpen(e: PopupOpenEventArgs) {
-    if (e.type === "Editor") {
-      //let statusElement = e.element.querySelector("#EventType");
-      //statusElement.setAttribute("name", "EventType");
-    }
-  }
-
-  render() {
+  public render(): JSX.Element {
     return (
       <div className="schedule-control-section">
         <div className="col-lg-12 control-section">
@@ -117,12 +189,11 @@ export class PersonalCalendar extends React.PureComponent<PersonalCalendarProps>
               readonly={this.props.isPreview}
               height={this.props.isPreview ? "175px" : "650px"}
               ref={(t) => (this.scheduleObj = t)}
-              eventSettings={{ dataSource: this.data }}
-              eventRendered={this.onEventRendered.bind(this)}
+              eventSettings={{ dataSource: this.dataManager }}
               locale="ru"
-              popupOpen={this.popupOpen.bind(this)}
-              editorTemplate={this.editorTemplate.bind(this)}
+              editorTemplate={this._editorTemplate}
               showQuickInfo={false}
+              actionBegin={this._onActionBegin}
             >
               {this.props.isPreview ? (
                 <ViewsDirective>
@@ -134,11 +205,9 @@ export class PersonalCalendar extends React.PureComponent<PersonalCalendarProps>
                   <ViewDirective option="Year" />
                 </ViewsDirective>
               )}
-
               <ResourcesDirective>
                 <ResourceDirective field="Subject" dataSource={this.resourceData} idField="Text" colorField="Color" />
               </ResourcesDirective>
-
               <Inject services={[Month, Year, TimelineMonth, Resize, DragAndDrop]} />
             </ScheduleComponent>
           </div>
@@ -147,26 +216,18 @@ export class PersonalCalendar extends React.PureComponent<PersonalCalendarProps>
     );
   }
 
-  editorTemplate(props: any) {
+  private _editorTemplate = (props: (CalendarModelMapped & { [key: string]: any }) | undefined) => {
     /*FIXME REFACTOR THIS SHIT*/
     return props !== undefined ? (
       <table className="custom-event-editor" style={{ width: "100%", marginTop: "24px" }}>
         <tbody>
-          {/* <tr>
-            <td className="e-textlabel" style={{ paddingBottom: "32px", paddingRight: "16px" }}>
-              Summary
-            </td>
-            <td colSpan={4}>
-              <input id="Summary" className="e-field e-input" type="text" name="Subject" style={{ width: "100%" }} />
-            </td>
-          </tr>*/}
-          {!this.props.isPreview && props.ManagerComment && (
+          {!this.props.isPreview && props.managerComment && (
             <tr>
               <td className="e-textlabel" style={{ paddingBottom: "24px", paddingRight: "8px" }}>
                 Комментарий менеджера
               </td>
               <td colSpan={4} style={{ paddingBottom: "24px" }}>
-                {props.ManagerComment}
+                {props.managerComment}
               </td>
             </tr>
           )}
@@ -197,7 +258,7 @@ export class PersonalCalendar extends React.PureComponent<PersonalCalendarProps>
                 format="dd/MM/yy"
                 id="StartTime"
                 data-name="StartTime"
-                value={new Date(props.startTime || props.StartTime)}
+                value={new Date(props.StartTime || props.startTime)}
                 className="e-field"
               />
             </td>
@@ -212,7 +273,7 @@ export class PersonalCalendar extends React.PureComponent<PersonalCalendarProps>
                 format="dd/MM/yy"
                 id="EndTime"
                 data-name="EndTime"
-                value={new Date(props.endTime || props.EndTime)}
+                value={new Date(props.EndTime || props.endTime)}
                 className="e-field"
               />
             </td>
@@ -220,7 +281,7 @@ export class PersonalCalendar extends React.PureComponent<PersonalCalendarProps>
         </tbody>
       </table>
     ) : (
-      <div></div>
+      <div />
     );
-  }
+  };
 }

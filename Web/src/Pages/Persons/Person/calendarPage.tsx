@@ -1,6 +1,5 @@
 import React, { FunctionComponent, useEffect } from "react";
 import { PersonalCalendar } from "src/Components/Calendar/PersonalCalendar/personalCalendar";
-import { CalendarSource } from "../../../Components/Calendar/PersonalCalendar/datasource";
 import { usePersonContext } from "../../../Contexts/personContext";
 import { useSearchParams } from "react-router-dom";
 import { SlackChannelsSearchParam } from "../../../Typings/Enums/slackChannelsSearchParam";
@@ -15,7 +14,6 @@ import { CalendarPageToolbar } from "../../../Components/Calendar/calendarPageTo
 import { PersonModel } from "../../../Api/Models/personModel";
 import { PersonsApi } from "../../../Api/personsApi";
 import { Api } from "../../../Api/api";
-import { DepartmentCalendar } from "../../../Components/Calendar/DepartmentCalendar/departmentCalendar";
 
 interface CalendarPageProps {}
 
@@ -43,6 +41,7 @@ export const CalendarPage: FunctionComponent<CalendarPageProps> = () => {
         }
       });
     };
+
     const getAuthPersonInfo = async () => {
       await auth.getPersonInfo((result) => {
         if (result.success) {
@@ -121,41 +120,28 @@ export const CalendarPage: FunctionComponent<CalendarPageProps> = () => {
                 <TabPanel value={currentTab} name={"0"}>
                   <Box sx={{ py: 2 }}>
                     {/* fixme fix person in calendarData being null sometimes */}
-                    {person.person && (
-                      <PersonalCalendar
-                        initialData={CalendarSource.UsersCalendarData.filter((v) => v.Person?.id === person.person?.id)}
-                        eventsToShow={["Отпуск", "Командировка", "Учеба"]}
-                        onDataUpdate={(newData) => {
-                          newData = newData.map((e) => {
-                            if (e.Person === undefined) {
-                              e.Person = person.person;
-                            }
-                            return e;
-                          });
-                          Object.assign(CalendarSource.UsersCalendarData, newData);
-                        }}
-                      />
+                    {auth.authInfo && person.person && (
+                      <PersonalCalendar token={auth.authInfo.token} person={person.person} />
                     )}
                   </Box>
                 </TabPanel>
                 {/*fixme 2 is divider, so it's skipped... damn*/}
                 {authProfileScope === AuthScope.departmentManager && authPersonInfo && (
                   <TabPanel value={currentTab} name={"2"}>
-                    <DepartmentCalendar
+                    {/*<DepartmentCalendar
                       persons={departmentPersons}
                       initialData={CalendarSource.UsersCalendarData.filter(
                         (v) =>
                           v.Person?.department?.id === authPersonInfo.department.id &&
                           v.Person?.id !== authPersonInfo.id
                       )}
-                      eventsToShow={["Отпуск", "Командировка", "Учеба"]}
                       onDataUpdate={(newData) => {
                         Object.assign(CalendarSource.UsersCalendarData, newData);
                         {
-                          /* fixme assign correct Person field if object is created */
+                          // fixme assign correct Person field if object is created 
                         }
                       }}
-                    />
+                    />*/}
                   </TabPanel>
                 )}
               </>
