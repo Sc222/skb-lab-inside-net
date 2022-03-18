@@ -102,10 +102,19 @@ export const ProfileToolbar: FunctionComponent<ProfileToolbarProps> = ({
               <ListItemAvatar>
                 <Avatar
                   sx={(theme) => ({
-                    mr: 4,
-                    height: 128,
-                    width: 128,
-                    fontSize: "96px",
+                    [theme.breakpoints.down("md")]: {
+                      height: 72,
+                      width: 72,
+                      fontSize: "54px",
+                      mr: 2,
+                    },
+                    [theme.breakpoints.up("md")]: {
+                      height: 128,
+                      width: 128,
+                      fontSize: "96px",
+                      mr: 4,
+                    },
+
                     border: `solid 2px ${theme.palette.primary.main}`,
                     background: theme.palette.background.paper,
                   })}
