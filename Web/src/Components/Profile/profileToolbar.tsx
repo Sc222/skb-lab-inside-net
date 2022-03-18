@@ -4,7 +4,6 @@ import {
   Card,
   CardContent,
   IconButton,
-  Link,
   ListItem,
   ListItemAvatar,
   ListItemText,
@@ -12,11 +11,9 @@ import {
   useTheme,
 } from "@mui/material";
 import React, { FunctionComponent } from "react";
-import { Link as RouterLink } from "react-router-dom";
-import { SiteRoute } from "../../Typings/Enums/siteRoute";
 import { PersonModel } from "../../Api/Models/personModel";
 import { useDesktop, useMobile, useTablet } from "../../Hooks/responsiveHooks";
-import { AddOutlined, DeleteOutlined, EditOutlined, Person } from "@mui/icons-material";
+import { AddOutlined, DeleteOutlined, Person } from "@mui/icons-material";
 
 interface ProfileToolbarProps {
   person: PersonModel | null;
@@ -55,7 +52,8 @@ export const ProfileToolbar: FunctionComponent<ProfileToolbarProps> = ({
                     <>
                       {isAuthPersonProfilePage ? (
                         <>
-                          {authPersonId && !isMobile && (
+                          {/** TODO: finish settings page */}
+                          {/*{authPersonId && !isMobile && (
                             <Link
                               component={RouterLink}
                               to={`${SiteRoute.persons}/${authPersonId}/${SiteRoute.settings}`}
@@ -71,7 +69,7 @@ export const ProfileToolbar: FunctionComponent<ProfileToolbarProps> = ({
                                 </Button>
                               )}
                             </Link>
-                          )}
+                          )}*/}
                         </>
                       ) : (
                         <>

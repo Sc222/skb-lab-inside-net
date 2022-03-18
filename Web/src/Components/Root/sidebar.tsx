@@ -5,7 +5,6 @@ import LogoAccent from "./../../assets/logo-accent.png";
 import { NavItem } from "./navItem";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import TodayOutlinedIcon from "@mui/icons-material/TodayOutlined";
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import { SiteRoute } from "../../Typings/Enums/siteRoute";
 import { AppTheme } from "../../appTheme";
 import { SlackOutlined } from "../Icons/slackOutlined";
@@ -34,11 +33,12 @@ export const getDefaultItems = (personId: string): { to: string; icon: ReactNode
     icon: <TodayOutlinedIcon fontSize="small" />,
     title: "Календарь",
   },
-  {
+  /** TODO: finish settings page */
+  /*{
     to: `${personId}/${SiteRoute.settings}`,
     icon: <SettingsOutlinedIcon fontSize="small" />,
     title: "Настройки",
-  },
+  },*/
 ];
 
 interface SidebarProps {

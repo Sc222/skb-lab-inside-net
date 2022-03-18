@@ -3,7 +3,6 @@ import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { Avatar, Divider, ListItemIcon, Menu, MenuList } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import { LogoutOutlined, Person } from "@mui/icons-material";
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import { useAuthContext } from "../../Contexts/authContext";
 import { SiteRoute } from "../../Typings/Enums/siteRoute";
 
@@ -87,12 +86,13 @@ export const ToolbarProfileMenu: FunctionComponent<ToolbarProfileMenuProps> = ({
           </MenuItem>
           <Divider />
 
-          <MenuItem component={RouterLink} to={`${auth.authInfo.personId}/${SiteRoute.settings}`}>
+          {/** TODO: finish settings page */}
+          {/* <MenuItem component={RouterLink} to={`${auth.authInfo.personId}/${SiteRoute.settings}`}>
             <ListItemIcon>
               <SettingsOutlinedIcon fontSize="small" />
             </ListItemIcon>
             Настройки
-          </MenuItem>
+          </MenuItem>*/}
         </MenuList>
       )}
       <MenuItem onClick={signOut}>
