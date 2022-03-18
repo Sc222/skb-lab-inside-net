@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 import { styled } from "@mui/material/styles";
-import { AppBar, Avatar, Badge, Box, IconButton, Toolbar, Tooltip } from "@mui/material";
+import { AppBar, Avatar, Box, IconButton, Toolbar, Tooltip } from "@mui/material";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import { SearchInput } from "./searchInput";
@@ -8,6 +8,7 @@ import { ToolbarProfileMenu } from "./toolbarProfileMenu";
 import { SiteRoute } from "../../Typings/Enums/siteRoute";
 import { useMatch } from "react-router-dom";
 import { Person } from "@mui/icons-material";
+import { NotificationsMenu } from "./notificationsMenu";
 
 const CustomToolbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -28,6 +29,8 @@ export const CustomToolbar: FunctionComponent<CustomToolbarProps> = ({
 }) => {
   const [profileMenuAnchorEl, setProfileMenuAnchorEl] = React.useState<null | HTMLElement>(null);
 
+  const [notificationMenuAnchorEl, setNotificationMenuAnchorEl] = React.useState<null | HTMLElement>(null);
+
   const isSearchPage = useMatch(`${SiteRoute.persons}/${SiteRoute.search}`) !== null;
 
   const setProfileMenuAnchor = (event: React.MouseEvent<HTMLElement>) => {
@@ -38,6 +41,16 @@ export const CustomToolbar: FunctionComponent<CustomToolbarProps> = ({
 
   const resetProfileMenuAnchor = () => {
     setProfileMenuAnchorEl(null);
+  };
+
+  const setNotificationMenuAnchor = (event: React.MouseEvent<HTMLElement>) => {
+    if (!notificationMenuAnchorEl) {
+      setNotificationMenuAnchorEl(event.currentTarget);
+    }
+  };
+
+  const resetNotificationMenuAnchor = () => {
+    setNotificationMenuAnchorEl(null);
   };
 
   return (
@@ -76,13 +89,19 @@ export const CustomToolbar: FunctionComponent<CustomToolbarProps> = ({
           {!isSearchPage && <SearchInput />}
           <Box sx={{ flexGrow: 1, ml: 1.5 }} />
           <Tooltip title="Уведомления">
-            <IconButton>
+            <IconButton onClick={setNotificationMenuAnchor}>
               {/*todo notifications badge and menu*/}
-              <Badge badgeContent={undefined} color="primary" variant="dot">
+              {/* <Badge badgeContent={undefined} color="primary" variant="dot">
                 <NotificationsOutlinedIcon fontSize="small" />
-              </Badge>
+              </Badge>*/}
+              <NotificationsOutlinedIcon fontSize="small" />
             </IconButton>
           </Tooltip>
+          <NotificationsMenu
+            onClose={resetNotificationMenuAnchor}
+            anchorEl={notificationMenuAnchorEl}
+            notifications={[]}
+          />
 
           <Avatar
             sx={(theme) => ({
