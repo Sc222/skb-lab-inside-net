@@ -124,7 +124,7 @@ export const ProfileToolbar: FunctionComponent<ProfileToolbarProps> = ({
                 </Avatar>
               </ListItemAvatar>
               <ListItemText
-                primary={<Typography variant={isMobile || isTablet ? "h5" : "h4"}>{person.fullName}</Typography>}
+                primary={<Typography variant={isMobile ? "h6" : isTablet ? "h5" : "h4"}>{person.fullName}</Typography>}
                 secondary={
                   <>
                     <Typography variant="h6">{person.position.name}</Typography>

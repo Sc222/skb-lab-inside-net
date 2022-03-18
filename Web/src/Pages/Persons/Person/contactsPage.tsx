@@ -10,6 +10,7 @@ import {
   List,
   SelectChangeEvent,
   Typography,
+  useTheme,
 } from "@mui/material";
 import { useAuthContext } from "src/Contexts/authContext";
 import { DepartmentModel } from "../../../Api/Models/departmentModel";
@@ -22,6 +23,7 @@ import { MyContactCard } from "../../../Components/Contacts/myContactCard";
 import { MyContact } from "../../../Typings/Types/myContact";
 import { SiteRoute } from "../../../Typings/Enums/siteRoute";
 import { PersonPageContainer } from "src/Components/Common/personPageContainer";
+import { useMobile } from "../../../Hooks/responsiveHooks";
 
 interface ContactPageProps {
   searchOnEveryInput: boolean;
@@ -31,6 +33,9 @@ interface ContactPageProps {
 
 //FIXME: DRY !!!
 export const ContactsPage: FunctionComponent<ContactPageProps> = ({ searchOnEveryInput }) => {
+  const theme = useTheme();
+  const isMobile = useMobile(theme);
+
   const auth = useAuthContext();
   const [authPersonContacts, setAuthPersonContacts] = React.useState<MyContact[] | null>(null);
   const [departments, setDepartments] = React.useState<DepartmentModel[] | null>(null); // all departments list
@@ -151,6 +156,7 @@ export const ContactsPage: FunctionComponent<ContactPageProps> = ({ searchOnEver
                         <Typography sx={{ mr: 1 }} textAlign="center" variant="body2" component="span">
                           Вы можете воспользоваться
                         </Typography>
+                        {isMobile && <br />}
                         <Link
                           component={RouterLink}
                           to={`${SiteRoute.persons}/${SiteRoute.search}?${searchParams.toString()}`}
