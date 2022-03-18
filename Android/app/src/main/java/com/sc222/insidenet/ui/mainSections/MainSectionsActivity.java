@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
@@ -67,18 +69,7 @@ public class MainSectionsActivity extends AppCompatActivity implements BottomNav
         @Override
         public void doUpdateVisitedHistory(WebView view, String url, boolean isReload) {
             super.doUpdateVisitedHistory(view, url, isReload);
-
-            //view.getUrl()
-
-            if (url.endsWith("login")) {
-                Toast.makeText(getApplicationContext(), "ОБРАБОТАТЬ ЛОГИН", Toast.LENGTH_LONG).show();
-                //TODO: hide navigation here
-            } else if (url.contains("profile")) { //TODO: use regexp here
-                //show navigation here
-                Toast.makeText(getApplicationContext(), "ОБРАБОТАТЬ СТРАНИЦУ ПРОФИЛЯ", Toast.LENGTH_LONG).show();
-            }
-
-
+            toggleBottomNavVisibilityByUrl(url);
         }
 
         @Override
@@ -101,6 +92,17 @@ public class MainSectionsActivity extends AppCompatActivity implements BottomNav
             }
             //Your code to do
             Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void toggleBottomNavVisibilityByUrl(String url) {
+        //TODO: use regexp here
+        if (url.endsWith("login")) {
+            binding.bottomNavigation.setVisibility(View.GONE);
+        } else if (url.contains("persons")) {
+            binding.bottomNavigation.setVisibility(View.VISIBLE);
+        } else {
+            binding.bottomNavigation.setVisibility(View.GONE);
         }
     }
 
