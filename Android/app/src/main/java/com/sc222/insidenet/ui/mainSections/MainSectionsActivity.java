@@ -8,12 +8,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.CookieManager;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -99,13 +99,13 @@ public class MainSectionsActivity extends AppCompatActivity implements BottomNav
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             super.onPageStarted(view, url, favicon);
-            Toast.makeText(getApplicationContext(), "LOADING STARTED", Toast.LENGTH_SHORT).show();
+            binding.pageLoadingIndicator.show();
         }
 
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
-            //Toast.makeText(getApplicationContext(), "LOADING FINISHED: "+url, Toast.LENGTH_SHORT).show();
+            binding.pageLoadingIndicator.hide();
         }
 
         @Override
@@ -116,7 +116,7 @@ public class MainSectionsActivity extends AppCompatActivity implements BottomNav
             }
             Log.e("main", errorMessage);
             //Your code to do
-            Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -169,6 +169,9 @@ public class MainSectionsActivity extends AppCompatActivity implements BottomNav
         binding.webView.setWebViewClient(new DefaultWebClient());
         binding.webView.loadUrl(UrlConstants.WEB_VIEW_URL);
         //binding.webView.addJavascriptInterface(new DefaultWebInterface(this),"Android");
+
+
+//        binding.webView.copyBackForwardList().getCurrentItem().
 
 
 
