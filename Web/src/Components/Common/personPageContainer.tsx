@@ -11,6 +11,7 @@ export const PersonPageContainer: FunctionComponent<PropsWithChildren<PersonPage
         flexGrow: 1,
         [theme.breakpoints.down("md")]: {
           py: 4,
+          mb: 4,
         },
         [theme.breakpoints.up("md")]: {
           py: 8,
