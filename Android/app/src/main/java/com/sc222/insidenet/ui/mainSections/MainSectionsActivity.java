@@ -26,11 +26,37 @@ import com.sc222.insidenet.databinding.ActivityMainSectionsBinding;
 import com.sc222.insidenet.ui.webview.constants.UrlConstants;
 
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MainSectionsActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        Toast.makeText(getApplicationContext(), "WEBVIEW NAVIGATE TO: " + item.getItemId(), Toast.LENGTH_SHORT).show();
+        String urlToNavigate = UrlConstants.WEB_VIEW_URL + "/persons";
+
+        //FIXME: refactor and move to UrlConstants + (somehow navigate inside react without full reloading)
+        if (authenticatedUserId != null) {
+            urlToNavigate = urlToNavigate + "/" + authenticatedUserId;
+            switch (item.getItemId()) {
+                case R.id.profileFragment:
+                    urlToNavigate = urlToNavigate + "/profile";
+                    break;
+                case R.id.dataAccessFragment:
+                    urlToNavigate = urlToNavigate + "/slack-channels";
+                    break;
+                case R.id.calendarFragment:
+                    urlToNavigate = urlToNavigate + "/calendar";
+                    break;
+                case R.id.contactsFragment:
+                    urlToNavigate = urlToNavigate + "/contacts";
+                    break;
+            }
+        }
+
+        if (!binding.webView.getUrl().equals(urlToNavigate)) {
+            Log.e("main", "navigate to: " + urlToNavigate);
+            binding.webView.loadUrl(urlToNavigate);
+        }
         return true;
     }
 
@@ -47,8 +73,7 @@ public class MainSectionsActivity extends AppCompatActivity implements BottomNav
     // - !!! HIDE BOTTOM NAV IF NOT LOGGED IN (inject android logic using )
     //
 
-    //FIXME: CRITICAL
-    // website crashes on emulators (idk, try connecting to production build)
+    //FIXME: website crashes on some emulators (try connecting to production build + setting up better babel)
 
     private class DefaultWebClient extends WebViewClient {
         @Override
@@ -57,8 +82,6 @@ public class MainSectionsActivity extends AppCompatActivity implements BottomNav
                 // This is my website, so do not override; let my WebView load the page
                 return false;
             }
-
-            // Toast.makeText(getApplicationContext(), "URL CHANGE: "+request.getUrl().getPath(),Toast.LENGTH_LONG).show();
 
             // Otherwise, the link is not for a page on my site, so launch another Activity that handles URLs
             Intent intent = new Intent(Intent.ACTION_VIEW, request.getUrl());
@@ -70,6 +93,7 @@ public class MainSectionsActivity extends AppCompatActivity implements BottomNav
         public void doUpdateVisitedHistory(WebView view, String url, boolean isReload) {
             super.doUpdateVisitedHistory(view, url, isReload);
             toggleBottomNavVisibilityByUrl(url);
+            updateAuthenticatedUserId(url);
         }
 
         @Override
@@ -90,34 +114,28 @@ public class MainSectionsActivity extends AppCompatActivity implements BottomNav
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 errorMessage = error.getDescription().toString();
             }
+            Log.e("main", errorMessage);
             //Your code to do
             Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_LONG).show();
         }
     }
 
-    private void toggleBottomNavVisibilityByUrl(String url) {
-        //TODO: use regexp here
-        if (url.endsWith("login")) {
-            binding.bottomNavigation.setVisibility(View.GONE);
-        } else if (url.contains("persons")) {
-            binding.bottomNavigation.setVisibility(View.VISIBLE);
-        } else {
-            binding.bottomNavigation.setVisibility(View.GONE);
-        }
-    }
-
 
     private ActivityMainSectionsBinding binding;
+
+    private String authenticatedUserId = null;
+
+    //private
     //private NavController navController;
 
     @Override
     public void onBackPressed() {
-        /*if (Objects.requireNonNull(navController.getCurrentDestination()).getId() == R.id.profileFragment)
-            this.finishAffinity();
-        else
-            super.onBackPressed();*/
-        //TODO: CLOSE APP
-        super.onBackPressed();
+        //FIXME: finish only from profile page, in other  case -> go back
+        this.finishAffinity();
+        /*
+        if (Objects.requireNonNull(navController.getCurrentDestination()).getId() == R.id.profileFragment){super.onBackPressed();}
+        else {super.onBackPressed();}
+         */
     }
 
 
@@ -156,5 +174,39 @@ public class MainSectionsActivity extends AppCompatActivity implements BottomNav
 
        /* NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.bottomNavigation, navController);*/
+    }
+
+    private void updateAuthenticatedUserId(String url) {
+        //TODO: use regexp here
+        if (url.endsWith("login")) {
+            // reset previously authenticated user
+            authenticatedUserId = null;
+            Log.e("auth", "reset auth");
+        } else if (url.contains("persons")) {
+            if (authenticatedUserId == null) {
+                // set authenticated user cookies
+                authenticatedUserId = CookieManager.getInstance().getCookie(url);
+                String cookies = CookieManager.getInstance().getCookie(url);
+                Pattern pattern = Pattern.compile("personId=([a-zA-Z0-9\\-]+);?");
+                Matcher matcher = pattern.matcher(cookies);
+                if (matcher.find()) {
+                    String foundId = matcher.group(1);
+                    Optional.ofNullable(foundId).ifPresent(val -> authenticatedUserId = foundId);
+                }
+                Log.e("auth", "set id: " + authenticatedUserId);
+            }
+        }
+    }
+
+
+    private void toggleBottomNavVisibilityByUrl(String url) {
+        //TODO: use regexp here
+        if (url.endsWith("login")) {
+            binding.bottomNavigation.setVisibility(View.GONE);
+        } else if (url.contains("persons")) {
+            binding.bottomNavigation.setVisibility(View.VISIBLE);
+        } else {
+            binding.bottomNavigation.setVisibility(View.GONE);
+        }
     }
 }
