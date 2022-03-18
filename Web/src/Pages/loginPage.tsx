@@ -139,7 +139,8 @@ export const LoginPage: FunctionComponent<LoginPageProps> = () => {
             </Button>
           </Box>
           <Typography color="textSecondary" variant="body2">
-            <Link
+            {/* FIXME: create register page or just use ldap data and remove ability to register???*/}
+            {/*<Link
               component={RouterLink}
               to={SiteRoute.register}
               variant="subtitle2"
@@ -149,7 +150,7 @@ export const LoginPage: FunctionComponent<LoginPageProps> = () => {
               }}
             >
               Зарегистрироваться
-            </Link>{" "}
+            </Link>{" "}*/}
             {/*//TODO CREATE SPECIAL LDAP-REGISTER PAGE !!!*/}
             {/*или
 
