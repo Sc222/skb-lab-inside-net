@@ -21,6 +21,7 @@ import { MyContactsToolbar } from "../../../Components/Contacts/myContactsToolba
 import { MyContactCard } from "../../../Components/Contacts/myContactCard";
 import { MyContact } from "../../../Typings/Types/myContact";
 import { SiteRoute } from "../../../Typings/Enums/siteRoute";
+import { PersonPageContainer } from "src/Components/Common/personPageContainer";
 
 interface ContactPageProps {
   searchOnEveryInput: boolean;
@@ -116,13 +117,7 @@ export const ContactsPage: FunctionComponent<ContactPageProps> = ({ searchOnEver
   };
 
   return (
-    <Box
-      component="main"
-      sx={{
-        flexGrow: 1,
-        py: 8,
-      }}
-    >
+    <PersonPageContainer>
       <Container maxWidth="md">
         <MyContactsToolbar
           resultCount={authPersonContacts?.length}
@@ -181,6 +176,6 @@ export const ContactsPage: FunctionComponent<ContactPageProps> = ({ searchOnEver
           </Card>
         </Box>
       </Container>
-    </Box>
+    </PersonPageContainer>
   );
 };

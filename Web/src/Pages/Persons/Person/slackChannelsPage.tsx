@@ -11,6 +11,7 @@ import { RequestChannelAccessTab } from "../../../Components/SlackChannels/reque
 import { GrantChannelsAccessTab } from "../../../Components/SlackChannels/grantChannelsAccessTab";
 import { useSearchParams } from "react-router-dom";
 import { SlackChannelsSearchParam } from "../../../Typings/Enums/slackChannelsSearchParam";
+import { PersonPageContainer } from "src/Components/Common/personPageContainer";
 
 interface SlackChannelsPageProps {}
 
@@ -58,13 +59,7 @@ export const SlackChannelsPage: FunctionComponent<SlackChannelsPageProps> = () =
   const shouldShowAdminMenu = isAdminOrSlackAdmin(authProfileScope);
 
   return (
-    <Box
-      component="main"
-      sx={{
-        flexGrow: 1,
-        py: 8,
-      }}
-    >
+    <PersonPageContainer>
       <Container maxWidth="md">
         <SlackChannelsToolbar />
 
@@ -108,6 +103,6 @@ export const SlackChannelsPage: FunctionComponent<SlackChannelsPageProps> = () =
           </Card>
         </Box>
       </Container>
-    </Box>
+    </PersonPageContainer>
   );
 };

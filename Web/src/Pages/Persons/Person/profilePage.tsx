@@ -3,7 +3,6 @@ import { Link as RouterLink } from "react-router-dom";
 import { useAuthContext } from "../../../Contexts/authContext";
 import {
   Avatar,
-  Box,
   Card,
   CardContent,
   CardHeader,
@@ -26,6 +25,7 @@ import { PersonModel } from "../../../Api/Models/personModel";
 import { SlackChannelModel } from "../../../Api/Models/slackChannelModel";
 import { MyChannelListItem } from "../../../Components/SlackChannels/myChannelListItem";
 import { PersonalCalendar } from "../../../Components/Calendar/PersonalCalendar/personalCalendar";
+import { PersonPageContainer } from "../../../Components/Common/personPageContainer";
 
 //TODO: split profilePage by CARDS
 //TODO: optimize rerenders
@@ -113,13 +113,7 @@ export const ProfilePage: FunctionComponent<ProfilePageProps> = () => {
   };
 
   return (
-    <Box
-      component="main"
-      sx={{
-        flexGrow: 1,
-        py: 8,
-      }}
-    >
+    <PersonPageContainer>
       <Container maxWidth="md">
         {/*fixme TMP workaround of profile page blinking*/}
         {!personContext.isLoading && (
@@ -310,6 +304,6 @@ export const ProfilePage: FunctionComponent<ProfilePageProps> = () => {
           </Grid>
         )}
       </Container>
-    </Box>
+    </PersonPageContainer>
   );
 };

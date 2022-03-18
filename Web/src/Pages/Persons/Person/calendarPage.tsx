@@ -16,6 +16,7 @@ import { PersonsApi } from "../../../Api/personsApi";
 import { Api } from "../../../Api/api";
 import { DepartmentCalendar } from "src/Components/Calendar/DepartmentCalendar/departmentCalendar";
 import { ContactsSearchParam } from "../../../Typings/Enums/contactsSearchParam";
+import { PersonPageContainer } from "../../../Components/Common/personPageContainer";
 
 interface CalendarPageProps {}
 
@@ -89,16 +90,9 @@ export const CalendarPage: FunctionComponent<CalendarPageProps> = () => {
   };
 
   return (
-    <Box
-      component="main"
-      sx={{
-        flexGrow: 1,
-        py: 8,
-      }}
-    >
+    <PersonPageContainer>
       <Container maxWidth="md">
         <CalendarPageToolbar />
-
         <Box sx={{ width: "100%", mt: 3 }}>
           <Card>
             <CardContent sx={{ px: 1, py: "0 !important" }}>
@@ -146,23 +140,6 @@ export const CalendarPage: FunctionComponent<CalendarPageProps> = () => {
           </Card>
         </Box>
       </Container>
-    </Box>
+    </PersonPageContainer>
   );
-
-  /* return (
-    <>
-      {!person.isLoading && person && (
-        <div>
-          CALENDAR PAGE
-          <PersonalCalendar
-            initialData={CalendarSource.UsersCalendarData.filter((v) => v.Person.Id === person.person?.Id)}
-            eventsToShow={["Отпуск", "Командировка", "Учеба"]}
-            onDataUpdate={(newData) => {
-              CalendarSource.UsersCalendarData = newData;
-            }}
-          />
-        </div>
-      )}
-    </>
-  );*/
 };

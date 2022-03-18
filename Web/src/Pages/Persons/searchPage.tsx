@@ -20,6 +20,7 @@ import { PersonsApi } from "../../Api/personsApi";
 import { Api } from "../../Api/api";
 import { DepartmentModel } from "../../Api/Models/departmentModel";
 import { DepartmentsApi } from "../../Api/departmentsApi";
+import { PersonPageContainer } from "src/Components/Common/personPageContainer";
 
 interface SearchPageProps {
   searchOnEveryInput: boolean;
@@ -138,13 +139,7 @@ export const SearchPage: FunctionComponent<SearchPageProps> = ({ searchOnEveryIn
   };
 
   return (
-    <Box
-      component="main"
-      sx={{
-        flexGrow: 1,
-        py: 8,
-      }}
-    >
+    <PersonPageContainer>
       <Container maxWidth="md">
         <SearchContactsToolbar
           resultCount={contacts?.length}
@@ -187,6 +182,6 @@ export const SearchPage: FunctionComponent<SearchPageProps> = ({ searchOnEveryIn
           </Card>
         </Box>
       </Container>
-    </Box>
+    </PersonPageContainer>
   );
 };
