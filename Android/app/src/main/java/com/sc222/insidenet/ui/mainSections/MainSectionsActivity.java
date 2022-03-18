@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver.OnScrollChangedListener;
 import android.webkit.CookieManager;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
@@ -106,6 +107,7 @@ public class MainSectionsActivity extends AppCompatActivity implements BottomNav
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
             binding.pageLoadingIndicator.hide();
+            binding.swipeToRefreshLayout.setRefreshing(false); // finish refresh
         }
 
         @Override
@@ -115,6 +117,8 @@ public class MainSectionsActivity extends AppCompatActivity implements BottomNav
                 errorMessage = error.getDescription().toString();
             }
             Log.e("main", errorMessage);
+
+            binding.swipeToRefreshLayout.setRefreshing(false); // finish refresh in case of error
             //Your code to do
             //Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_LONG).show();
         }
@@ -125,8 +129,12 @@ public class MainSectionsActivity extends AppCompatActivity implements BottomNav
 
     private String authenticatedUserId = null;
 
-    //private
-    //private NavController navController;
+    private final OnScrollChangedListener onScrollChangedListener = new OnScrollChangedListener() {
+        @Override
+        public void onScrollChanged() {
+            binding.swipeToRefreshLayout.setEnabled(Math.abs(binding.webView.getScrollY()) <= 0.1 );
+        }
+    };
 
     @Override
     public void onBackPressed() {
@@ -159,7 +167,7 @@ public class MainSectionsActivity extends AppCompatActivity implements BottomNav
                 R.id.profileFragment, R.id.dataAccessFragment, R.id.calendarFragment, R.id.contactsFragment)
                 .build();
 
-        //TODO: move to init method
+        //TODO: move to init webview method
         WebSettings webSettings = binding.webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setLoadWithOverviewMode(true);
@@ -170,13 +178,29 @@ public class MainSectionsActivity extends AppCompatActivity implements BottomNav
         binding.webView.loadUrl(UrlConstants.WEB_VIEW_URL);
         //binding.webView.addJavascriptInterface(new DefaultWebInterface(this),"Android");
 
+        //TODO: move to init swipeToRefresh method
+        binding.swipeToRefreshLayout.setOnRefreshListener(
+                () -> binding.webView.reload()
+        );
 
-//        binding.webView.copyBackForwardList().getCurrentItem().
 
 
 
        /* NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.bottomNavigation, navController);*/
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        binding.swipeToRefreshLayout.getViewTreeObserver().addOnScrollChangedListener(onScrollChangedListener);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        binding.swipeToRefreshLayout.getViewTreeObserver().removeOnScrollChangedListener(onScrollChangedListener);
     }
 
     private void updateAuthenticatedUserId(String url) {
